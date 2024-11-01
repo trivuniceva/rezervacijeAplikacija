@@ -19,25 +19,23 @@ export class HomepageComponent {
       name: 'Luxury Beachside Villa',
       location: 'Miami, FL',
       price: 300,
-      image: 'assets/pics/apartment/a1.jpg'
+      image: '/pics/apartment/a1.jpg'
     },
     {
       id: 2,
       name: 'Cozy Mountain Cabin',
       location: 'Aspen, CO',
       price: 200,
-      image: 'assets/pics/apartment/a2.jpg'
+      image: '/pics/apartment/a2.jpg'
     },
     {
       id: 3,
       name: 'Modern City Apartment',
       location: 'New York, NY',
       price: 250,
-      image: 'assets/pics/apartment/a3.jpg'
+      image: '/pics/apartment/a3.jpg'
     }
   ];
-
-  constructor() { }
 
   navigateToBooking() {
     console.log('Navigating to booking page...');
