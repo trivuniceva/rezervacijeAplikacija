@@ -1,0 +1,34 @@
+<div class="delete-account-container">
+  <h2>Deleting your account</h2>
+  <p>We're sorry to see you go. We'd like to know why you're deleting your account as we may be able to help with common issues.</p>
+
+  <form (ngSubmit)="onSubmit()">
+    <div class="form-step">
+
+      <div class="reasons-container">
+        <div class="form-group" *ngFor="let reason of reasons">
+          <span>{{ reason }}</span>
+          <input
+            type="radio"
+            [(ngModel)]="selectedReason"
+            [value]="reason"
+            (click)="toggleRadio(reason)"
+            [checked]="selectedReason === reason"
+            name="deleteReason">
+        </div>
+      </div>
+
+
+      <div class="confirmation-message">
+        <p>
+          If you continue with account deletion, your profile and account details will be deleted on <strong>30 Nov 2024</strong>.
+          You won't be visible on Instagram between now and then. You can cancel the permanent deletion process at any time before the process
+          starts through Accounts Centre or by logging in to your Instagram account.
+        </p>
+      </div>
+
+      <button type="button" (click)="onDeleteAccount()" class="btn btn-submit">Delete account</button>
+      <button type="button" (click)="onCancel()" class="btn btn-back">Cancel</button>
+    </div>
+  </form>
+</div>
