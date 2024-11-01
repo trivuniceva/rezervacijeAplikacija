@@ -1,10 +1,13 @@
 import { Component } from '@angular/core';
 import {Router} from '@angular/router';
+import {NgForOf} from '@angular/common';
 
 @Component({
   selector: 'app-delete-account',
   standalone: true,
-  imports: [],
+  imports: [
+    NgForOf
+  ],
   templateUrl: './delete-account.component.html',
   styleUrl: './delete-account.component.css'
 })

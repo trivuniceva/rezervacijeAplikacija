@@ -2,7 +2,7 @@
   <h2>Deleting your account</h2>
   <p>We're sorry to see you go. We'd like to know why you're deleting your account as we may be able to help with common issues.</p>
 
-  <form (ngSubmit)="onSubmit()">
+  <form>
     <div class="form-step">
 
       <div class="reasons-container">
@@ -10,7 +10,6 @@
           <span>{{ reason }}</span>
           <input
             type="radio"
-            [(ngModel)]="selectedReason"
             [value]="reason"
             (click)="toggleRadio(reason)"
             [checked]="selectedReason === reason"
