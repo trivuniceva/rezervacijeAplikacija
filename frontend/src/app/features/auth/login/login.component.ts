@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import {Router} from '@angular/router';
+import {AuthService} from '../../../core/service/auth/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -9,12 +11,14 @@ import { Component } from '@angular/core';
 })
 export class LoginComponent {
 
+  constructor(private authService: AuthService, private router: Router) { }
+
   forgotPassword() {
 
   }
 
   goToSignup() {
-
+    this.router.navigate(['/signup'])
   }
 
   login() {

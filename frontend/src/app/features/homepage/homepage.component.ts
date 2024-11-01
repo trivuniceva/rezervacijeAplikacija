@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
-import {CurrencyPipe} from '@angular/common';
+import {CurrencyPipe, NgForOf} from '@angular/common';
 
 @Component({
   selector: 'app-homepage',
   standalone: true,
   imports: [
-    CurrencyPipe
+    CurrencyPipe,
+    NgForOf
   ],
   templateUrl: './homepage.component.html',
   styleUrl: './homepage.component.css'
@@ -37,9 +38,6 @@ export class HomepageComponent {
   ];
 
   constructor() { }
-
-  ngOnInit(): void {
-  }
 
   navigateToBooking() {
     console.log('Navigating to booking page...');
