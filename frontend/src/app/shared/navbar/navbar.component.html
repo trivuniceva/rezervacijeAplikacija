@@ -1,0 +1,20 @@
+<div *ngIf="!userRole || userRole === ''" class="sidenav">
+  <a href=""> Home </a>
+  <a href="/login"> Search </a>
+  <a href="/login"> Login </a>
+</div>
+
+
+<div *ngIf="userRole === 'GUEST'" class="sidenav">
+  <a routerLink="/profile">Profile</a>
+  <a routerLink="/profile">Reservation</a>
+<!--  <a href="#" (click)="logout()">Logout</a>-->
+</div>
+
+<div *ngIf="userRole === 'HOST'" class="sidenav">
+  <a routerLink="/profile">Profile</a>
+  <a routerLink="/profile">Add Apartment</a>
+  <a routerLink="/profile">Edit Apartment</a>
+  <a routerLink="/profile">Reservation</a>
+<!--  <a href="#" (click)="logout()">Logout</a>-->
+</div>
