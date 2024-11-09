@@ -4,21 +4,18 @@ import backend.model.User;
 import backend.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
 //@CrossOrigin(origins = "http://localhost:4200")
-//@RequestMapping("/api/auth")
+@RequestMapping("/api/auth")
 public class AuthController {
 
     @Autowired
     private AuthService authService;
 
-    @PostMapping("/api/auth/login")
+    @PostMapping("/login")
     public ResponseEntity<User> login(@RequestBody User loginUser) {
         System.out.println(" srce moje lepooo!!! ");
 

@@ -6,6 +6,7 @@
       <input
         type="email"
         id="email"
+        [(ngModel)]="email"
         name="email" required
         placeholder="Email:"
         class="form-control"
@@ -15,7 +16,7 @@
     <div class="form-group">
       <input
         type="password"
-        id="password"
+        id="password" [(ngModel)]="password"
         name="password" required
         placeholder="Password:"
         class="form-control"
