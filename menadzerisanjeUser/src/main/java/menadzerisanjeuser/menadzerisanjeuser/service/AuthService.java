@@ -1,7 +1,8 @@
-package backend.service;
+package menadzerisanjeuser.menadzerisanjeuser.service;
 
-import backend.model.User;
-import backend.repository.UserRepository;
+import menadzerisanjeuser.menadzerisanjeuser.model.RegisterRequest;
+import menadzerisanjeuser.menadzerisanjeuser.model.User;
+import menadzerisanjeuser.menadzerisanjeuser.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,7 +11,6 @@ public class AuthService {
 
     @Autowired
     private UserRepository userRepository;
-
 
     public User login(String email, String password) {
         System.out.println("email: " + email);
@@ -51,7 +51,10 @@ public class AuthService {
             return true;
         }
         return false;
+    }
 
+
+    public void signup(RegisterRequest registerRequest) {
 
     }
 }
