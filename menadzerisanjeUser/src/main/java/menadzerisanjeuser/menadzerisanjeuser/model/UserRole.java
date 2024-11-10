@@ -1,4 +1,4 @@
-package backend.model;
+package menadzerisanjeuser.menadzerisanjeuser.model;
 
 public enum UserRole {
     ADMINISTRATOR, //A

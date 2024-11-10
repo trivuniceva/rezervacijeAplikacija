@@ -1,6 +1,6 @@
-package backend.repository;
+package menadzerisanjeuser.menadzerisanjeuser.repository;
 
-import backend.model.User;
+import menadzerisanjeuser.menadzerisanjeuser.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UserRepository extends JpaRepository<User, Long> {
