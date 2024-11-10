@@ -19,4 +19,15 @@ export class UserService {
       })
     );
   }
+
+  uploadProfilePic(formData: FormData): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/upload-profile-pic`, formData).pipe(
+      catchError(error => {
+        console.error('Error uploading profile picture:', error);
+        return throwError(error);
+      })
+    );
+  }
+
+
 }
