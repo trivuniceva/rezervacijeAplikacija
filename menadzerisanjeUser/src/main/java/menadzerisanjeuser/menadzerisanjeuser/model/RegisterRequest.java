@@ -5,7 +5,7 @@ public class RegisterRequest {
     private String password;
     private String firstname;
     private String lastname;
-    private UserRole userRole;
+    private UserRole role;
     private String address;
     private String phone;
 
@@ -41,12 +41,12 @@ public class RegisterRequest {
         this.lastname = lastname;
     }
 
-    public UserRole getUserRole() {
-        return userRole;
+    public UserRole getRole() {
+        return role;
     }
 
-    public void setUserRole(UserRole userRole) {
-        this.userRole = userRole;
+    public void setRole(UserRole role) {
+        this.role = role;
     }
 
     public String getAddress() {
@@ -63,5 +63,18 @@ public class RegisterRequest {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    @Override
+    public String toString() {
+        return "RegisterRequest{" +
+                "email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", firstname='" + firstname + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", userRole='" + role + '\'' +
+                ", address='" + address + '\'' +
+                ", phone='" + phone + '\'' +
+                '}';
     }
 }
