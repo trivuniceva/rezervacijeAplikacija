@@ -1,8 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import {Router, RouterOutlet} from '@angular/router';
 import {NavbarComponent} from "./shared/navbar/navbar.component";
 import {NgIf} from '@angular/common';
 import {AuthService} from './core/service/auth/auth.service';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -15,19 +16,14 @@ export class AppComponent implements OnInit{
   title = 'frontend';
   userRole: string = '';
 
+  constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
-    this.setUserRole();
+    // this.authService.setUserRole();
+    // this.userRole = this.authService.getUserRole();
+    this.authService.userRole$.subscribe((role) => {
+      this.userRole = role;
+    });
   }
 
-  setUserRole() {
-    let user = localStorage.getItem('loggedUser');
-
-    if (user) {
-      let parsedUser = JSON.parse(user);
-      this.userRole = parsedUser.userRole;
-    } else {
-      this.userRole = '';
-    }
-  }
 }

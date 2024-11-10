@@ -31,12 +31,21 @@ export class LoginComponent {
     console.log("ajmo log")
     this.authService.login(this.email, this.password).subscribe(response => {
       console.log('Login successful', response);
+
       console.log("pile moje")
-      localStorage.setItem('loggedUser', JSON.stringify(response)); // Čuvaj korisnika
+
+      this.authService.storageHandle({ user: response });
+
+      // localStorage.setItem('loggedUser', JSON.stringify(response)); // Čuvaj korisnika
+
+
+
+      console.log("srcicccc")
+
+
       this.router.navigate(['/profile'])
     }, error => {
       console.error('Login failed', error);
     });
   }
-
 }

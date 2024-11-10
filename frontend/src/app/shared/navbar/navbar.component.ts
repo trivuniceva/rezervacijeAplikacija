@@ -1,28 +1,26 @@
-import { Component } from '@angular/core';
-import {NgIf} from '@angular/common';
-import {AuthService} from '../../core/service/auth/auth.service';
+import { Component, OnInit } from '@angular/core';
+import { NgIf } from '@angular/common';
+import { AuthService } from '../../core/service/auth/auth.service';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [
-    NgIf
-  ],
+  imports: [NgIf],
   templateUrl: './navbar.component.html',
-  styleUrl: './navbar.component.css'
+  styleUrls: ['./navbar.component.css'],
 })
-export class NavbarComponent {
+export class NavbarComponent implements OnInit {
   userRole: string = '';
 
   constructor(private authService: AuthService) {}
 
-  ngOnInit() {
-    this.authService.userRole$.subscribe(role => {
+  ngOnInit(): void {
+    this.authService.userRole$.subscribe((role) => {
       this.userRole = role;
     });
   }
 
-  logout() {
+  logout(): void {
     this.authService.logout();
   }
 }
