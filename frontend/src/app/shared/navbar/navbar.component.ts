@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import {NgIf} from '@angular/common';
+import {AuthService} from '../../core/service/auth/auth.service';
 
 @Component({
   selector: 'app-navbar',
@@ -13,4 +14,15 @@ import {NgIf} from '@angular/common';
 export class NavbarComponent {
   userRole: string = '';
 
+  constructor(private authService: AuthService) {}
+
+  ngOnInit() {
+    this.authService.userRole$.subscribe(role => {
+      this.userRole = role;
+    });
+  }
+
+  logout() {
+    this.authService.logout();
+  }
 }

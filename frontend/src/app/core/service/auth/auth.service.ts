@@ -39,5 +39,9 @@ export class AuthService {
     return this.http.post(this.apiUrl + '/login', { email, password });
   }
 
-  
+  logout() {
+    localStorage.removeItem('loggedUser');
+    this.userRoleSubject.next('');
+  }
+
 }

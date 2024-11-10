@@ -2,13 +2,14 @@
   <a href=""> Home </a>
   <a href=""> Search </a>
   <a href="/login"> Login </a>
+  <a href="#" (click)="logout()">Logout</a>
 </div>
 
 
 <div *ngIf="userRole === 'GUEST'" class="sidenav">
   <a href="/profile"> Profile </a>
   <a href="/profile"> Reservation </a>
-<!--  <a href="#" (click)="logout()">Logout</a>-->
+  <a href="#" (click)="logout()">Logout</a>
 </div>
 
 <div *ngIf="userRole === 'HOST'" class="sidenav">
