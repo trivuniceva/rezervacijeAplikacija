@@ -30,6 +30,15 @@ export class UserProfileComponent implements OnInit{
   }
 
   saveChanges() {
+    this.authService.updateUser(this.user).subscribe(
+      response => {
+        console.log('User updated successfully:', response);
+        this.isEditing = false;
+      },
+      error => {
+        console.error('Error updating user:', error);
+      }
+    );
 
   }
 
@@ -43,7 +52,6 @@ export class UserProfileComponent implements OnInit{
 
   deleteAcc() {
     this.router.navigate(["/delete-account"])
-
   }
 
 }

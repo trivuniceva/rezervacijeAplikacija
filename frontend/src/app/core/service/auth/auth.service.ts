@@ -45,4 +45,13 @@ export class AuthService {
     );
   }
 
+  updateUser(userData: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/update-user`, userData).pipe(
+      catchError(error => {
+        console.error('Error updating user:', error);
+        return throwError(error);
+      })
+    );
+  }
+
 }
