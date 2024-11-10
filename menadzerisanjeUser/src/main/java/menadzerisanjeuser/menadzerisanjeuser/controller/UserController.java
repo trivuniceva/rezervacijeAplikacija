@@ -19,16 +19,17 @@ public class UserController {
 
 
     @PostMapping("/update-user")
-    public ResponseEntity<?> updateUser(@RequestBody UserDto userDto) {
+    public ResponseEntity<String> updateUser(@RequestBody UserDto userDto) {
         System.out.println(userDto.getEmail());
         System.out.println(userDto.getFirstname());
         try {
             userService.updateUser(userDto);
-            return ResponseEntity.ok().body("User updated successfully");
+            return ResponseEntity.ok("User updated successfully");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error updating user");
         }
     }
+
 
 
 }
