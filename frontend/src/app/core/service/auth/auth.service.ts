@@ -18,28 +18,13 @@ export class AuthService {
     const user = localStorage.getItem('loggedUser');
     return user ? JSON.parse(user) : null;
   }
-
-  getUserRole(){
-    return this.userRoleSubject.getValue();
-  }
-
   login(email: string, password: string): Observable<any> {
-    console.log("uso u logiiii na servisu ")
-
     return this.http.post(this.apiUrl + '/login', { email, password });
   }
 
   storageHandle({ user }: { user: any }) {
     localStorage.setItem('loggedUser', JSON.stringify(user));
-
-    // Emit the user's role when it's stored
     this.userRoleSubject.next(user.userRole);
-
-    console.log("User role emitted:", user.userRole);
-    console.log(localStorage.getItem('loggedUser'));
-    console.log(user.email);
-    console.log(user.phone);
-    console.log(user.profilePic);
   }
 
 
