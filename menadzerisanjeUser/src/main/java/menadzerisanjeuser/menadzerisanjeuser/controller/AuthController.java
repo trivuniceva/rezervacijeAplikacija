@@ -1,7 +1,7 @@
-package backend.controller;
+package menadzerisanjeuser.menadzerisanjeuser.controller;
 
-import backend.model.User;
-import backend.service.AuthService;
+import menadzerisanjeuser.menadzerisanjeuser.model.User;
+import menadzerisanjeuser.menadzerisanjeuser.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

@@ -1,7 +1,7 @@
-package backend.service;
+package menadzerisanjeuser.menadzerisanjeuser.service;
 
-import backend.model.User;
-import backend.repository.UserRepository;
+import menadzerisanjeuser.menadzerisanjeuser.model.User;
+import menadzerisanjeuser.menadzerisanjeuser.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,4 +1,4 @@
-package backend.service;
+package menadzerisanjeuser.menadzerisanjeuser.service;
 
 import org.springframework.stereotype.Service;
 

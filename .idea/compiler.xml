@@ -7,11 +7,17 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="rezervacije" />
+        <module name="menadzerisanjeUser" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="auth" target="17" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="auth" options="-parameters" />
+      <module name="menadzerisanjeUser" options="-parameters" />
       <module name="rezervacije" options="-parameters" />
     </option>
   </component>
