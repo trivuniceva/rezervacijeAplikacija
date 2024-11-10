@@ -35,6 +35,7 @@ export class AuthService {
   register(userData: any): Observable<any> {
     console.log(userData.email)
     console.log(userData.password)
+    console.log(userData.role)
 
     return this.http.post<any>(`${this.apiUrl}/register`, userData).pipe(
       catchError(error => {

@@ -56,6 +56,23 @@ public class AuthService {
 
     public void signup(RegisterRequest registerRequest) {
 
+        System.out.println(registerRequest.getRole());
+
+        if(!userExist(registerRequest.getEmail())){
+            User newUser = new User();
+            newUser.setEmail(registerRequest.getEmail());
+            newUser.setPassword(registerRequest.getPassword());
+            newUser.setFirstname(registerRequest.getFirstname());
+            newUser.setLastname(registerRequest.getLastname());
+            newUser.setProfilePic("/pics/slika2.jpg");
+            newUser.setAddress(registerRequest.getAddress());
+            newUser.setPhone(registerRequest.getPhone());
+            newUser.setUserRole(registerRequest.getRole());
+
+            userRepository.save(newUser);
+        }
+
+
     }
 }
 

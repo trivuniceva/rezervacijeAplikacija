@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/
 import {NgIf} from '@angular/common';
 import {AuthService} from '../../../core/service/auth/auth.service';
 import {Router} from '@angular/router';
+import {routes} from '../../../app.routes';
 
 @Component({
   selector: 'app-signup',
@@ -46,8 +47,10 @@ export class SignupComponent implements OnInit {
         lastname: this.signupForm.value.lastname,
         address: this.signupForm.value.address,
         phone: this.signupForm.value.phone,
-        role: this.signupForm.value.role
+        role: this.signupForm.value.role.toUpperCase()
       };
+
+      console.log(userData.role)
 
       this.userService.register(userData).subscribe(
         response => {
