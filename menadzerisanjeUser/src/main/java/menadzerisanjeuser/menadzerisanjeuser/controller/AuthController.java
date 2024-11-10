@@ -32,7 +32,13 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<?> signup(@RequestBody RegisterRequest registerRequest) {
         System.out.println("Registration request received: " + registerRequest.getEmail());
+        System.out.println("rola: " + registerRequest.getRole());
+
+        System.out.println(" - - - - - - - ");
+        System.out.println(registerRequest.toString());
+
         authService.signup(registerRequest);
+
         return ResponseEntity.ok(new SuccessResponse("Registration successful!"));
     }
 
