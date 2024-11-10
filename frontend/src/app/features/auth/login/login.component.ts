@@ -31,8 +31,8 @@ export class LoginComponent {
     console.log("ajmo log")
     this.authService.login(this.email, this.password).subscribe(response => {
       console.log('Login successful', response);
-      // localStorage.setItem('user', JSON.stringify(response)); // Čuvaj korisnika
-      // this.authService.getUserRole();
+      console.log("pile moje")
+      localStorage.setItem('loggedUser', JSON.stringify(response)); // Čuvaj korisnika
       this.router.navigate(['/profile'])
     }, error => {
       console.error('Login failed', error);
