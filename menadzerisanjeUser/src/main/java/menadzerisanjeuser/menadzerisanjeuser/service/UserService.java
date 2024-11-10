@@ -12,6 +12,25 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
+    public User getUserByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+
+    public boolean userExist(String email) {
+        return userRepository.findByEmail(email) != null;
+    }
+
+    public boolean validPassword(User user, String password) {
+        return user.getPassword().equals(password);
+    }
+
+    public boolean isDeleted(User user) {
+        return user.getDeletedAcc();
+    }
+
+    public void saveUser(User user) {
+        userRepository.save(user);
+    }
 
     public void updateUser(UserDto userDto) {
         User user = userRepository.findByEmail(userDto.getEmail());
@@ -25,6 +44,5 @@ public class UserService {
         user.setProfilePic(user.getProfilePic());
 
         userRepository.save(user);
-
     }
 }

@@ -2,7 +2,6 @@ package menadzerisanjeuser.menadzerisanjeuser.service;
 
 import menadzerisanjeuser.menadzerisanjeuser.model.RegisterRequest;
 import menadzerisanjeuser.menadzerisanjeuser.model.User;
-import menadzerisanjeuser.menadzerisanjeuser.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,55 +9,25 @@ import org.springframework.stereotype.Service;
 public class AuthService {
 
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
     public User login(String email, String password) {
         System.out.println("email: " + email);
         System.out.println("password: " + password);
 
-        if (userExist(email)){
-            User user = userRepository.findByEmail(email);
-            if(validPassword(user, password)){
-                if(!isDeleted(user)) {
-                    System.out.println("aktiva::: " + user.getActive());
-                    if(user.getActive()) {
-                        System.out.println("dobat juzerrr ej");
-                        System.out.println(user.getProfilePic());
-                        return user;
-                    }
-                }
+        User user = userService.getUserByEmail(email);
+        if (user != null && userService.validPassword(user, password)) {
+            if (!userService.isDeleted(user) && user.getActive()) {
+                System.out.println("dobar korisnik: " + user.getProfilePic());
+                return user;
             }
         }
         return null;
     }
 
-    boolean userExist(String email){
-        if(userRepository.findByEmail(email) != null){
-            return true;
-        }
-        return false;
-    }
-
-    boolean validPassword(User user, String password){
-        if(user.getPassword().equals(password)){
-            return true;
-        }
-        return false;
-    }
-
-    boolean isDeleted(User user){
-        if(user.getDeletedAcc()){
-            return true;
-        }
-        return false;
-    }
-
-
     public void signup(RegisterRequest registerRequest) {
-
         System.out.println(registerRequest.getRole());
-
-        if(!userExist(registerRequest.getEmail())){
+        if(!this.userService.userExist(registerRequest.getEmail())){
             User newUser = new User();
             newUser.setEmail(registerRequest.getEmail());
             newUser.setPassword(registerRequest.getPassword());
@@ -69,10 +38,7 @@ public class AuthService {
             newUser.setPhone(registerRequest.getPhone());
             newUser.setUserRole(registerRequest.getRole());
 
-            userRepository.save(newUser);
+            userService.saveUser(newUser);
         }
-
-
     }
 }
-
