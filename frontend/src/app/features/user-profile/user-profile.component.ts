@@ -3,6 +3,7 @@ import {AuthService} from '../../core/service/auth/auth.service';
 import {Router} from '@angular/router';
 import {NgIf} from '@angular/common';
 import {FormsModule} from '@angular/forms';
+import {UserService} from '../../core/service/user/user.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -18,7 +19,7 @@ export class UserProfileComponent implements OnInit{
   user: any;
   isEditing = false;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private userService: UserService, private router: Router, private authService: AuthService) {}
 
   ngOnInit(): void {
     this.user = this.authService.getLoggedUser()
@@ -30,6 +31,15 @@ export class UserProfileComponent implements OnInit{
   }
 
   saveChanges() {
+    this.userService.updateUser(this.user).subscribe(
+      response => {
+        console.log('User updated successfully:', response);
+        this.isEditing = false;
+      },
+      error => {
+        console.error('Error updating user:', error);
+      }
+    );
 
   }
 
@@ -43,7 +53,6 @@ export class UserProfileComponent implements OnInit{
 
   deleteAcc() {
     this.router.navigate(["/delete-account"])
-
   }
 
 }
