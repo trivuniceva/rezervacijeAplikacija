@@ -23,11 +23,12 @@ export class NavbarComponent implements OnInit {
   }
 
   toggleProfileMenu() {
-    console.log('Toggling profile menu');
     this.isProfileMenuOpen = !this.isProfileMenuOpen;
-    console.log('Profile menu state: ', this.isProfileMenuOpen);
   }
 
+  closeMenu() {
+    this.isProfileMenuOpen = false;  
+  }
 
   logout(): void {
     this.authService.logout();
