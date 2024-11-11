@@ -40,6 +40,9 @@ public class User {
     @Column(name = "address")
     private String address;
 
+    @Column(name = "reset_token")
+    private String resetToken;
+
     public Long getId() {
         return id;
     }
@@ -126,6 +129,14 @@ public class User {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getResetToken() {
+        return resetToken;
+    }
+
+    public void setResetToken(String resetToken) {
+        this.resetToken = resetToken;
     }
 }
 

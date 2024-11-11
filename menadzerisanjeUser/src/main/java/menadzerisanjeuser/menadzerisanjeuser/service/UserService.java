@@ -6,6 +6,8 @@ import menadzerisanjeuser.menadzerisanjeuser.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 public class UserService {
 
@@ -56,5 +58,9 @@ public class UserService {
         user.setPassword(newPassword);
         userRepository.save(user);
         return true;
+    }
+
+    public String generateActivationToken() {
+        return UUID.randomUUID().toString();
     }
 }

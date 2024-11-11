@@ -3,6 +3,7 @@ package menadzerisanjeuser.menadzerisanjeuser.service;
 import menadzerisanjeuser.menadzerisanjeuser.model.RegisterRequest;
 import menadzerisanjeuser.menadzerisanjeuser.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -10,6 +11,9 @@ public class AuthService {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private EmailService emailService;
 
     public User login(String email, String password) {
         System.out.println("email: " + email);
@@ -37,8 +41,17 @@ public class AuthService {
             newUser.setAddress(registerRequest.getAddress());
             newUser.setPhone(registerRequest.getPhone());
             newUser.setUserRole(registerRequest.getRole());
+            newUser.setResetToken(this.userService.generateActivationToken());
 
+
+
+            System.out.println("krece mejl: " + newUser.getEmail());
+            System.out.println("tokeN: " + newUser.getResetToken());
+            emailService.sendActivationEmail(newUser.getEmail(), newUser.getResetToken());
+
+            System.out.println("save....");
             userService.saveUser(newUser);
+            System.out.println("snimio korisnika");
         }
     }
 }
