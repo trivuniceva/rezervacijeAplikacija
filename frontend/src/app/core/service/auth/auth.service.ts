@@ -14,10 +14,11 @@ export class AuthService {
 
   constructor(private http: HttpClient) { }
 
-  getLoggedUser(){
+  getLoggedUser() {
     const user = localStorage.getItem('loggedUser');
     return user ? JSON.parse(user) : null;
   }
+
   login(email: string, password: string): Observable<any> {
     return this.http.post(this.apiUrl + '/login', { email, password });
   }
