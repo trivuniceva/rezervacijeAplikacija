@@ -27,7 +27,7 @@ export class NavbarComponent implements OnInit {
   }
 
   closeMenu() {
-    this.isProfileMenuOpen = false;  
+    this.isProfileMenuOpen = false;
   }
 
   logout(): void {
