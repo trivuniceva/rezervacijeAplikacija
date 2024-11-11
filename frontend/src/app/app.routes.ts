@@ -4,6 +4,8 @@ import {HomepageComponent} from './features/homepage/homepage.component';
 import {SignupComponent} from './features/auth/signup/signup.component';
 import {UserProfileComponent} from './features/user-profile/user-profile.component';
 import {DeleteAccountComponent} from './features/delete-account/delete-account.component';
+import {ChangePasswordComponent} from './features/change-password/change-password.component';
+import {GuestReservationComponent} from './features/reservation/guest-reservation/guest-reservation.component';
 
 export const routes: Routes = [
   {path: '', component: HomepageComponent},
@@ -11,5 +13,7 @@ export const routes: Routes = [
   {path: 'signup', component: SignupComponent},
   {path: 'profile', component: UserProfileComponent},
   {path: 'delete-account', component: DeleteAccountComponent},
+  {path: 'change-password', component: ChangePasswordComponent},
+  {path: 'guest-reservation', component: GuestReservationComponent},
 
 ];
