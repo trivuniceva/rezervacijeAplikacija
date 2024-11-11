@@ -1,8 +1,7 @@
 <div *ngIf="!userRole || userRole === ''" class="sidenav">
-  <a href=""> Home </a>
-  <a href=""> Search </a>
-  <a href="/login"> Login </a>
-  <a href="#" (click)="logout()">Logout</a>
+  <a routerLink="">Home</a>
+  <a routerLink="">Search</a>
+  <a routerLink="/login">Login</a>
 </div>
 
 
@@ -11,12 +10,12 @@
 
   <div *ngIf="isProfileMenuOpen" class="dropdown-menu">
     <div class="hover">
-    <a href="/profile">Edit Profile</a>
+      <a routerLink="/profile">Edit Profile</a>
     </div>
-    <a href="/change-password">Change Password</a>
+    <a routerLink="/change-password">Change Password</a>
   </div>
 
-  <a href="/guest-reservation"> Reservation </a>
+  <a routerLink="/guest-reservation">Reservation</a>
   <a href="#" (click)="logout()">Logout</a>
 </div>
 
@@ -24,16 +23,19 @@
   <a (click)="toggleProfileMenu()"> Profile </a>
 
   <div *ngIf="isProfileMenuOpen" class="dropdown-menu">
-    <a href="/edit-profile">Edit Profile</a>
-    <a href="/change-password">Change Password</a>
+    <div class="hover">
+      <a routerLink="/profile">Edit Profile</a>
+    </div>
+    <a routerLink="/change-password">Change Password</a>
   </div>
 
-  <a href="/add-apartment"> Add Apartment </a>
-  <a href="/edit-apartment"> Edit Apartment </a>
-  <a href="/reservation"> Reservation</a>
+  <a routerLink="/profile">Add Apartment</a>
+  <a routerLink="/profile">Edit Apartment</a>
+  <a routerLink="/profile">Reservation</a>
   <a href="#" (click)="logout()">Logout</a>
 </div>
 
 
 <div *ngIf="userRole === 'ADMINISTRATOR'" class="sidenav">
+  <a href="#" (click)="logout()">Logout</a>
 </div>
