@@ -45,4 +45,16 @@ public class UserService {
 
         userRepository.save(user);
     }
+
+    public boolean changePassword(String email, String oldPassword, String newPassword) {
+        User user = userRepository.findByEmail(email);
+
+        if (user == null) {
+            return false;
+        }
+
+        user.setPassword(newPassword);
+        userRepository.save(user);
+        return true;
+    }
 }

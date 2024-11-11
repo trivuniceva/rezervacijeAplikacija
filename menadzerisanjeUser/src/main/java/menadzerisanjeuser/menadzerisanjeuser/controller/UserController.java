@@ -1,5 +1,6 @@
 package menadzerisanjeuser.menadzerisanjeuser.controller;
 
+import menadzerisanjeuser.menadzerisanjeuser.dto.PasswordChangeRequest;
 import menadzerisanjeuser.menadzerisanjeuser.dto.UserDto;
 import menadzerisanjeuser.menadzerisanjeuser.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,23 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error updating user");
         }
     }
+
+    @PostMapping("/change-password")
+    public ResponseEntity<String> changePassword(@RequestBody PasswordChangeRequest passwordChangeRequest) {
+        System.out.println("Changing password for: " + passwordChangeRequest.getEmail());
+        try {
+            boolean isChanged = userService.changePassword(passwordChangeRequest.getEmail(), passwordChangeRequest.getOldPassword(), passwordChangeRequest.getNewPassword());
+
+            if (isChanged) {
+                return ResponseEntity.ok("Password changed successfully.");
+            } else {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Failed to change password. Please check your old password.");
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while changing the password: " + e.getMessage());
+        }
+    }
+
 
 
 

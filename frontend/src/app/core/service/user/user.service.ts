@@ -19,4 +19,18 @@ export class UserService {
       })
     );
   }
+
+  changePassword(email: string, oldPassword: string, newPassword: string): Observable<any> {
+
+    console.log("ajmo mace vozi")
+
+    const payload = {
+      email: email,
+      oldPassword: oldPassword,
+      newPassword: newPassword
+    };
+
+
+    return this.http.post(`${this.apiUrl}/change-password`, payload);
+  }
 }
