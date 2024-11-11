@@ -4,6 +4,7 @@ import menadzerisanjeuser.menadzerisanjeuser.model.RegisterRequest;
 import menadzerisanjeuser.menadzerisanjeuser.model.SuccessResponse;
 import menadzerisanjeuser.menadzerisanjeuser.model.User;
 import menadzerisanjeuser.menadzerisanjeuser.service.AuthService;
+import menadzerisanjeuser.menadzerisanjeuser.service.UserSessionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,15 +18,22 @@ public class AuthController {
     @Autowired
     private AuthService authService;
 
+    @Autowired
+    private UserSessionService userSessionService;
+
     @PostMapping("/login")
     public ResponseEntity<User> login(@RequestBody User loginUser) {
         User user = authService.login(loginUser.getEmail(), loginUser.getPassword());
+
+        String sessionId = java.util.UUID.randomUUID().toString();
+        userSessionService.loginUser(loginUser.getEmail(), sessionId);
+
         return ResponseEntity.ok(user);
     }
 
     @PostMapping("/logout")
     public String logout(@RequestParam String sessionId) {
-        // TODO: napravi user session
+        userSessionService.logoutUser(sessionId);
         return "Logout successful!";
     }
 
@@ -41,7 +49,6 @@ public class AuthController {
 
         return ResponseEntity.ok(new SuccessResponse("Registration successful!"));
     }
-
 }
 
 
