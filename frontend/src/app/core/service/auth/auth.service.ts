@@ -44,4 +44,8 @@ export class AuthService {
       })
     );
   }
+
+  changePassword(oldPassword: string, newPassword: string) {
+
+  }
 }
