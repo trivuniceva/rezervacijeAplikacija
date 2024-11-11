@@ -11,6 +11,9 @@ public class AuthService {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private SessionService sessionService;
+
     public User login(String email, String password) {
         System.out.println("email: " + email);
         System.out.println("password: " + password);
