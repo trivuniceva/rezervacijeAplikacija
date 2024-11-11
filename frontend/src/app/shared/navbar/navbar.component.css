@@ -33,3 +33,40 @@ body {
   text-decoration: none;
   color: #015E61;
 }
+
+.dropdown-menu {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  background-color: #333;
+  border-radius: 5px;
+  z-index: 2;
+
+  padding: 15px;
+  margin-top: 30px;
+  margin-right: 350px;
+
+  width: auto;
+
+}
+
+.dropdown-menu a {
+  color: white;
+  padding: 10px 30px;
+  text-decoration: none;
+
+  display: block;
+  width: auto;
+  transition: background-color 0.3s ease;
+
+  border-radius: 5px;
+  margin-left: -5%;
+  margin-right: -5%;
+
+}
+
+.dropdown-menu a:hover {
+  background-color: #015E61;
+  color: white;
+}
+

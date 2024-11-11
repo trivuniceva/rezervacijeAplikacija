@@ -11,6 +11,7 @@ import { AuthService } from '../../core/service/auth/auth.service';
 })
 export class NavbarComponent implements OnInit {
   userRole: string = '';
+  isProfileMenuOpen: boolean = false;
 
   constructor(private authService: AuthService) {}
 
@@ -19,6 +20,13 @@ export class NavbarComponent implements OnInit {
       this.userRole = role;
     });
   }
+
+  toggleProfileMenu() {
+    console.log('Toggling profile menu');
+    this.isProfileMenuOpen = !this.isProfileMenuOpen;
+    console.log('Profile menu state: ', this.isProfileMenuOpen);
+  }
+
 
   logout(): void {
     this.authService.logout();
