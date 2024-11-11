@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import {NgIf} from '@angular/common';
 import {FormsModule} from '@angular/forms';
-import {AuthService} from '../../core/service/auth/auth.service';
+import {UserService} from '../../core/service/user/user.service';
 
 @Component({
   selector: 'app-change-password',
@@ -21,7 +21,7 @@ export class ChangePasswordComponent {
   errorMessage: string = '';
   isSubmitting: boolean = false;
 
-  constructor(private authService: AuthService) {
+  constructor(private userService: UserService) {
   }
 
   changePassword() {
@@ -32,16 +32,16 @@ export class ChangePasswordComponent {
 
     this.isSubmitting = true;
 
-    // this.authService.changePassword(this.oldPassword, this.newPassword)
-    //   .subscribe(
-    //     () => {
-    //       this.isSubmitting = false;
-    //     },
-    //     (error) => {
-    //       this.isSubmitting = false;
-    //       this.errorMessage = 'Failed to change the password.';
-    //     }
-    //   );
+    this.userService.changePassword(this.oldPassword, this.newPassword)
+      .subscribe(
+        () => {
+          this.isSubmitting = false;
+        },
+        (error) => {
+          this.isSubmitting = false;
+          this.errorMessage = 'Failed to change the password.';
+        }
+      );
   }
 
 }

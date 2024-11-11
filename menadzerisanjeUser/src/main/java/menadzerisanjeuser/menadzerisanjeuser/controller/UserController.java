@@ -1,5 +1,6 @@
 package menadzerisanjeuser.menadzerisanjeuser.controller;
 
+import menadzerisanjeuser.menadzerisanjeuser.dto.ChangePasswordRequest;
 import menadzerisanjeuser.menadzerisanjeuser.dto.UserDto;
 import menadzerisanjeuser.menadzerisanjeuser.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,19 @@ public class UserController {
         }
     }
 
+    @PostMapping("/change-password")
+    public ResponseEntity<String> changePassword(@RequestBody ChangePasswordRequest request) {
+        System.out.println("menjamo sifru");
+        boolean isChanged = userService.changePassword(request.getOldPassword(), request.getNewPassword());
+
+        if (isChanged) {
+            return ResponseEntity.ok("Password changed successfully.");
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Failed to change password. Old password is incorrect.");
+        }
+    }
 
 
-}
+
+
+    }
