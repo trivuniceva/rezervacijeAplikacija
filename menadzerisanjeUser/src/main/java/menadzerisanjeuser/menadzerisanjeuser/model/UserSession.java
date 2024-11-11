@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "user_session")
+
 public class UserSession {
 
     @Id
@@ -46,6 +47,7 @@ public class UserSession {
 
     public void setUserId(Long userId) {
         this.userId = userId;
+
     }
 
     public String getSessionId() {
@@ -80,3 +82,4 @@ public class UserSession {
         this.active = active;
     }
 }
+

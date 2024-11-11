@@ -7,6 +7,7 @@ import menadzerisanjeuser.menadzerisanjeuser.model.User;
 import menadzerisanjeuser.menadzerisanjeuser.model.UserSession;
 import menadzerisanjeuser.menadzerisanjeuser.service.AuthService;
 import menadzerisanjeuser.menadzerisanjeuser.service.SessionService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +26,7 @@ public class AuthController {
     @Autowired
     private SessionService sessionService;
 
+
     @PostMapping("/login")
     public ResponseEntity<User> login(@RequestBody User loginUser, HttpServletRequest request) {
         User user = authService.login(loginUser.getEmail(), loginUser.getPassword());
@@ -35,6 +37,7 @@ public class AuthController {
             return ResponseEntity.ok(user);
         }
         return ResponseEntity.status(401).body(null); // Unauthorized if login fails
+
     }
 
 
@@ -48,6 +51,7 @@ public class AuthController {
         } else {
             return "Session not found!";
         }
+
     }
 
 
@@ -63,7 +67,6 @@ public class AuthController {
 
         return ResponseEntity.ok(new SuccessResponse("Registration successful!"));
     }
-
 }
 
 
