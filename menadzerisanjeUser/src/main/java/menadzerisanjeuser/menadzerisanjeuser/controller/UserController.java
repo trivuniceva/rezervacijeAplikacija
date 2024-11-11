@@ -2,6 +2,7 @@ package menadzerisanjeuser.menadzerisanjeuser.controller;
 
 import menadzerisanjeuser.menadzerisanjeuser.dto.PasswordChangeRequest;
 import menadzerisanjeuser.menadzerisanjeuser.dto.UserDto;
+import menadzerisanjeuser.menadzerisanjeuser.model.SuccessResponse;
 import menadzerisanjeuser.menadzerisanjeuser.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,22 +33,25 @@ public class UserController {
     }
 
     @PostMapping("/change-password")
-    public ResponseEntity<String> changePassword(@RequestBody PasswordChangeRequest passwordChangeRequest) {
-        System.out.println("Changing password for: " + passwordChangeRequest.getEmail());
+    public ResponseEntity<?> changePassword(@RequestBody PasswordChangeRequest passwordChangeRequest) {
+        System.out.println("Password change request received for: " + passwordChangeRequest.getEmail());
         try {
             boolean isChanged = userService.changePassword(passwordChangeRequest.getEmail(), passwordChangeRequest.getOldPassword(), passwordChangeRequest.getNewPassword());
 
             if (isChanged) {
-                return ResponseEntity.ok("Password changed successfully.");
+                System.out.println("Password successfully changed for: " + passwordChangeRequest.getEmail());
+                // Koristi SuccessResponse umesto ResponseMessage
+                return ResponseEntity.ok(new SuccessResponse("Password changed successfully."));
             } else {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Failed to change password. Please check your old password.");
+                System.out.println("Failed to change password for: " + passwordChangeRequest.getEmail());
+                // Koristi SuccessResponse sa odgovarajućom porukom
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new SuccessResponse("Failed to change password."));
             }
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while changing the password: " + e.getMessage());
+            e.printStackTrace();
+            // U slučaju greške, koristi SuccessResponse sa odgovarajućom porukom
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new SuccessResponse("An error occurred while changing the password."));
         }
     }
-
-
-
 
 }

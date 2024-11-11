@@ -26,7 +26,7 @@ export class ChangePasswordComponent {
   }
 
   changePassword() {
-    console.log("Changing password...");
+    console.log("Attempting to change password...");
     let email = this.authService.getLoggedUser().email;
 
     if (this.newPassword !== this.confirmPassword) {
@@ -38,22 +38,31 @@ export class ChangePasswordComponent {
 
     this.userService.changePassword(email, this.oldPassword, this.newPassword)
       .subscribe(
-        (response) => {
+        (response: { message: string }) => {
+          console.log("Server response:", response); // Log the whole response
+
           this.isSubmitting = false;
-          if (response === "Password changed successfully.") {
-            console.log("Password change successful!");
-            this.errorMessage = '';  // Clear any previous error message
+
+          // Proveri sadržaj poruke iz odgovora
+          if (response && response.message) {
+            if (response.message === "Password changed successfully.") {
+              console.log("Password change successful!");
+              this.errorMessage = '';  // Clear error message on success
+            } else {
+              this.errorMessage = response.message || 'Failed to change password.'; // Display failure message
+            }
           } else {
-            this.errorMessage = 'Failed to change password.';
+            this.errorMessage = 'Unexpected response format.';
           }
         },
         (error) => {
           this.isSubmitting = false;
-          // Displaying the error message returned from the backend
-          this.errorMessage = error.error || 'Failed to change the password due to a server error.';
+          console.error("Error response:", error); // Log error response
+
+          // Ako je greška objekat, izvlaci grešku iz objekta
+          this.errorMessage = error.error ? error.error.message || error.message : 'Failed to change the password due to a server error.';
         }
       );
   }
-
 
 }
