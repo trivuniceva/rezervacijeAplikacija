@@ -1,0 +1,63 @@
+<div class="apartment-container">
+
+  <h1>Add New Apartment</h1>
+
+  <div class="form-group">
+    <label for="name">Apartment Name:</label>
+    <input id="name" [(ngModel)]="apartment.name" type="text" placeholder="Enter apartment name" />
+  </div>
+
+  <div class="form-group">
+    <label for="description">Description:</label>
+    <textarea id="description" [(ngModel)]="apartment.description" placeholder="Enter apartment description"></textarea>
+  </div>
+
+  <div class="form-group">
+    <label for="location">Location:</label>
+    <input id="location" [(ngModel)]="apartment.location" type="text" placeholder="Enter apartment location" />
+  </div>
+
+  <div class="form-group">
+    <label for="amenities">Amenities:</label>
+    <input id="amenities" [(ngModel)]="apartment.amenities" type="text" placeholder="e.g., WiFi, Kitchen, Air Conditioning" />
+  </div>
+
+  <div class="form-group">
+    <label for="photos">Add Photos:</label>
+    <input type="file" id="photos" (change)="onFileSelected($event)" multiple />
+  </div>
+
+  <div class="form-group">
+    <label for="minGuests">Minimum Guests:</label>
+    <input id="minGuests" [(ngModel)]="apartment.minGuests" type="number" placeholder="Minimum number of guests" />
+  </div>
+
+  <div class="form-group">
+    <label for="maxGuests">Maximum Guests:</label>
+    <input id="maxGuests" [(ngModel)]="apartment.maxGuests" type="number" placeholder="Maximum number of guests" />
+  </div>
+
+  <div class="form-group">
+    <label for="apartmentType">Apartment Type:</label>
+    <select id="apartmentType" [(ngModel)]="apartment.apartmentType">
+      <option value="studio">Studio</option>
+      <option value="room">Room</option>
+      <option value="apartment">Apartment</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="price">Price per Night:</label>
+    <input id="price" [(ngModel)]="apartment.price" type="number" placeholder="Enter price per night" />
+  </div>
+
+  <div class="form-group">
+    <label for="availability">Availability:</label>
+    <input type="date" id="availability" [(ngModel)]="apartment.availability" />
+  </div>
+
+  <div class="button-container">
+    <button (click)="addApartment()">Add Apartment</button>
+  </div>
+
+</div>

@@ -69,11 +69,12 @@
             <artifactId>menadzerisanjeUser</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
+
         <dependency>
             <groupId>smestajMenadzment</groupId>
             <artifactId>smestajMenadzment</artifactId>
             <version>0.0.1-SNAPSHOT</version>
-            <scope>compile</scope>
+<!--            <scope>compile</scope>-->
         </dependency>
 
 
