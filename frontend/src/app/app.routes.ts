@@ -6,8 +6,8 @@ import {UserProfileComponent} from './features/user-profile/user-profile.compone
 import {DeleteAccountComponent} from './features/delete-account/delete-account.component';
 import {ChangePasswordComponent} from './features/change-password/change-password.component';
 import {GuestReservationComponent} from './features/reservation/guest-reservation/guest-reservation.component';
-import {AddApartmentComponent} from './features/add-apartment/add-apartment.component';
-import {EditApartmentComponent} from './features/edit-apartment/edit-apartment.component';
+import {AddApartmentComponent} from './features/apartment/add-apartment/add-apartment.component';
+import {EditApartmentComponent} from './features/apartment/edit-apartment/edit-apartment.component';
 
 export const routes: Routes = [
   {path: '', component: HomepageComponent},
