@@ -18,7 +18,16 @@
       <div class="text">
         <h2>Experience The New Adventure</h2>
         <p>Neki tekst o planinama o aktivnostima...</p>
+
+        <div *ngIf="!userRole || userRole === ''" class="sidenav">
         <button class="view-details">View Details</button>
+        </div>
+
+        <div *ngIf="userRole === 'HOST'">
+        <button class="view-details" (click)="editApartment()">Edit Apartment</button>
+        </div>
+
+
       </div>
       <div class="image">
         <img [src]="item.imageUrl" alt="Adventure image" />
