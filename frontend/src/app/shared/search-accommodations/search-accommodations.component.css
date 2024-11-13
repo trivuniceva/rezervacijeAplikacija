@@ -7,8 +7,20 @@
 .container {
   width: 90%;
   max-width: 1200px;
-  margin: 0 auto;
   padding: 20px 0;
+  background-color: white;
+
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  margin: 7% auto;
+  text-align: center;
+  color: white;
+  background-color: rgba(30,30,30, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 8px;
+
+  color: white;
 }
 
 .filters {
@@ -22,14 +34,15 @@
 .filters button {
   padding: 10px 20px;
   border: none;
-  background-color: #007BFF;
+  background-color: #015E61;
   color: white;
   cursor: pointer;
   border-radius: 5px;
 }
 
 .filters button:hover {
-  background-color: #0056b3;
+  color: #015E61;
+  background-color: white;
 }
 
 .card-container {
@@ -71,26 +84,27 @@
 .text h2 {
   margin-bottom: 10px;
   font-size: 24px;
-  color: #333;
+  color: white;
 }
 
 .text p {
   margin-bottom: 20px;
-  color: #666;
+  color: white;
   line-height: 1.6;
 }
 
 .view-details {
   padding: 10px 20px;
-  background-color: #28a745;
-  color: white;
+  color: #333;
+  background-color: white;
   border: none;
   cursor: pointer;
   border-radius: 5px;
 }
 
 .view-details:hover {
-  background-color: #218838;
+  background-color: #333;
+  color: white;
 }
 
 .pagination {
@@ -101,15 +115,23 @@
 }
 
 .pagination button {
-  padding: 8px 16px;
-  border: 1px solid #ccc;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 0.5px solid white;
   background-color: white;
   cursor: pointer;
-  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: black;
+  /*transition: background-color 0.3s, color 0.3s;*/
 }
 
 .pagination button:hover {
-  background-color: #f0f0f0;
+  border: 1px solid #015E61;
+  background-color: #015E61;
+  color: white;
 }
 
 /* Responsivnost */
