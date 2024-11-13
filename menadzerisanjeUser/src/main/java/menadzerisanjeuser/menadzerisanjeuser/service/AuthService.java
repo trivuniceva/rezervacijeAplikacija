@@ -47,7 +47,7 @@ public class AuthService {
 
             System.out.println("krece mejl: " + newUser.getEmail());
             System.out.println("tokeN: " + newUser.getResetToken());
-            emailService.sendActivationEmail(newUser.getEmail(), newUser.getResetToken());
+//            emailService.sendActivationEmail(newUser.getEmail(), newUser.getResetToken());
 
             System.out.println("save....");
             userService.saveUser(newUser);
