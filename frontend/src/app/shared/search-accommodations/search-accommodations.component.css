@@ -1,0 +1,134 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px 0;
+}
+
+.filters {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+.filters button {
+  padding: 10px 20px;
+  border: none;
+  background-color: #007BFF;
+  color: white;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.filters button:hover {
+  background-color: #0056b3;
+}
+
+.card-container {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.card {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.card.image-right .image {
+  order: 2;
+}
+
+.card.image-left .image {
+  order: 1;
+}
+
+.image {
+  flex: 1;
+}
+
+.image img {
+  width: 100%;
+  max-width: 500px;
+  height: auto;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.text {
+  flex: 1;
+}
+
+.text h2 {
+  margin-bottom: 10px;
+  font-size: 24px;
+  color: #333;
+}
+
+.text p {
+  margin-bottom: 20px;
+  color: #666;
+  line-height: 1.6;
+}
+
+.view-details {
+  padding: 10px 20px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.view-details:hover {
+  background-color: #218838;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+  gap: 10px;
+}
+
+.pagination button {
+  padding: 8px 16px;
+  border: 1px solid #ccc;
+  background-color: white;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.pagination button:hover {
+  background-color: #f0f0f0;
+}
+
+/* Responsivnost */
+@media (max-width: 768px) {
+  .card {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .card.image-right .image,
+  .card.image-left .image {
+    order: 0;
+  }
+
+  .image img {
+    max-width: 100%;
+  }
+
+  .filters {
+    justify-content: center;
+  }
+}

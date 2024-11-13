@@ -1,0 +1,35 @@
+<div class="container">
+  <div class="filters">
+    <!-- Filteri za kategorije -->
+    <button>Kategorija 1</button>
+    <button>Kategorija 2</button>
+    <button>Kategorija 3</button>
+    <button>Kategorija 4</button>
+    <button>Resetuj filtere</button>
+  </div>
+
+  <div class="card-container">
+    <div
+      *ngFor="let item of items; let i = index"
+      class="card"
+      [class.image-right]="i % 2 === 0"
+      [class.image-left]="i % 2 !== 0"
+    >
+      <div class="text">
+        <h2>Experience The New Adventure</h2>
+        <p>Neki tekst o planinama o aktivnostima...</p>
+        <button class="view-details">View Details</button>
+      </div>
+      <div class="image">
+        <img [src]="item.imageUrl" alt="Adventure image" />
+      </div>
+    </div>
+  </div>
+
+  <div class="pagination">
+    <!-- Paginacija -->
+    <button>&lt;</button>
+    <button *ngFor="let page of [1, 2, 3, '...']; let idx = index">{{ page }}</button>
+    <button>&gt;</button>
+  </div>
+</div>

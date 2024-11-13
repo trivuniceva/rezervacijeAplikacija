@@ -8,6 +8,9 @@ import {ChangePasswordComponent} from './features/change-password/change-passwor
 import {GuestReservationComponent} from './features/reservation/guest-reservation/guest-reservation.component';
 import {AddApartmentComponent} from './features/apartment/add-apartment/add-apartment.component';
 import {EditApartmentComponent} from './features/apartment/edit-apartment/edit-apartment.component';
+import {
+  SearchAccommodationsComponent
+} from './shared/search-accommodations/search-accommodations.component';
 
 export const routes: Routes = [
   {path: '', component: HomepageComponent},
@@ -19,5 +22,6 @@ export const routes: Routes = [
   {path: 'guest-reservation', component: GuestReservationComponent},
   {path: 'add-apartment', component: AddApartmentComponent},
   {path: 'edit-apartment', component: EditApartmentComponent},
+  {path: 'search-apartment', component: SearchAccommodationsComponent},
 
 ];
