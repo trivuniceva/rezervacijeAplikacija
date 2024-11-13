@@ -23,9 +23,9 @@ export class SearchAccommodationsComponent implements OnInit{
 
   ngOnInit(): void {
     this.items = [
-      { imageUrl: 'path/to/image1.jpg', title: 'Adventure 1', description: 'Opis 1' },
-      { imageUrl: 'path/to/image2.jpg', title: 'Adventure 2', description: 'Opis 2' },
-      { imageUrl: 'path/to/image3.jpg', title: 'Adventure 3', description: 'Opis 3' },
+      { imageUrl: '/pics/apartment/a2.jpg', title: 'Adventure 1', description: 'Opis 1' },
+      { imageUrl: '/pics/apartment/a3.jpg', title: 'Adventure 2', description: 'Opis 2' },
+      { imageUrl: '/pics/apartment/a2.jpg', title: 'Adventure 3', description: 'Opis 3' },
     ];
   }
 
