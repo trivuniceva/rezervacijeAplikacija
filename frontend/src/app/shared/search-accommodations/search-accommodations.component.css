@@ -15,9 +15,10 @@
   position: relative;
   margin: 7% auto;
   text-align: center;
-  color: white;
-  background-color: rgba(30,30,30, 0.1);
-  backdrop-filter: blur(10px);
+  color: #333;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  /*background-color: rgba(30,30,30, 0.1);*/
+  /*backdrop-filter: blur(10px);*/
   border-radius: 8px;
 
   color: white;
@@ -41,8 +42,8 @@
 }
 
 .filters button:hover {
-  color: #015E61;
-  background-color: white;
+  color: white;
+  background-color: #333333;
 }
 
 .card-container {
@@ -102,19 +103,19 @@
 .text h2 {
   margin-bottom: 10px;
   font-size: 24px;
-  color: white;
+  color: #333333;
 }
 
 .text p {
   margin-bottom: 20px;
-  color: white;
+  color: #333333;
   line-height: 1.6;
 }
 
 .view-details {
   padding: 10px 20px;
-  color: #333;
-  background-color: white;
+  color: white;
+  background-color: #015E61;
   border: none;
   cursor: pointer;
   border-radius: 5px;
@@ -137,18 +138,18 @@
   height: 40px;
   border-radius: 50%;
   border: 0.5px solid white;
-  background-color: white;
+  background-color: #015E61;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: black;
+  color: white;
   /*transition: background-color 0.3s, color 0.3s;*/
 }
 
 .pagination button:hover {
-  border: 1px solid #015E61;
-  background-color: #015E61;
+  border: 1px solid #333333;
+  background-color: #333333;
   color: white;
 }
 
