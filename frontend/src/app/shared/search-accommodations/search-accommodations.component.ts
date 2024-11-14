@@ -2,12 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {NgForOf, NgIf} from '@angular/common';
 import {AuthService} from '../../core/service/auth/auth.service';
 import {Router} from '@angular/router';
-
-interface Item {
-  imageUrl: string;
-  title: string;
-  description: string;
-}
+import {Accommodation, AccommodationService} from '../../core/service/accommodation/accommodation.service';
 
 
 @Component({
@@ -22,22 +17,18 @@ interface Item {
 })
 export class SearchAccommodationsComponent implements OnInit{
 
-  items: Item[] = [];
   userRole: string = '';
+  accommodations: Accommodation[] = [];
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private accommodationService: AccommodationService) {}
 
   ngOnInit(): void {
-
-    this.authService.userRole$.subscribe((role) => {
-      this.userRole = role;
+    this.accommodationService.getAccommodations().subscribe((data) => {
+      this.accommodations = data;
     });
-
-    this.items = [
-      { imageUrl: '/pics/apartment/a2.jpg', title: 'Adventure 1', description: 'Opis 1' },
-      { imageUrl: '/pics/apartment/a3.jpg', title: 'Adventure 2', description: 'Opis 2' },
-      { imageUrl: '/pics/apartment/a2.jpg', title: 'Adventure 3', description: 'Opis 3' },
-    ];
   }
 
   editApartment() {

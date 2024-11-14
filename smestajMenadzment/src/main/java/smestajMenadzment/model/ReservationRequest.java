@@ -1,4 +1,4 @@
-package backend.model;
+package smestajMenadzment.model;
 
 import jakarta.persistence.*;
 import menadzerisanjeuser.menadzerisanjeuser.model.User;
@@ -10,6 +10,7 @@ import java.time.LocalDate;
 @Table(name = "reservation_requests")
 public class ReservationRequest {
 
+    @jakarta.persistence.Id
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -85,5 +86,7 @@ public class ReservationRequest {
     public void setStatus(RequestStatus status) {
         this.status = status;
     }
+
+
 }
 

@@ -10,27 +10,30 @@
 
   <div class="card-container">
     <div
-      *ngFor="let item of items; let i = index"
+      *ngFor="let accommodation of accommodations; let i = index"
       class="card"
       [class.image-right]="i % 2 === 0"
       [class.image-left]="i % 2 !== 0"
     >
       <div class="text">
-        <h2>Experience The New Adventure</h2>
-        <p>Neki tekst o planinama o aktivnostima...</p>
+        <h2>{{ accommodation.name }}</h2>
+        <p>{{ accommodation.description }}</p>
+        <p>Lokacija: {{ accommodation.location }}</p>
+        <p>Kapacitet: {{ accommodation.minGuests }} - {{ accommodation.maxGuests }} gostiju</p>
+        <p>Tip: {{ accommodation.type }}</p>
 
         <div *ngIf="!userRole || userRole === ''" class="sidenav">
-        <button class="view-details">View Details</button>
+          <button class="view-details">View Details</button>
         </div>
 
         <div *ngIf="userRole === 'HOST'">
-        <button class="view-details" (click)="editApartment()">Edit Apartment</button>
+          <button class="view-details" (click)="editApartment()">Edit Apartment</button>
         </div>
-
-
       </div>
+
       <div class="image">
-        <img [src]="item.imageUrl" alt="Adventure image" />
+        <img [src]="accommodation.photos[0]" alt="{{ accommodation.name }} image" *ngIf="accommodation.photos && accommodation.photos.length > 0" />
+        <img src="placeholder.jpg" alt="Placeholder image" *ngIf="!accommodation.photos || accommodation.photos.length === 0" />
       </div>
     </div>
   </div>

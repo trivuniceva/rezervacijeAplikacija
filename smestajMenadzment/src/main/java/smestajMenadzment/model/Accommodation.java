@@ -1,7 +1,6 @@
-package backend.model;
+package smestajMenadzment.model;
 
 import jakarta.persistence.*;
-import menadzerisanjeuser.menadzerisanjeuser.model.User;
 import org.springframework.data.annotation.Id;
 
 import java.util.List;
@@ -9,6 +8,7 @@ import java.util.List;
 @Entity
 @Table(name = "accommodations")
 public class Accommodation {
+    @jakarta.persistence.Id
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -137,5 +137,6 @@ public class Accommodation {
     public void setOwner(User owner) {
         this.owner = owner;
     }
+
 }
 

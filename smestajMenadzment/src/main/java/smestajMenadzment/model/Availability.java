@@ -1,4 +1,4 @@
-package backend.model;
+package smestajMenadzment.model;
 
 import jakarta.persistence.*;
 import org.springframework.data.annotation.Id;
@@ -10,6 +10,7 @@ import java.time.LocalDate;
 @Table(name = "availability")
 public class Availability {
 
+    @jakarta.persistence.Id
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -81,5 +82,7 @@ public class Availability {
     public void setReserved(boolean reserved) {
         this.reserved = reserved;
     }
+
+
 }
 
