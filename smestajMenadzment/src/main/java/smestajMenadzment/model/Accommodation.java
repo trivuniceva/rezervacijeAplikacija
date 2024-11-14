@@ -24,8 +24,8 @@ public class Accommodation {
     @ElementCollection
     private List<String> amenities;  // wifi, klima, itd.
 
-    @ElementCollection
-    private List<String> photos;
+    @Column(name = "photos")
+    private String photos;
 
     private int minGuests;
     private int maxGuests;
@@ -82,11 +82,11 @@ public class Accommodation {
         this.amenities = amenities;
     }
 
-    public List<String> getPhotos() {
+    public String getPhotos() {
         return photos;
     }
 
-    public void setPhotos(List<String> photos) {
+    public void setPhotos(String photos) {
         this.photos = photos;
     }
 

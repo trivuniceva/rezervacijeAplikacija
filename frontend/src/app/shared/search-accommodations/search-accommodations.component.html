@@ -32,9 +32,9 @@
       </div>
 
       <div class="image">
-        <img [src]="accommodation.photos[0]" alt="{{ accommodation.name }} image" *ngIf="accommodation.photos && accommodation.photos.length > 0" />
-        <img src="placeholder.jpg" alt="Placeholder image" *ngIf="!accommodation.photos || accommodation.photos.length === 0" />
+        <img *ngIf="accommodation.photos" [src]="accommodation.photos" alt="Accommodation Image" />
       </div>
+
     </div>
   </div>
 

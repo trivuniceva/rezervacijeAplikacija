@@ -12,7 +12,7 @@ export interface Accommodation {
   type: string;
   approved: boolean;
   amenities: string[];
-  photos: string[];
+  photos: string;
 }
 
 @Injectable({
@@ -25,6 +25,7 @@ export class AccommodationService {
   constructor(private http: HttpClient) {}
 
   getAccommodations(): Observable<Accommodation[]> {
+
     return this.http.get<Accommodation[]>(this.apiUrl);
   }
 

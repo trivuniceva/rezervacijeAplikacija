@@ -28,6 +28,7 @@ export class SearchAccommodationsComponent implements OnInit{
   ngOnInit(): void {
     this.accommodationService.getAccommodations().subscribe((data) => {
       this.accommodations = data;
+      console.log(this.accommodations)
     });
   }
 
