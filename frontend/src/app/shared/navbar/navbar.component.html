@@ -1,6 +1,6 @@
 <div *ngIf="!userRole || userRole === ''" class="sidenav">
   <a routerLink="">Home</a>
-  <a routerLink="">Search</a>
+  <a routerLink="/search-apartment">Search</a>
   <a routerLink="/login">Login</a>
 </div>
 
@@ -29,8 +29,15 @@
     <a routerLink="/change-password" (click)="closeMenu()">Change Password</a>
   </div>
 
-  <a routerLink="/add-apartment" (click)="closeMenu()">Add Apartment</a>
-  <a routerLink="/edit-apartment" (click)="closeMenu()">Edit Apartment</a>
+  <a (click)="toggleProfileMenu()"> Apartments </a>
+
+  <div *ngIf="isProfileMenuOpen" class="dropdown-menu">
+    <div class="hover">
+      <a routerLink="/add-apartment" (click)="closeMenu()">Add Apartment</a>
+    </div>
+    <a routerLink="/edit-apartment-view" (click)="closeMenu()">Edit Apartment</a>
+  </div>
+
   <a routerLink="/profile" (click)="closeMenu()">Reservation</a>
   <a href="#" (click)="logout()">Logout</a>
 </div>

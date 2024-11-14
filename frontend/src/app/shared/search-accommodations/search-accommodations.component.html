@@ -1,0 +1,47 @@
+<div class="container">
+  <div class="filters">
+    <!-- Filteri za kategorije -->
+    <button>Kategorija 1</button>
+    <button>Kategorija 2</button>
+    <button>Kategorija 3</button>
+    <button>Kategorija 4</button>
+    <button>Resetuj filtere</button>
+  </div>
+
+  <div class="card-container">
+    <div
+      *ngFor="let accommodation of accommodations; let i = index"
+      class="card"
+      [class.image-right]="i % 2 === 0"
+      [class.image-left]="i % 2 !== 0"
+    >
+      <div class="text">
+        <h2>{{ accommodation.name }}</h2>
+        <p>{{ accommodation.description }}</p>
+        <p>Lokacija: {{ accommodation.location }}</p>
+        <p>Kapacitet: {{ accommodation.minGuests }} - {{ accommodation.maxGuests }} gostiju</p>
+        <p>Tip: {{ accommodation.type }}</p>
+
+        <div *ngIf="!userRole || userRole === ''" class="sidenav">
+          <button class="view-details">View Details</button>
+        </div>
+
+        <div *ngIf="userRole === 'HOST'">
+          <button class="view-details" (click)="editApartment()">Edit Apartment</button>
+        </div>
+      </div>
+
+      <div class="image">
+        <img *ngIf="accommodation.photos" [src]="accommodation.photos" alt="Accommodation Image" />
+      </div>
+
+    </div>
+  </div>
+
+  <div class="pagination">
+    <!-- Paginacija -->
+    <button>&lt;</button>
+    <button *ngFor="let page of [1, 2, 3, '...']; let idx = index">{{ page }}</button>
+    <button>&gt;</button>
+  </div>
+</div>

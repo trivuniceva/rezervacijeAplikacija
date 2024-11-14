@@ -1,4 +1,4 @@
-package menadzerisanjeuser.menadzerisanjeuser.config;
+package backend.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -20,10 +20,8 @@ public class SecurityConfig {
         http.cors(cors -> cors.configurationSource(corsConfigurationSource)) // Set CORS configuration
                 .csrf(csrf -> csrf.disable()) // Disable CSRF
                 .authorizeHttpRequests(authz -> authz
-                        .requestMatchers("/api/auth/login").permitAll() // Explicitly permit login endpoint
-                        .requestMatchers("/api/**").permitAll() // Allow all other API endpoints
-                        .anyRequest().authenticated()); // Other requests require authentication
+                        .requestMatchers("/api/**").permitAll() // Permit all requests to /api/**
+                        .anyRequest().authenticated()); // Any other request requires authentication
         return http.build();
     }
-
 }

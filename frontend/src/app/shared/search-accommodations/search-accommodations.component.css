@@ -1,0 +1,175 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  width: 90%;
+  max-width: 1200px;
+  padding: 20px 0;
+  background-color: white;
+
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  margin: 7% auto;
+  text-align: center;
+  color: #333;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  /*background-color: rgba(30,30,30, 0.1);*/
+  /*backdrop-filter: blur(10px);*/
+  border-radius: 8px;
+
+  color: white;
+}
+
+.filters {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+.filters button {
+  padding: 10px 20px;
+  border: none;
+  background-color: #015E61;
+  color: white;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.filters button:hover {
+  color: white;
+  background-color: #333333;
+}
+
+.card-container {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.card {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  justify-content: space-between;
+}
+
+.card.image-right .text {
+  order: 1;
+}
+
+.card.image-left .text {
+  order: 2;
+}
+
+.card.image-right .image {
+  order: 2;
+}
+
+.card.image-left .image {
+  order: 1;
+}
+
+.card.image-right .image img {
+  border-radius: 25px 0 0 25px;
+}
+
+.card.image-left .image img {
+  border-radius: 0 25px 25px 0;
+}
+
+
+.image {
+  flex: 1.2;
+}
+
+.image img {
+  width: 100%;
+  height: 450px;
+  /*max-width: 500px;*/
+  object-fit: cover;
+
+}
+
+.text {
+  flex: 0.8;
+}
+
+.text h2 {
+  margin-bottom: 10px;
+  font-size: 24px;
+  color: #333333;
+}
+
+.text p {
+  margin-bottom: 20px;
+  color: #333333;
+  line-height: 1.6;
+}
+
+.view-details {
+  padding: 10px 20px;
+  color: white;
+  background-color: #015E61;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.view-details:hover {
+  background-color: #333;
+  color: white;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+  gap: 10px;
+}
+
+.pagination button {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 0.5px solid white;
+  background-color: #015E61;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  /*transition: background-color 0.3s, color 0.3s;*/
+}
+
+.pagination button:hover {
+  border: 1px solid #333333;
+  background-color: #333333;
+  color: white;
+}
+
+/* Responsivnost */
+@media (max-width: 768px) {
+  .card {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .card.image-right .image,
+  .card.image-left .image {
+    order: 0;
+  }
+
+  .image img {
+    max-width: 100%;
+  }
+
+  .filters {
+    justify-content: center;
+  }
+}

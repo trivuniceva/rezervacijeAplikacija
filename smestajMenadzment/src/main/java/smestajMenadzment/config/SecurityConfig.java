@@ -1,4 +1,4 @@
-package menadzerisanjeuser.menadzerisanjeuser.config;
+package smestajMenadzment.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -18,12 +18,10 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.cors(cors -> cors.configurationSource(corsConfigurationSource)) // Set CORS configuration
-                .csrf(csrf -> csrf.disable()) // Disable CSRF
+                .csrf(csrf -> csrf.disable()) // Disable CSRF (ako je potrebno)
                 .authorizeHttpRequests(authz -> authz
-                        .requestMatchers("/api/auth/login").permitAll() // Explicitly permit login endpoint
-                        .requestMatchers("/api/**").permitAll() // Allow all other API endpoints
+                        .requestMatchers("/api/accommodations", "/api/accommodationsByHost").permitAll() // Explicitly allow POST requests to specific endpoints
                         .anyRequest().authenticated()); // Other requests require authentication
         return http.build();
     }
-
 }
