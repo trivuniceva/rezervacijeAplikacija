@@ -1,9 +1,9 @@
 package smestajMenadzment.service;
 
 import smestajMenadzment.model.Accommodation;
-import backend.repository.AccommodationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import smestajMenadzment.repository.AccommodationRepository;
 
 import java.util.List;
 

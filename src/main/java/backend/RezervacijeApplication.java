@@ -12,6 +12,7 @@ public class RezervacijeApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(RezervacijeApplication.class, args);
+
     }
 
 }

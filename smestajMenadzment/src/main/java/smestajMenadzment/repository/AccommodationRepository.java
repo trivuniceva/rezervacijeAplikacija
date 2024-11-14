@@ -11,5 +11,5 @@ public interface AccommodationRepository extends JpaRepository<Accommodation, Lo
     List<Accommodation> findByApproved(boolean approved);
     List<Accommodation> findByType(String type);
     List<Accommodation> findByLocation(String location);
-    List<Accommodation> findByOwnerId(Long ownerId);
+//    List<Accommodation> findByOwnerId(Long ownerId);
 }

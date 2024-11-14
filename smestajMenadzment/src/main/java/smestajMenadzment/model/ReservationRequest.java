@@ -1,7 +1,6 @@
 package smestajMenadzment.model;
 
 import jakarta.persistence.*;
-import menadzerisanjeuser.menadzerisanjeuser.model.User;
 import org.springframework.data.annotation.Id;
 
 import java.time.LocalDate;
@@ -15,9 +14,9 @@ public class ReservationRequest {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "guest_id")
-    private User guest;
+//    @ManyToOne
+//    @JoinColumn(name = "guest_id")
+//    private User guest;
 
     @ManyToOne
     @JoinColumn(name = "accommodation_id")
@@ -39,13 +38,13 @@ public class ReservationRequest {
         this.id = id;
     }
 
-    public User getGuest() {
-        return guest;
-    }
-
-    public void setGuest(User guest) {
-        this.guest = guest;
-    }
+//    public User getGuest() {
+//        return guest;
+//    }
+//
+//    public void setGuest(User guest) {
+//        this.guest = guest;
+//    }
 
     public Accommodation getAccommodation() {
         return accommodation;

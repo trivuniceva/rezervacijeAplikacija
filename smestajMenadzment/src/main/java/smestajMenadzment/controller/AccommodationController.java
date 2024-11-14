@@ -1,12 +1,12 @@
 package smestajMenadzment.controller;
 
-import backend.model.Accommodation;
-import backend.service.AccommodationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import smestajMenadzment.model.Accommodation;
+import smestajMenadzment.service.AccommodationService;
 
 import java.util.List;
 
