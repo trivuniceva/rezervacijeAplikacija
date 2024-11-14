@@ -1,4 +1,4 @@
-package smestajMenadzment.model;
+package menadzerisanjeuser.menadzerisanjeuser.model;
 
 import jakarta.persistence.*;
 import org.springframework.data.annotation.Id;
@@ -38,9 +38,9 @@ public class Accommodation {
     @OneToMany(mappedBy = "accommodation")
     private List<Availability> availabilityList;
 
-//    @ManyToOne
-//    @JoinColumn(name = "owner_id")
-//    private User owner;
+    @ManyToOne
+    @JoinColumn(name = "owner_id")
+    private User owner;
 
     public Long getId() {
         return id;
@@ -130,13 +130,13 @@ public class Accommodation {
         this.availabilityList = availabilityList;
     }
 
-//    public User getOwner() {
-//        return owner;
-//    }
-//
-//    public void setOwner(User owner) {
-//        this.owner = owner;
-//    }
+    public User getOwner() {
+        return owner;
+    }
+
+    public void setOwner(User owner) {
+        this.owner = owner;
+    }
 
 }
 

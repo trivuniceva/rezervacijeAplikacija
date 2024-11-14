@@ -20,8 +20,10 @@ public class SecurityConfig {
         http.cors(cors -> cors.configurationSource(corsConfigurationSource)) // Set CORS configuration
                 .csrf(csrf -> csrf.disable()) // Disable CSRF
                 .authorizeHttpRequests(authz -> authz
-                        .requestMatchers("/api/**").permitAll() // Permit all requests to /api/**
-                        .anyRequest().authenticated()); // Any other request requires authentication
+                        .requestMatchers("/api/auth/login").permitAll() // Explicitly permit login endpoint
+                        .requestMatchers("/api/**").permitAll() // Allow all other API endpoints
+                        .anyRequest().authenticated()); // Other requests require authentication
         return http.build();
     }
+
 }

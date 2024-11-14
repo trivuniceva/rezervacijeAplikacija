@@ -26,10 +26,31 @@ export class SearchAccommodationsComponent implements OnInit{
     private accommodationService: AccommodationService) {}
 
   ngOnInit(): void {
-    this.accommodationService.getAccommodations().subscribe((data) => {
-      this.accommodations = data;
-      console.log(this.accommodations)
+    this.authService.userRole$.subscribe((role) => {
+      this.userRole = role;
     });
+
+    if(this.userRole === ''){
+      this.accommodationService.getAccommodations().subscribe((data) => {
+        this.accommodations = data;
+        console.log(this.accommodations)
+      });
+    }
+    else {
+      console.log("sto si slatka <333333333")
+      console.log(this.userRole)
+      console.log(this.authService.getLoggedUser())
+      console.log(this.authService.getLoggedUser().email)
+
+      this.accommodationService.findAccommodationsByHost(this.authService.getLoggedUser().email).subscribe((data) => {
+        this.accommodations = data;
+        console.log("hajmo lutko <333333333")
+        console.log(this.authService.getLoggedUser())
+        console.log(this.authService.getLoggedUser().email)
+        console.log(this.accommodations)
+      });
+    }
+
   }
 
   editApartment() {

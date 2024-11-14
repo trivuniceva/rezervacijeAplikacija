@@ -18,10 +18,10 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.cors(cors -> cors.configurationSource(corsConfigurationSource)) // Set CORS configuration
-                .csrf(csrf -> csrf.disable()) // Disable CSRF
+                .csrf(csrf -> csrf.disable()) // Disable CSRF (ako je potrebno)
                 .authorizeHttpRequests(authz -> authz
-                        .requestMatchers("/api/**").permitAll() // Permit all requests to /api/**
-                        .anyRequest().authenticated()); // Any other request requires authentication
+                        .requestMatchers("/api/accommodations", "/api/accommodationsByHost").permitAll() // Explicitly allow POST requests to specific endpoints
+                        .anyRequest().authenticated()); // Other requests require authentication
         return http.build();
     }
 }

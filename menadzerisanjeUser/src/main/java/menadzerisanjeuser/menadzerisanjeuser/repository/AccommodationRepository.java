@@ -1,6 +1,6 @@
-package smestajMenadzment.repository;
+package menadzerisanjeuser.menadzerisanjeuser.repository;
 
-import smestajMenadzment.model.Accommodation;
+import menadzerisanjeuser.menadzerisanjeuser.model.Accommodation;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -11,5 +11,5 @@ public interface AccommodationRepository extends JpaRepository<Accommodation, Lo
     List<Accommodation> findByApproved(boolean approved);
     List<Accommodation> findByType(String type);
     List<Accommodation> findByLocation(String location);
-//    List<Accommodation> findByOwnerId(Long ownerId);
+    List<Accommodation> findByOwnerId(Long ownerId);
 }

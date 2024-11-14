@@ -1,22 +1,19 @@
-package smestajMenadzment.model;
+package menadzerisanjeuser.menadzerisanjeuser.model;
 
 import jakarta.persistence.*;
 import org.springframework.data.annotation.Id;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "reservation_requests")
-public class ReservationRequest {
+@Table(name = "availability")
+public class Availability {
 
     @jakarta.persistence.Id
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-//    @ManyToOne
-//    @JoinColumn(name = "guest_id")
-//    private User guest;
 
     @ManyToOne
     @JoinColumn(name = "accommodation_id")
@@ -25,10 +22,10 @@ public class ReservationRequest {
     private LocalDate startDate;
     private LocalDate endDate;
 
-    private int numberOfGuests;
+    private BigDecimal pricePerGuest;
+    private BigDecimal pricePerUnit;
 
-    @Enumerated(EnumType.STRING)
-    private RequestStatus status;
+    private boolean reserved;
 
     public Long getId() {
         return id;
@@ -37,14 +34,6 @@ public class ReservationRequest {
     public void setId(Long id) {
         this.id = id;
     }
-
-//    public User getGuest() {
-//        return guest;
-//    }
-//
-//    public void setGuest(User guest) {
-//        this.guest = guest;
-//    }
 
     public Accommodation getAccommodation() {
         return accommodation;
@@ -70,20 +59,28 @@ public class ReservationRequest {
         this.endDate = endDate;
     }
 
-    public int getNumberOfGuests() {
-        return numberOfGuests;
+    public BigDecimal getPricePerGuest() {
+        return pricePerGuest;
     }
 
-    public void setNumberOfGuests(int numberOfGuests) {
-        this.numberOfGuests = numberOfGuests;
+    public void setPricePerGuest(BigDecimal pricePerGuest) {
+        this.pricePerGuest = pricePerGuest;
     }
 
-    public RequestStatus getStatus() {
-        return status;
+    public BigDecimal getPricePerUnit() {
+        return pricePerUnit;
     }
 
-    public void setStatus(RequestStatus status) {
-        this.status = status;
+    public void setPricePerUnit(BigDecimal pricePerUnit) {
+        this.pricePerUnit = pricePerUnit;
+    }
+
+    public boolean isReserved() {
+        return reserved;
+    }
+
+    public void setReserved(boolean reserved) {
+        this.reserved = reserved;
     }
 
 
