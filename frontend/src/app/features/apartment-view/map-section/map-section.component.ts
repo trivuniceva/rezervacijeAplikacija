@@ -21,7 +21,10 @@ export class MapSectionComponent implements OnInit {
   private initMap(): void {
     this.map = L.map('map', {
       center: [45.2671, 19.8335], // Koordinate za Novi Sad
-      zoom: 13 // Nivo zumiranja
+      zoom: 13, // Nivo zumiranja
+      zoomControl: false, // Onemogućava dugmiće za zumiranje
+      dragging: false, // Onemogućava pomeranje mape
+      scrollWheelZoom: false,
     });
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {

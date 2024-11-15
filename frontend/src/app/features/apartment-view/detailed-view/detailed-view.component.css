@@ -32,5 +32,31 @@ html, body {
 
 .right-section {
   flex: 1;
-  border: solid;
+  display: flex; /* Koristimo Flexbox za vertikalno poravnanje elemenata */
+  flex-direction: column; /* Elementi idu jedan ispod drugog */
+  position: relative;
+}
+
+.map-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+}
+
+#map {
+  height: 100%;
+  width: 100%;
+  z-index: 0; /* Mapa ostaje u pozadini */
+}
+
+.amenities-info {
+  position: relative;
+  z-index: 2; /* Informacije o amenities će biti iznad mape */
+  background-color: rgba(255, 255, 255, 0.9); /* Blaga pozadina za bolju čitljivost */
+  padding: 10px;
+  border-radius: 8px;
+  margin-top: auto; /* Gura div sa sadržajem na dno sekcije */
 }
