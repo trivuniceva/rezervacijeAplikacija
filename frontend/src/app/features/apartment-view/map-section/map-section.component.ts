@@ -11,25 +11,22 @@ import {LeafletModule} from '@asymmetrik/ngx-leaflet';
   templateUrl: './map-section.component.html',
   styleUrl: './map-section.component.css'
 })
-export class MapSectionComponent implements OnInit{
-  @Input() layers: L.Layer[] = [];
-  options: any;
-  map?: L.Map;
+export class MapSectionComponent implements OnInit {
+  private map: L.Map | undefined;
 
   ngOnInit(): void {
-    this.options = this.getMapOptions();
+    this.initMap();
   }
 
-  private getMapOptions() {
-    return {
-      layers: [
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-          maxZoom: 19,
-          attribution: '© OpenStreetMap'
-        })
-      ],
-      zoom: 13,
-      center: L.latLng(45.2671, 19.8335)
-    };
+  private initMap(): void {
+    this.map = L.map('map', {
+      center: [45.2671, 19.8335], // Koordinate za Novi Sad
+      zoom: 13 // Nivo zumiranja
+    });
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 18,
+      attribution: '© OpenStreetMap contributors'
+    }).addTo(this.map);
   }
 }
