@@ -1,19 +1,36 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
 .container {
   display: flex;
   justify-content: space-between;
   padding: 20px;
+  height: 90vh;
+  box-sizing: border-box; /* Da padding ne utiče na ukupne dimenzije */
+}
+
+.left-section, .middle-section, .right-section {
+  height: 100%;
+  overflow: auto; /* Ako ima previše sadržaja unutar sekcija, dodaj skrolovanje unutar sekcije */
 }
 
 .left-section {
   flex: 2;
   padding-right: 20px;
+  border: solid;
 }
 
 .middle-section {
   flex: 1;
   padding-right: 20px;
+  border: solid;
 }
 
 .right-section {
   flex: 1;
+  border: solid;
 }
