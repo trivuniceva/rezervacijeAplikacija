@@ -30,7 +30,7 @@ export class SearchAccommodationsComponent implements OnInit{
       this.userRole = role;
     });
 
-    if(this.userRole === ''){
+    if(this.userRole === '' || this.userRole === 'GUEST'){
       this.accommodationService.getAccommodations().subscribe((data) => {
         this.accommodations = data;
         console.log(this.accommodations)
@@ -55,5 +55,9 @@ export class SearchAccommodationsComponent implements OnInit{
 
   editApartment() {
     this.router.navigate(['/edit-apartment'])
+  }
+
+  detailedViewApartment() {
+    this.router.navigate(['/detailed-view'])
   }
 }

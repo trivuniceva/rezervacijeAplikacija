@@ -1,0 +1,22 @@
+.property-info {
+  border: 1px solid #ccc;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.property-info h2 {
+  color: green;
+}
+
+.property-info ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.property-info ul li {
+  margin: 5px 0;
+}
+
+.description {
+  margin-top: 15px;
+}
