@@ -12,6 +12,7 @@ import {
   SearchAccommodationsComponent
 } from './shared/search-accommodations/search-accommodations.component';
 import {EditApartmentViewComponent} from './features/apartment/edit-apartment-view/edit-apartment-view.component';
+import {DetailedViewComponent} from './features/apartment-view/detailed-view/detailed-view.component';
 
 export const routes: Routes = [
   {path: '', component: HomepageComponent},
@@ -20,10 +21,12 @@ export const routes: Routes = [
   {path: 'profile', component: UserProfileComponent},
   {path: 'delete-account', component: DeleteAccountComponent},
   {path: 'change-password', component: ChangePasswordComponent},
-  {path: 'guest-reservation', component: GuestReservationComponent},
   {path: 'add-apartment', component: AddApartmentComponent},
   {path: 'edit-apartment-view', component: EditApartmentViewComponent},
   {path: 'edit-apartment', component: EditApartmentComponent},
   {path: 'search-apartment', component: SearchAccommodationsComponent},
+  {path: 'guest-reservation', component: SearchAccommodationsComponent},
+  {path: 'detailed-view', component: DetailedViewComponent},
+
 
 ];

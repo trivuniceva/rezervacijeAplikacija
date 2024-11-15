@@ -29,6 +29,11 @@
         <div *ngIf="userRole === 'HOST'">
           <button class="view-details" (click)="editApartment()">Edit Apartment</button>
         </div>
+
+        <div *ngIf="userRole === 'GUEST'">
+          <button class="view-details" (click)="detailedViewApartment()">View Apartment</button>
+        </div>
+
       </div>
 
       <div class="image">
