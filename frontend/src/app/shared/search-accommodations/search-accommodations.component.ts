@@ -60,4 +60,8 @@ export class SearchAccommodationsComponent implements OnInit{
   detailedViewApartment() {
     this.router.navigate(['/detailed-view'])
   }
+
+  signup() {
+    this.router.navigate(['/login'])
+  }
 }
