@@ -12,7 +12,7 @@ import {
   SearchAccommodationsComponent
 } from './shared/search-accommodations/search-accommodations.component';
 import {EditApartmentViewComponent} from './features/apartment/edit-apartment-view/edit-apartment-view.component';
-import {DetailedViewComponent} from './features/detailed-view/detailed-view.component';
+import {DetailedViewComponent} from './features/apartment-view/detailed-view/detailed-view.component';
 
 export const routes: Routes = [
   {path: '', component: HomepageComponent},
