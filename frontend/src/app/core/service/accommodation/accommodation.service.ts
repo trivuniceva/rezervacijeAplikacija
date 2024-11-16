@@ -31,6 +31,6 @@ export class AccommodationService {
 
   findAccommodationsByHost(email: string) {
     return this.http.get<Accommodation[]>(`${this.apiUrl}/accommodationsByHost?email=${email}`);
-
   }
+
 }

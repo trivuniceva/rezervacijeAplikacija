@@ -1,0 +1,103 @@
+.host-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border: 1px solid #ccc;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.host-photo {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin-bottom: 5px;
+}
+
+.contact-button {
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  background-color: #4CAF50;
+  justify-content: center;
+}
+
+.contact-button .contact-icon {
+  width: 15px;
+  height: 15px;
+  margin-right: 8px;
+}
+
+.phone-section {
+  display: flex;
+  align-items: center;
+  margin: 10px 0;
+  background-color: #6c757d;
+  padding: 10px 15px;
+  border-radius: 5px;
+}
+
+.phone-toggle {
+  margin-left: 10px;
+  background-color: transparent;
+  border: none;
+  color: black;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.phone-toggle:hover {
+  text-decoration: underline;
+}
+
+
+.analytics-area {
+  margin-top: 20px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.occupancy {
+  font-size: 14px;
+  margin-bottom: 12px;
+}
+
+.price-history {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.price-bars {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: flex-end; /* Poravnanje na dno */
+}
+
+.price-bar {
+  display: flex;
+  flex-direction: column; /* Omogućava da bar i godina budu vertikalno poređani */
+  align-items: center;
+}
+
+.bar {
+  width: 20px;
+  background-color: #007bff;
+  display: block;
+  border-radius: 3px 3px 0 0;
+}
+
+.year {
+  margin-top: 5px;
+  font-size: 12px;
+  color: #333;
+}
+

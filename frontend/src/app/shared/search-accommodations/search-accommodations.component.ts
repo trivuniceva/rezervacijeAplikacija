@@ -57,7 +57,11 @@ export class SearchAccommodationsComponent implements OnInit{
     this.router.navigate(['/edit-apartment'])
   }
 
-  detailedViewApartment() {
-    this.router.navigate(['/detailed-view'])
+  detailedViewApartment(accommodation: Accommodation) {
+    this.router.navigate(['/detailed-view'],{ state: { accommodation } });
+  }
+
+  signup() {
+    this.router.navigate(['/login'])
   }
 }

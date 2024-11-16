@@ -4,8 +4,19 @@
   border-radius: 8px;
 }
 
+
 .property-info h2 {
   color: green;
+  margin: 0;
+}
+
+.property-info small {
+  margin-left: 5px;
+}
+
+.price-container {
+  display: flex;
+  align-items: center;
 }
 
 .property-info ul {

@@ -1,13 +1,20 @@
-<div class="property-info">
-  <h2>$400,500</h2>
+<div *ngIf="accommodation" class="property-info">
+  <h1>{{ accommodation.name }}</h1>
+  <div class="price-container">
+    <h2>{{ accommodation.price }} 400€ </h2>
+    <small>per night</small>
+  </div>
   <p>565 Broome Str, NY</p>
+
   <ul>
-    <li>Bedrooms: 4</li>
-    <li>Bathrooms: 2</li>
-    <li>Area: 1024 ft²</li>
-    <li>Parking: 1 Indoor</li>
+    <li>Lokacija: {{ accommodation.location }}</li>
+    <li>Kapacitet: {{ accommodation.minGuests }} - {{ accommodation.maxGuests }} gostiju</li>
+    <li>Tip: {{ accommodation.type }}</li>
   </ul>
-  <p class="description">
-    Beautiful duplex condo boasting a multi-level patio...
-  </p>
+  <p></p>
+<!--  <img *ngIf="accommodation.photos" [src]="accommodation.photos" alt="Accommodation Image" />-->
+
+  <p class="description"> {{ accommodation.description }} </p>
+
+  <button (click)="goBack()">Go Back</button>
 </div>

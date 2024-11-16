@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import {CurrencyPipe, NgForOf} from '@angular/common';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-homepage',
@@ -12,6 +13,9 @@ import {CurrencyPipe, NgForOf} from '@angular/common';
   styleUrl: './homepage.component.css'
 })
 export class HomepageComponent {
+
+  constructor(private router: Router) {
+  }
 
   featuredApartments = [
     {
@@ -38,8 +42,7 @@ export class HomepageComponent {
   ];
 
   navigateToBooking() {
-    console.log('Navigating to booking page...');
-    // TODO 1:
+    this.router.navigate(['/login'])
   }
 
   viewDetails(apartmentId: number) {
