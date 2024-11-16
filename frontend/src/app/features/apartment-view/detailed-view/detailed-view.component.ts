@@ -1,11 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {FormsModule} from '@angular/forms';
-import {NgForOf} from '@angular/common';
+import {NgIf} from '@angular/common';
 import {ApartmentImagesComponent} from '../apartment-images/apartment-images.component';
 import {ApartmentDetailsComponent} from '../apartment-details/apartment-details.component';
 import {ApartmentInfoComponent} from '../apartment-info/apartment-info.component';
 import {MapSectionComponent} from '../map-section/map-section.component';
 import {AmenitiesInfoComponent} from '../amenities-info/amenities-info.component';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-detailed-view',
@@ -15,11 +16,22 @@ import {AmenitiesInfoComponent} from '../amenities-info/amenities-info.component
     ApartmentDetailsComponent,
     ApartmentInfoComponent,
     MapSectionComponent,
-    AmenitiesInfoComponent
+    AmenitiesInfoComponent,
+    NgIf
   ],
   templateUrl: './detailed-view.component.html',
   styleUrl: './detailed-view.component.css'
 })
-export class DetailedViewComponent {
+export class DetailedViewComponent implements OnInit {
+  accommodation: any;
 
+  constructor(private location: Location) {}
+
+  ngOnInit(): void {
+    this.accommodation = history.state.accommodation;
+  }
+
+  goBack() {
+    this.location.back();  // Vraća korisnika nazad na listu
+  }
 }
