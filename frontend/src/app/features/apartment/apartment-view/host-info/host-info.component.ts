@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {AccommodationService} from '../../../core/service/accommodation/accommodation.service';
+import {AccommodationService} from '../../../../core/service/accommodation/accommodation.service';
 import {NgForOf, NgIf} from '@angular/common';
 
 @Component({

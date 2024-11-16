@@ -19,10 +19,10 @@ import { Location } from '@angular/common';
     AmenitiesInfoComponent,
     NgIf
   ],
-  templateUrl: './detailed-view.component.html',
-  styleUrl: './detailed-view.component.css'
+  templateUrl: './detailed-view-base.component.html',
+  styleUrl: './detailed-view-base.component.css'
 })
-export class DetailedViewComponent implements OnInit {
+export class DetailedViewBaseComponent implements OnInit {
   accommodation: any;
 
   constructor(private location: Location) {}
