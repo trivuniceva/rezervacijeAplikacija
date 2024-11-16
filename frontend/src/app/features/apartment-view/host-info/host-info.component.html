@@ -1,0 +1,20 @@
+<div class="host-card">
+  <img [src]="host.profilePic" alt="Host" class="host-photo">
+  <h3>{{host.firstname}} {{host.lastname}}</h3>
+  <p>⭐⭐⭐⭐⭐ </p>
+  <p>(123 reviews)</p>
+
+  <div class="phone-section">
+    <span *ngIf="!isPhoneVisible">••• ••• •••</span>
+    <span *ngIf="isPhoneVisible">{{ host.phone }}</span>
+    <button (click)="togglePhoneVisibility()" class="phone-toggle">
+      {{ isPhoneVisible ? 'Hide number' : 'Show number' }}
+    </button>
+  </div>
+
+  <br>
+  <button class="contact-button">
+    <img src="icon/mail.png" alt="Contact Icon" class="contact-icon">
+    Contact Host
+  </button>
+</div>

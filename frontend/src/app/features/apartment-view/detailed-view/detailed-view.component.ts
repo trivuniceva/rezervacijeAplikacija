@@ -3,7 +3,7 @@ import {FormsModule} from '@angular/forms';
 import {NgIf} from '@angular/common';
 import {ApartmentImagesComponent} from '../apartment-images/apartment-images.component';
 import {ApartmentDetailsComponent} from '../apartment-details/apartment-details.component';
-import {ApartmentInfoComponent} from '../apartment-info/apartment-info.component';
+import {HostInfoComponent} from '../host-info/host-info.component';
 import {MapSectionComponent} from '../map-section/map-section.component';
 import {AmenitiesInfoComponent} from '../amenities-info/amenities-info.component';
 import { Location } from '@angular/common';
@@ -14,7 +14,7 @@ import { Location } from '@angular/common';
   imports: [
     ApartmentImagesComponent,
     ApartmentDetailsComponent,
-    ApartmentInfoComponent,
+    HostInfoComponent,
     MapSectionComponent,
     AmenitiesInfoComponent,
     NgIf

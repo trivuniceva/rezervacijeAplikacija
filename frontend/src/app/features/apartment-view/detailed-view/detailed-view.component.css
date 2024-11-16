@@ -19,19 +19,19 @@ html, body {
 }
 
 .left-section {
-  flex: 2;
+  flex: 2.4;
   padding-right: 20px;
   border: solid;
 }
 
 .middle-section {
-  flex: 1;
+  flex: 0.8;
   padding-right: 20px;
   border: solid;
 }
 
 .right-section {
-  flex: 1;
+  flex: 0.8;
   display: flex; /* Koristimo Flexbox za vertikalno poravnanje elemenata */
   flex-direction: column; /* Elementi idu jedan ispod drugog */
   position: relative;
