@@ -2,19 +2,37 @@
   <img [src]="host.profilePic" alt="Host" class="host-photo">
   <h3>{{host.firstname}} {{host.lastname}}</h3>
   <p>⭐⭐⭐⭐⭐ </p>
-  <p>(123 reviews)</p>
+  <small>(123 reviews)</small>
 
   <div class="phone-section">
     <span *ngIf="!isPhoneVisible">••• ••• •••</span>
-    <span *ngIf="isPhoneVisible">{{ host.phone }}</span>
+    <span *ngIf="isPhoneVisible">+{{ host.phone }}</span>
     <button (click)="togglePhoneVisibility()" class="phone-toggle">
       {{ isPhoneVisible ? 'Hide number' : 'Show number' }}
     </button>
   </div>
 
-  <br>
   <button class="contact-button">
     <img src="icon/mail.png" alt="Contact Icon" class="contact-icon">
     Contact Host
   </button>
+</div>
+
+
+<div class="analytics-area">
+  <h3>AnalyticsArea</h3>
+  <div class="occupancy">
+    <span>{{ host.occupancyRate }}% Occupancy</span>
+    <span>Est. monthly profit: ${{ host.estimatedProfit }}</span>
+  </div>
+  <div class="price-history">
+    <h4>Price History</h4>
+    <div class="price-bars">
+      <div class="price-bar" *ngFor="let year of host.priceHistory">
+        <span class="bar" [style.height]="year.price / 4500 + 'px'"></span>
+        <span class="year">{{ year.year }}</span>
+      </div>
+    </div>
+  </div>
+
 </div>
