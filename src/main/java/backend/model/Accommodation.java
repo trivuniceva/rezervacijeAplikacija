@@ -1,6 +1,7 @@
-package menadzerisanjeuser.menadzerisanjeuser.model;
+package backend.model;
 
 import jakarta.persistence.*;
+import menadzerisanjeuser.menadzerisanjeuser.model.User;
 import org.springframework.data.annotation.Id;
 
 import java.util.List;

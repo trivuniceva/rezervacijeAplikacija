@@ -1,9 +1,9 @@
-package menadzerisanjeuser.menadzerisanjeuser.controller;
+package backend.controller;
 
-import menadzerisanjeuser.menadzerisanjeuser.model.Accommodation;
-import menadzerisanjeuser.menadzerisanjeuser.service.AccommodationService;
+import backend.model.Accommodation;
+import backend.service.AccommodationService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,5 +24,12 @@ public class AccommodationController {
     public List<Accommodation> getAccommodationsByHost(@RequestParam String email) {
         return accommodationService.getAccommodationsByHost(email);
     }
+
+    @PostMapping("/add-apartment")
+    public ResponseEntity<Accommodation> addNewAccommodation(@RequestBody Accommodation accommodation) {
+        Accommodation savedAccommodation = accommodationService.saveAccommodation(accommodation);
+        return ResponseEntity.ok(savedAccommodation);
+    }
+
 }
 
