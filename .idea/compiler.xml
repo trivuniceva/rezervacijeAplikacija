@@ -7,12 +7,12 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="rezervacije" />
-        <module name="smestajMenadzment" />
         <module name="menadzerisanjeUser" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="auth" target="17" />
+      <module name="smestajMenadzment" target="17" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">

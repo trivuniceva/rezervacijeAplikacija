@@ -1,6 +1,6 @@
-package menadzerisanjeuser.menadzerisanjeuser.repository;
+package backend.repository;
 
-import menadzerisanjeuser.menadzerisanjeuser.model.Accommodation;
+import backend.model.Accommodation;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

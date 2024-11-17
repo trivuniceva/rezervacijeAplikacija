@@ -1,9 +1,8 @@
-package menadzerisanjeuser.menadzerisanjeuser.service;
+package backend.service;
 
-import menadzerisanjeuser.menadzerisanjeuser.dto.ApartmentRequest;
-import menadzerisanjeuser.menadzerisanjeuser.model.Accommodation;
+import backend.model.Accommodation;
+import backend.repository.AccommodationRepository;
 import menadzerisanjeuser.menadzerisanjeuser.model.User;
-import menadzerisanjeuser.menadzerisanjeuser.repository.AccommodationRepository;
 import menadzerisanjeuser.menadzerisanjeuser.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,11 +31,11 @@ public class AccommodationService {
         return this.accommodationRepository.findByOwnerId(host.getId());
     }
 
-    public void addNewAccommodation(ApartmentRequest apartmentRequest){
-        System.out.println("treba ga snimim ");
+    public Accommodation saveAccommodation(Accommodation accommodation) {
+        // Dodaj dodatnu logiku ako je potrebno, npr. validaciju
 
-        System.out.println(apartmentRequest.toString());
-
+        System.out.println("snimaaaaaa");
+        return accommodationRepository.save(accommodation);
     }
 }
 

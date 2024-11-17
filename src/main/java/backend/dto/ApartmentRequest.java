@@ -1,54 +1,24 @@
-package menadzerisanjeuser.menadzerisanjeuser.model;
+package backend.dto;
 
-import jakarta.persistence.*;
-import org.springframework.data.annotation.Id;
+import backend.model.AccommodationType;
 
 import java.util.List;
 
-@Entity
-@Table(name = "accommodations")
-public class Accommodation {
-    @jakarta.persistence.Id
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class ApartmentRequest {
 
-    @Column(name = "name")
     private String name;
-
-    @Column(name = "description")
     private String description;
-
     private String location;
-
-    @ElementCollection
-    private List<String> amenities;  // wifi, klima, itd.
-
-    @Column(name = "photos")
-    private String photos;
-
+    private List<String> amenities;
+//    private String photos;
     private int minGuests;
     private int maxGuests;
-
-    @Enumerated(EnumType.STRING)
     private AccommodationType type;
-
     private boolean approved;
 
-    @OneToMany(mappedBy = "accommodation")
-    private List<Availability> availabilityList;
-
-    @ManyToOne
-    @JoinColumn(name = "owner_id")
-    private User owner;
-
-    public Long getId() {
-        return id;
+    public ApartmentRequest() {
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
@@ -82,13 +52,13 @@ public class Accommodation {
         this.amenities = amenities;
     }
 
-    public String getPhotos() {
-        return photos;
-    }
+//    public String getPhotos() {
+//        return photos;
+//    }
 
-    public void setPhotos(String photos) {
-        this.photos = photos;
-    }
+//    public void setPhotos(String photos) {
+//        this.photos = photos;
+//    }
 
     public int getMinGuests() {
         return minGuests;
@@ -122,21 +92,18 @@ public class Accommodation {
         this.approved = approved;
     }
 
-    public List<Availability> getAvailabilityList() {
-        return availabilityList;
-    }
+    @Override
+    public String toString() {
+        return "ApartmentRequest{" +
+                "name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", location='" + location + '\'' +
+                ", amenities=" + amenities +
 
-    public void setAvailabilityList(List<Availability> availabilityList) {
-        this.availabilityList = availabilityList;
+                ", minGuests=" + minGuests +
+                ", maxGuests=" + maxGuests +
+                ", type=" + type +
+                ", approved=" + approved +
+                '}';
     }
-
-    public User getOwner() {
-        return owner;
-    }
-
-    public void setOwner(User owner) {
-        this.owner = owner;
-    }
-
 }
-

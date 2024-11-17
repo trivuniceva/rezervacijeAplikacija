@@ -20,7 +20,7 @@ export interface Accommodation {
 })
 export class AccommodationService {
 
-  private apiUrl = 'http://localhost:8081/api';
+  private apiUrl = 'http://localhost:8080/api';
 
   constructor(private http: HttpClient) {}
 
@@ -33,6 +33,7 @@ export class AccommodationService {
   }
 
   addNewApartment(apartment: any): Observable<any> {
+    console.log(apartment)
     return this.http.post<any>(`${this.apiUrl}/add-apartment`, apartment).pipe(
       catchError(error => {
         console.error('Registration error:', error);

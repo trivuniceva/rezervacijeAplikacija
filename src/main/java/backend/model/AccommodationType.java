@@ -1,4 +1,4 @@
-package menadzerisanjeuser.menadzerisanjeuser.model;
+package backend.model;
 
 public enum AccommodationType {
     STUDIO, ROOM, APARTMENT

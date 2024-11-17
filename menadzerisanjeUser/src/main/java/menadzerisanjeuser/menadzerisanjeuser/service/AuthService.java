@@ -3,7 +3,6 @@ package menadzerisanjeuser.menadzerisanjeuser.service;
 import menadzerisanjeuser.menadzerisanjeuser.model.RegisterRequest;
 import menadzerisanjeuser.menadzerisanjeuser.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 @Service
