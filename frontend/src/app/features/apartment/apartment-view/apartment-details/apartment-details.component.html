@@ -1,0 +1,20 @@
+<div *ngIf="accommodation" class="property-info">
+  <h1>{{ accommodation.name }}</h1>
+  <div class="price-container">
+    <h2>{{ accommodation.price }} 400€ </h2>
+    <small>per night</small>
+  </div>
+  <p>565 Broome Str, NY</p>
+
+  <ul>
+    <li>Lokacija: {{ accommodation.location }}</li>
+    <li>Kapacitet: {{ accommodation.minGuests }} - {{ accommodation.maxGuests }} gostiju</li>
+    <li>Tip: {{ accommodation.type }}</li>
+  </ul>
+  <p></p>
+<!--  <img *ngIf="accommodation.photos" [src]="accommodation.photos" alt="Accommodation Image" />-->
+
+  <p class="description"> {{ accommodation.description }} </p>
+
+  <button (click)="goBack()">Go Back</button>
+</div>

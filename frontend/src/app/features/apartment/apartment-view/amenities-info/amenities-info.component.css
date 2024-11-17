@@ -1,0 +1,14 @@
+.amenities {
+  border: 1px solid #ccc;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.amenities ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.amenities ul li {
+  margin: 5px 0;
+}

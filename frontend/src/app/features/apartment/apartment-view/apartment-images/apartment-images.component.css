@@ -1,0 +1,20 @@
+.image-gallery {
+  display: flex;
+  flex-direction: column;
+}
+
+.main-image {
+  width: 100%;
+  height: auto;
+}
+
+.thumbnail-row {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.thumbnail-row img {
+  width: 30%;
+  cursor: pointer;
+}
