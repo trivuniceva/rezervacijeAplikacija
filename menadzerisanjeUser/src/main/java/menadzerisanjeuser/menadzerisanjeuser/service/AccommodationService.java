@@ -1,5 +1,6 @@
 package menadzerisanjeuser.menadzerisanjeuser.service;
 
+import menadzerisanjeuser.menadzerisanjeuser.dto.ApartmentRequest;
 import menadzerisanjeuser.menadzerisanjeuser.model.Accommodation;
 import menadzerisanjeuser.menadzerisanjeuser.model.User;
 import menadzerisanjeuser.menadzerisanjeuser.repository.AccommodationRepository;
@@ -29,6 +30,13 @@ public class AccommodationService {
         System.out.println(this.accommodationRepository.findByOwnerId(host.getId()));
 
         return this.accommodationRepository.findByOwnerId(host.getId());
+    }
+
+    public void addNewAccommodation(ApartmentRequest apartmentRequest){
+        System.out.println("treba ga snimim ");
+
+        System.out.println(apartmentRequest.toString());
+
     }
 }
 

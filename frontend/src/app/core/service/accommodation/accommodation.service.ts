@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {Observable} from 'rxjs';
+import {catchError, Observable, throwError} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 
 export interface Accommodation {
@@ -25,7 +25,6 @@ export class AccommodationService {
   constructor(private http: HttpClient) {}
 
   getAccommodations(): Observable<Accommodation[]> {
-
     return this.http.get<Accommodation[]>(`${this.apiUrl}/accommodations`);
   }
 
@@ -33,4 +32,13 @@ export class AccommodationService {
     return this.http.get<Accommodation[]>(`${this.apiUrl}/accommodationsByHost?email=${email}`);
   }
 
+  addNewApartment(apartment: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/add-apartment`, apartment).pipe(
+      catchError(error => {
+        console.error('Registration error:', error);
+        return throwError(error);
+      })
+    );
+
+  }
 }
