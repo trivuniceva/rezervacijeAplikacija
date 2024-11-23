@@ -16,6 +16,7 @@
   </div>
 
   <a routerLink="/guest-reservation" (click)="closeMenu()">Reservation</a>
+  <a routerLink="/notifications">Notifications</a>
   <a href="#" (click)="logout()">Logout</a>
 </div>
 
@@ -39,10 +40,12 @@
   </div>
 
   <a routerLink="/profile" (click)="closeMenu()">Reservation</a>
+  <a routerLink="/notifications">Notifications</a>
   <a href="#" (click)="logout()">Logout</a>
 </div>
 
 
 <div *ngIf="userRole === 'ADMINISTRATOR'" class="sidenav">
+  <a routerLink="/notifications">Notifications</a>
   <a href="#" (click)="logout()">Logout</a>
 </div>
