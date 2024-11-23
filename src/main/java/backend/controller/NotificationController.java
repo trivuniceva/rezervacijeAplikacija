@@ -17,7 +17,10 @@ public class NotificationController {
     }
 
     @GetMapping
-    public List<Notification> getNotifications() {
+    public List<Notification> getNotifications(@RequestParam(required = false) Long userId) {
+        if (userId != null) {
+            return notificationService.getNotificationsByUserId(userId);
+        }
         return notificationService.getAllNotifications();
     }
 

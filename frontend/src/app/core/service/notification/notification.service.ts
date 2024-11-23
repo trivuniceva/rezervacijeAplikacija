@@ -18,9 +18,10 @@ export class NotificationService {
 
   constructor(private http: HttpClient) {}
 
-  getNotifications(): Observable<AppNotification[]> {
-    return this.http.get<AppNotification[]>(this.apiUrl);
+  getNotifications(userId: number): Observable<AppNotification[]> {
+    return this.http.get<AppNotification[]>(`${this.apiUrl}?userId=${userId}`);
   }
+
 
   createNotification(notification: Partial<AppNotification>): Observable<AppNotification> {
     return this.http.post<AppNotification>(this.apiUrl, notification);
