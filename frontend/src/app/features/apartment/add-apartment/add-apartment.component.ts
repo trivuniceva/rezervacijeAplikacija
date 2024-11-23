@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import { AccommodationService } from '../../../core/service/accommodation/accommodation.service';
 import {NgIf} from '@angular/common';
+import {AuthService} from '../../../core/service/auth/auth.service';
 
 @Component({
   selector: 'app-add-apartment',
@@ -16,10 +17,14 @@ import {NgIf} from '@angular/common';
 })
 export class AddApartmentComponent implements OnInit {
   apartmentForm!: FormGroup;
+  user: any;
 
-  constructor(private accommodationService: AccommodationService, private fb: FormBuilder) {}
+  constructor(private accommodationService: AccommodationService, private fb: FormBuilder, private authService: AuthService) {}
 
   ngOnInit(): void {
+
+    this.user = this.authService.getLoggedUser();
+
     this.apartmentForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
       description: ['', [Validators.required]],
@@ -30,7 +35,8 @@ export class AddApartmentComponent implements OnInit {
       apartmentType: ['', [Validators.required]],
       price: [null, [Validators.required, Validators.min(0)]],
       availability: ['', [Validators.required]],
-      photos: ['']
+      photos: [''],
+      owner: this.user
     });
   }
 
@@ -50,7 +56,7 @@ export class AddApartmentComponent implements OnInit {
         next: (response) => {
           console.log('Accommodation created:', response);
           alert('Apartment successfully created!');
-          this.apartmentForm.reset(); // resetuj formu
+          // this.apartmentForm.reset(); // resetuj formu
         },
         error: (err) => {
           console.error('Error creating accommodation:', err);
