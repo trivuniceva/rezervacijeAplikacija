@@ -1,20 +1,39 @@
-<div *ngIf="accommodation" class="property-info">
-  <h1>{{ accommodation.name }}</h1>
-  <div class="price-container">
-    <h2>{{ accommodation.price }} 400€ </h2>
-    <small>per night</small>
+<div *ngIf="accommodation" class="property-container">
+  <div class="property-header">
+    <div class="price">
+      <h2>{{ accommodation.price }} 400 €</h2>
+      <small>per night</small>
+    </div>
+    <div class="location">
+      <h2>565 Broome Str, NY</h2>
+    </div>
+    <div class="action-icons">
+      <i class="fa fa-share-alt"></i>
+      <i class="fa fa-heart"></i>
+      <i class="fa fa-ellipsis-h"></i>
+    </div>
   </div>
-  <p>565 Broome Str, NY</p>
 
-  <ul>
-    <li>Lokacija: {{ accommodation.location }}</li>
-    <li>Kapacitet: {{ accommodation.minGuests }} - {{ accommodation.maxGuests }} gostiju</li>
-    <li>Tip: {{ accommodation.type }}</li>
-  </ul>
-  <p></p>
-<!--  <img *ngIf="accommodation.photos" [src]="accommodation.photos" alt="Accommodation Image" />-->
+  <hr />
 
-  <p class="description"> {{ accommodation.description }} </p>
+  <div class="property-content">
+    <div class="menu">
+      <i class="fa fa-info-circle"></i>
+      <i class="fa fa-car"></i>
+      <i class="fa fa-wallet"></i>
+      <i class="fa fa-home"></i>
+      <i class="fa fa-chart-pie"></i>
+    </div>
 
-  <button (click)="goBack()">Go Back</button>
+    <div class="details">
+      <h1>{{ accommodation.name }}</h1>
+      <ul class="property-details">
+        <li><i class="fa fa-users"></i> Kapacitet: {{ accommodation.minGuests }} - {{ accommodation.maxGuests }} gostiju</li>
+        <li><i class="fa fa-home"></i> Tip: {{ accommodation.type }}</li>
+        <li><i class="fa fa-expand"></i> Površina: 1,024 ft²</li>
+      </ul>
+      <p class="description">{{ accommodation.description }}</p>
+<!--      <button (click)="goBack()" class="go-back-btn">Go Back</button>-->
+    </div>
+  </div>
 </div>

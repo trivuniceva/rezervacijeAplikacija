@@ -21,13 +21,12 @@ html, body {
 .left-section {
   flex: 2.4;
   padding-right: 20px;
-  border: solid;
+  /*border: solid;*/
 }
 
 .middle-section {
   flex: 0.8;
   padding-right: 20px;
-  border: solid;
 }
 
 .right-section {

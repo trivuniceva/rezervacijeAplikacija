@@ -1,33 +1,134 @@
-.property-info {
-  border: 1px solid #ccc;
-  padding: 20px;
-  border-radius: 8px;
+.property-container {
+  margin: 20px;
+  /*border: solid;*/
+  width: 87%;
 }
 
-
-.property-info h2 {
-  color: green;
-  margin: 0;
-}
-
-.property-info small {
-  margin-left: 5px;
-}
-
-.price-container {
+.property-header {
   display: flex;
+  justify-content: space-between;
   align-items: center;
 }
 
-.property-info ul {
+.property-header .price {
+  display: flex;
+  align-items: baseline;
+  color: green;
+
+}
+
+.property-header h2 {
+  margin: 0;
+}
+
+.property-header small {
+  margin-left: 5px;
+  font-size: 14px;
+  color: #555;
+}
+
+.property-header .location {
+  flex: 1;
+  text-align: center;
+  font-size: 16px;
+  color: #333;
+}
+
+.property-header .action-icons {
+  display: flex;
+  gap: 15px;
+  font-size: 18px;
+  color: #888;
+}
+
+.action-icons i:hover {
+  color: #555;
+  cursor: pointer;
+}
+
+hr {
+  margin-top: 15px;
+  border: none;
+  border-top: 1px solid #ccc;
+  width: 74%;
+  margin-left: 26%;
+}
+
+.property-content {
+  display: flex;
+  gap: 20px;
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  font-size: 20px;
+  color: #888;
+  /*width: 7%;*/
+  /*height: 95%;*/
+
+  /*padding: 20px 10px;*/
+  padding: 20px 12px 20px 15px;
+  height: 25vh;
+  margin-left: 5%;
+  border-radius: 35px;
+
+  background-color: #F3F5F3;
+
+}
+
+
+.menu i:hover {
+  color: #555;
+  cursor: pointer;
+}
+
+.details {
+  flex: 1;
+  /*border: solid purple;*/
+  width: 80%;
+  margin-left: 12%;
+
+}
+
+.details h1 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.property-details {
   list-style-type: none;
   padding: 0;
 }
 
-.property-info ul li {
-  margin: 5px 0;
+.property-details li {
+  display: flex;
+  align-items: center;
+  margin: 10px 0;
+  font-size: 16px;
+}
+
+.property-details li i {
+  color: #888;
+  margin-right: 10px;
 }
 
 .description {
   margin-top: 15px;
+  color: #555;
+}
+
+.go-back-btn {
+  margin-top: 20px;
+  padding: 10px 15px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.go-back-btn:hover {
+  background-color: #218838;
 }
