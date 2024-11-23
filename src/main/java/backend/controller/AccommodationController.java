@@ -25,10 +25,10 @@ public class AccommodationController {
         return accommodationService.getAccommodationsByHost(email);
     }
 
-    @PostMapping("/add-apartment")
-    public ResponseEntity<Accommodation> addNewAccommodation(@RequestBody Accommodation accommodation) {
-        Accommodation savedAccommodation = accommodationService.saveAccommodation(accommodation);
-        return ResponseEntity.ok(savedAccommodation);
+    @PostMapping("/createAccommodation")
+    public ResponseEntity<Accommodation> createAccommodation(@RequestBody Accommodation accommodation) {
+        Accommodation createdAccommodation = accommodationService.createAccommodation(accommodation);
+        return ResponseEntity.ok(createdAccommodation);
     }
 
 }

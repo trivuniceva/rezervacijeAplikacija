@@ -2,15 +2,15 @@
   <h1>Add New Apartment</h1>
   <form [formGroup]="apartmentForm" (ngSubmit)="addApartment()">
     <div class="form-group">
-      <label for="name">Apartment Name:</label>
+      <label for="name">Name:</label>
       <input
         id="name"
         formControlName="name"
         type="text"
         placeholder="Enter apartment name"
         class="form-control">
-      <div *ngIf="apartmentForm.get('name')?.invalid && (apartmentForm.get('name')?.touched || apartmentForm.get('name')?.dirty)">
-        <small class="text-danger" *ngIf="apartmentForm.get('name')?.errors?.['required']">Apartment name is required.</small>
+      <div *ngIf="apartmentForm.get('name')?.invalid && apartmentForm.get('name')?.touched">
+        <small class="text-danger">Name is required and must be at least 3 characters long.</small>
       </div>
     </div>
 
@@ -21,9 +21,6 @@
         formControlName="description"
         placeholder="Enter apartment description"
         class="form-control"></textarea>
-      <div *ngIf="apartmentForm.get('description')?.invalid && (apartmentForm.get('description')?.touched || apartmentForm.get('description')?.dirty)">
-        <small class="text-danger" *ngIf="apartmentForm.get('description')?.errors?.['required']">Description is required.</small>
-      </div>
     </div>
 
     <div class="form-group">
@@ -34,28 +31,15 @@
         type="text"
         placeholder="Enter apartment location"
         class="form-control">
-      <div *ngIf="apartmentForm.get('location')?.invalid && (apartmentForm.get('location')?.touched || apartmentForm.get('location')?.dirty)">
-        <small class="text-danger" *ngIf="apartmentForm.get('location')?.errors?.['required']">Location is required.</small>
-      </div>
     </div>
 
     <div class="form-group">
-      <label for="amenities">Amenities:</label>
+      <label for="amenities">Amenities (comma separated):</label>
       <input
         id="amenities"
         formControlName="amenities"
         type="text"
         placeholder="e.g., WiFi, Kitchen, Air Conditioning"
-        class="form-control">
-    </div>
-
-    <div class="form-group">
-      <label for="photos">Add Photos:</label>
-      <input
-        type="file"
-        id="photos"
-        (change)="onFileSelected($event)"
-        multiple
         class="form-control">
     </div>
 
@@ -80,42 +64,49 @@
     </div>
 
     <div class="form-group">
-      <label for="apartmentType">Apartment Type:</label>
+      <label for="apartmentType">Type:</label>
       <select
         id="apartmentType"
         formControlName="apartmentType"
         class="form-control">
-        <option value="studio">Studio</option>
-        <option value="room">Room</option>
-        <option value="apartment">Apartment</option>
+        <option value="">Select type</option>
+        <option value="STUDIO">Studio</option>
+        <option value="ROOM">Room</option>
+        <option value="APARTMENT">Apartment</option>
       </select>
     </div>
 
     <div class="form-group">
-      <label for="price">Price per Night:</label>
+      <label for="price">Price:</label>
       <input
         id="price"
         formControlName="price"
         type="number"
         placeholder="Enter price per night"
         class="form-control">
-      <div *ngIf="apartmentForm.get('price')?.invalid && (apartmentForm.get('price')?.touched || apartmentForm.get('price')?.dirty)">
-        <small class="text-danger" *ngIf="apartmentForm.get('price')?.errors?.['required']">Price is required.</small>
-        <small class="text-danger" *ngIf="apartmentForm.get('price')?.errors?.['min']">Price must be a positive value.</small>
-      </div>
     </div>
 
     <div class="form-group">
       <label for="availability">Availability:</label>
       <input
-        type="date"
         id="availability"
         formControlName="availability"
+        type="date"
+        class="form-control">
+    </div>
+
+    <div class="form-group">
+      <label for="photos">Photos:</label>
+      <input
+        id="photos"
+        formControlName="photos"
+        type="file"
+        (change)="onFileSelected($event)"
         class="form-control">
     </div>
 
     <div class="button-container">
-      <button type="submit" class="btn btn-submit">Add Apartment</button>
+      <button type="submit" class="btn btn-submit" [disabled]="apartmentForm.invalid">Add Apartment</button>
     </div>
   </form>
 </div>
