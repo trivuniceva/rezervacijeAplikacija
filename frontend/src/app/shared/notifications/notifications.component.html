@@ -1,7 +1,9 @@
-<div *ngFor="let notification of notifications" class="notification">
-  <p [class.read]="notification.read">{{ notification.message }}</p>
-  <small>{{ notification.timestamp | date: 'short' }}</small>
-  <button (click)="markAsRead(notification.id)" *ngIf="!notification.read">
-    Mark as Read
-  </button>
+<div class="notification-container">
+  <div *ngFor="let notification of notifications" class="notification">
+    <p [class.read]="notification.read">{{ notification.message }}</p>
+    <small>{{ notification.timestamp | date: 'short' }}</small>
+    <button class="btn-primary" (click)="markAsRead(notification.id)" *ngIf="!notification.read">
+      Mark as Read
+    </button>
+  </div>
 </div>
