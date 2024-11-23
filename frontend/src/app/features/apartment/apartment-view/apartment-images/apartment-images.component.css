@@ -1,20 +1,36 @@
 .image-gallery {
   display: flex;
+  gap: 5px;
+}
+
+.thumbnail-column {
+  margin-top: 10px;
+  display: flex;
   flex-direction: column;
+  gap: 15px;
+  flex: 1;
+  align-items: center;
+}
+
+.thumbnail {
+  width: 190px;
+  height: 130px;
+  object-fit: cover;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.thumbnail:hover {
+  transform: scale(1.1);
+}
+
+.main-image-container {
+  flex: 3;
 }
 
 .main-image {
   width: 100%;
   height: auto;
-}
-
-.thumbnail-row {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 10px;
-}
-
-.thumbnail-row img {
-  width: 30%;
-  cursor: pointer;
+  border-radius: 5px;
 }
