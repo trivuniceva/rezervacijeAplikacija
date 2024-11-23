@@ -31,10 +31,9 @@ public class AccommodationService {
         return this.accommodationRepository.findByOwnerId(host.getId());
     }
 
-    public Accommodation saveAccommodation(Accommodation accommodation) {
-        // Dodaj dodatnu logiku ako je potrebno, npr. validaciju
-
-        System.out.println("snimaaaaaa");
+    public Accommodation createAccommodation(Accommodation accommodation) {
+        accommodation.setApproved(false);
+        System.out.println("snima...");
         return accommodationRepository.save(accommodation);
     }
 }
