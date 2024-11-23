@@ -33,6 +33,7 @@ export class AccommodationService {
   }
 
   createAccommodation(data: any): Observable<any> {
+    console.log(data.owner);
     return this.http.post(`${this.apiUrl}/createAccommodation`, data);
   }
 
