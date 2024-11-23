@@ -54,7 +54,7 @@ html, body {
 .amenities-info {
   position: relative;
   z-index: 2; /* Informacije o amenities će biti iznad mape */
-  background-color: rgba(255, 255, 255, 0.9); /* Blaga pozadina za bolju čitljivost */
+  /*background-color: rgba(255, 255, 255, 0.9); !* Blaga pozadina za bolju čitljivost *!*/
   padding: 10px;
   border-radius: 8px;
   margin-top: auto; /* Gura div sa sadržajem na dno sekcije */
