@@ -7,6 +7,7 @@ export interface AppNotification {
   message: string;
   read: boolean;
   timestamp: string;
+  info: string;
 }
 
 @Injectable({

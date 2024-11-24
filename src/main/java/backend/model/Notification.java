@@ -30,6 +30,16 @@ public class Notification {
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
+    private String info;
+
+    public String getInfo() {
+        return info;
+    }
+
+    public void setInfo(String info) {
+        this.info = info;
+    }
+
     public Long getId() {
         return id;
     }

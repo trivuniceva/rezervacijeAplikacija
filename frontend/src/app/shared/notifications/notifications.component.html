@@ -1,11 +1,11 @@
 <div class="notification-container">
   <div *ngFor="let notification of notifications" class="notification">
-    <p [class.read]="notification.read">{{ notification.message }}</p>
+    <p [class.read]="notification.read">{{ notification.message }} {{ notification.info }} </p>
     <small>{{ notification.timestamp | date: 'short' }}</small>
 
     <div *ngIf="userRole === 'ADMINISTRATOR'; else userButtons">
-<!--      <button (click)="approveApartment()">-->
-      <button>
+      <button (click)="approveApartment()">
+<!--      <button>-->
         Approve Apartment
       </button>
 

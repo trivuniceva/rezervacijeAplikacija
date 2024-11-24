@@ -38,4 +38,8 @@ export class NotificationsComponent implements OnInit {
       );
     });
   }
+
+  approveApartment() {
+
+  }
 }
