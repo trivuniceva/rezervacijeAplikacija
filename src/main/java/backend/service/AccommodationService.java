@@ -38,29 +38,26 @@ public class AccommodationService {
 
     public Accommodation createAccommodation(Accommodation accommodation) {
         accommodation.setApproved(false);
-        System.out.println(accommodation.getOwner());
+        Accommodation savedAccommodation = accommodationRepository.save(accommodation);
 
         List<User> admins = userRepository.findByUserRole(UserRole.ADMINISTRATOR);
-        System.out.println(admins.toString());
-        System.out.println(admins.size());
         if(admins.size() > 1){
             System.out.println(admins.toString());
             for (int i = 0; i < admins.size(); i++)
-            handleNotification(admins.get(i));
+            handleNotification(admins.get(i), String.valueOf(accommodation.getId()));
         } else {
             System.out.println(admins.get(0).getId());
-            handleNotification(admins.get(0));
+            handleNotification(admins.get(0), String.valueOf(accommodation.getId()));
         }
-
-        System.out.println("snima...");
-        return accommodationRepository.save(accommodation);
+        return savedAccommodation;
     }
 
-    private void handleNotification(User user){
+    private void handleNotification(User user, String info){
         Notification notification = new Notification();
-        notification.setMessage("Created new apartment.");
+        notification.setMessage("Created new apartment with id: #");
         notification.setIs_read(false);
         notification.setUser(user);
+        notification.setInfo(info);
 
         notificationService.createNotification(notification);
 
