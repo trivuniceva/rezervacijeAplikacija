@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
+import { AccommodationService } from '../../../core/service/accommodation/accommodation.service';
 import {NgIf} from '@angular/common';
-import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {AccommodationService} from '../../../core/service/accommodation/accommodation.service';
+import {AuthService} from '../../../core/service/auth/auth.service';
 
 @Component({
   selector: 'app-add-apartment',
@@ -14,46 +15,55 @@ import {AccommodationService} from '../../../core/service/accommodation/accommod
   templateUrl: './add-apartment.component.html',
   styleUrl: './add-apartment.component.css'
 })
-export class AddApartmentComponent {
+export class AddApartmentComponent implements OnInit {
   apartmentForm!: FormGroup;
+  user: any;
 
-  constructor(private accommodationService: AccommodationService, private fb: FormBuilder) {
-  }
+  constructor(private accommodationService: AccommodationService, private fb: FormBuilder, private authService: AuthService) {}
 
   ngOnInit(): void {
+
+    this.user = this.authService.getLoggedUser();
+
     this.apartmentForm = this.fb.group({
-      name: '',
-      description: '',
-      location: '',
-      amenities: '',
-      minGuests: null,
-      maxGuests: null,
-      apartmentType: '',
-      price: null,
-      availability: '',
-      photos: []
-    })
+      name: ['', [Validators.required, Validators.minLength(3)]],
+      description: ['', [Validators.required]],
+      location: ['', [Validators.required]],
+      amenities: [''],
+      minGuests: [1, [Validators.required, Validators.min(1)]],
+      maxGuests: [1, [Validators.required, Validators.min(1)]],
+      apartmentType: ['', [Validators.required]],
+      price: [null, [Validators.required, Validators.min(0)]],
+      availability: ['', [Validators.required]],
+      photos: [''],
+      owner: this.user
+    });
   }
 
-  onFileSelected(event: any) {
+  onFileSelected(event: any): void {
+    const file = event.target.files[0];
+    console.log('Selected file:', file);
   }
 
-  addApartment() {
-    if(this.apartmentForm.valid){
-      const data = {
-        name: this.apartmentForm.value.name,
-        description: this.apartmentForm.value.description,
-        location: this.apartmentForm.value.location,
-        amenities: this.apartmentForm.value.amenities,
-        minGuests: this.apartmentForm.value.minGuests,
-        maxGuests: this.apartmentForm.value.maxGuests,
-        apartmentType: this.apartmentForm.value.apartmentType,
-        price: this.apartmentForm.value.price,
-        availability: this.apartmentForm.value.availability,
+  addApartment(): void {
+    if (this.apartmentForm.valid) {
+      const formData = {
+        ...this.apartmentForm.value,
+        amenities: this.apartmentForm.value.amenities.split(',').map((item: string) => item.trim()) // Razdvajanje pogodnosti
       };
 
-      this.accommodationService.addNewApartment(data)
+      this.accommodationService.createAccommodation(formData).subscribe({
+        next: (response) => {
+          console.log('Accommodation created:', response);
+          alert('Apartment successfully created!');
+          // this.apartmentForm.reset(); // resetuj formu
+        },
+        error: (err) => {
+          console.error('Error creating accommodation:', err);
+        }
+      });
+    } else {
+      console.error('Form is invalid!');
     }
   }
-
 }

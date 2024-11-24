@@ -30,6 +30,16 @@ public class Notification {
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
+    private String info;
+
+    public String getInfo() {
+        return info;
+    }
+
+    public void setInfo(String info) {
+        this.info = info;
+    }
+
     public Long getId() {
         return id;
     }
@@ -46,12 +56,12 @@ public class Notification {
         this.message = message;
     }
 
-    public boolean isRead() {
+    public boolean isIs_read() {
         return is_read;
     }
 
-    public void setRead(boolean read) {
-        this.is_read = read;
+    public void setIs_read(boolean is_read) {
+        this.is_read = is_read;
     }
 
     public LocalDateTime getTimestamp() {

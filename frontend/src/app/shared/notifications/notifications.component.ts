@@ -14,11 +14,16 @@ import {AuthService} from '../../core/service/auth/auth.service';
 export class NotificationsComponent implements OnInit {
   notifications: AppNotification[] = [];
   user: any;
+  userRole: string = '';
 
   constructor(private notificationService: NotificationService, private authService: AuthService) {}
 
   ngOnInit() {
     this.user = this.authService.getLoggedUser();
+
+    this.authService.userRole$.subscribe((role) => {
+      this.userRole = role;
+    });
 
     this.notificationService.getNotifications(this.user.id).subscribe((data) => {
       this.notifications = data;
@@ -32,5 +37,9 @@ export class NotificationsComponent implements OnInit {
         notification.id === id ? { ...notification, read: true } : notification
       );
     });
+  }
+
+  approveApartment() {
+
   }
 }
