@@ -31,5 +31,13 @@ public class AccommodationController {
         return ResponseEntity.ok(createdAccommodation);
     }
 
+    @GetMapping("/accommodationById/{id}")
+    public ResponseEntity<Accommodation> getAccommodationById(@RequestParam String id) {
+        System.out.println("valjda radi");
+
+        return null;
+    }
+
+
 }
 

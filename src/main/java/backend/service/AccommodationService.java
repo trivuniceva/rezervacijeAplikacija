@@ -62,5 +62,10 @@ public class AccommodationService {
         notificationService.createNotification(notification);
 
     }
+
+    public Accommodation getAccommodationById(Long id) {
+        return accommodationRepository.findById(id).orElse(null);
+    }
+
 }
 

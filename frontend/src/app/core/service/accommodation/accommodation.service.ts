@@ -37,4 +37,9 @@ export class AccommodationService {
     return this.http.post(`${this.apiUrl}/createAccommodation`, data);
   }
 
+  getAccommodationById(id: string) {
+    return this.http.get<Accommodation[]>(`${this.apiUrl}/accommodationById?email=${id}`);
+  }
+
+
 }

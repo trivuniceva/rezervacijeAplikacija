@@ -1,65 +1,133 @@
-<div *ngIf="apartment" class="apartment-container">
+<form #editApartmentForm="ngForm">
+  <div *ngIf="accommodation" class="apartment-container">
+    <div class="form-group">
+      <label for="name">Apartment Name:</label>
+      <input
+        id="name"
+        [(ngModel)]="accommodation.name"
+        name="name"
+        [readonly]="!isEditing"
+        type="text"
+        required
+      />
+    </div>
 
-  <div class="form-group">
-    <label for="name">Apartment Name:</label>
-    <input id="name" [(ngModel)]="apartment.name" [readonly]="!isEditing" type="text" />
+    <div class="form-group">
+      <label for="description">Description:</label>
+      <textarea
+        id="description"
+        [(ngModel)]="accommodation.description"
+        name="description"
+        [readonly]="!isEditing">
+      </textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="location">Location:</label>
+      <input
+        id="location"
+        [(ngModel)]="accommodation.location"
+        name="location"
+        [readonly]="!isEditing"
+        type="text"
+        required
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="amenities">Amenities:</label>
+      <input
+        id="amenities"
+        [(ngModel)]="accommodation.amenities"
+        name="amenities"
+        [readonly]="!isEditing"
+        type="text"
+        placeholder="e.g., WiFi, Kitchen, Air Conditioning"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="photos">Add Photos:</label>
+      <input
+        type="file"
+        id="photos"
+        (change)="onFileSelected($event)"
+        [disabled]="!isEditing"
+        multiple
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="minGuests">Minimum Guests:</label>
+      <input
+        id="minGuests"
+        [(ngModel)]="accommodation.minGuests"
+        name="minGuests"
+        [readonly]="!isEditing"
+        type="number"
+        min="1"
+        required
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="maxGuests">Maximum Guests:</label>
+      <input
+        id="maxGuests"
+        [(ngModel)]="accommodation.maxGuests"
+        name="maxGuests"
+        [readonly]="!isEditing"
+        type="number"
+        min="1"
+        required
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="apartmentType">Apartment Type:</label>
+      <select
+        id="apartmentType"
+        [(ngModel)]="accommodation.apartmentType"
+        name="apartmentType"
+        [disabled]="!isEditing">
+        <option value="studio">Studio</option>
+        <option value="room">Room</option>
+        <option value="apartment">Apartment</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="price">Price per Night:</label>
+      <input
+        id="price"
+        [(ngModel)]="accommodation.price"
+        name="price"
+        [readonly]="!isEditing"
+        type="number"
+        min="0"
+        required
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="availability">Availability:</label>
+      <input
+        type="date"
+        id="availability"
+        [(ngModel)]="accommodation.availability"
+        name="availability"
+        [disabled]="!isEditing"
+        required
+      />
+    </div>
+
+    <div class="button-container">
+      <button *ngIf="isEditing" (click)="saveChanges(editApartmentForm)">Save</button>
+      <button (click)="cancel()">Cancel</button>
+    </div>
   </div>
 
-  <div class="form-group">
-    <label for="description">Description:</label>
-    <textarea id="description" [(ngModel)]="apartment.description" [readonly]="!isEditing"></textarea>
+  <div *ngIf="!accommodation" class="apartment-container">
+    <p>No apartment details available.</p>
   </div>
-
-  <div class="form-group">
-    <label for="location">Location:</label>
-    <input id="location" [(ngModel)]="apartment.location" [readonly]="!isEditing" type="text" />
-  </div>
-
-  <div class="form-group">
-    <label for="amenities">Amenities:</label>
-    <input id="amenities" [(ngModel)]="apartment.amenities" [readonly]="!isEditing" type="text" placeholder="e.g., WiFi, Kitchen, Air Conditioning" />
-  </div>
-
-  <div class="form-group">
-    <label for="photos">Add Photos:</label>
-    <input type="file" id="photos" (change)="onFileSelected($event)" [disabled]="!isEditing" multiple />
-  </div>
-
-  <div class="form-group">
-    <label for="minGuests">Minimum Guests:</label>
-    <input id="minGuests" [(ngModel)]="apartment.minGuests" [readonly]="!isEditing" type="number" />
-  </div>
-
-  <div class="form-group">
-    <label for="maxGuests">Maximum Guests:</label>
-    <input id="maxGuests" [(ngModel)]="apartment.maxGuests" [readonly]="!isEditing" type="number" />
-  </div>
-
-  <div class="form-group">
-    <label for="apartmentType">Apartment Type:</label>
-    <select id="apartmentType" [(ngModel)]="apartment.apartmentType" [disabled]="!isEditing">
-      <option value="studio">Studio</option>
-      <option value="room">Room</option>
-      <option value="apartment">Apartment</option>
-    </select>
-  </div>
-
-  <div class="form-group">
-    <label for="price">Price per Night:</label>
-    <input id="price" [(ngModel)]="apartment.price" [readonly]="!isEditing" type="number" />
-  </div>
-
-  <div class="form-group">
-    <label for="availability">Availability:</label>
-    <input type="date" id="availability" [(ngModel)]="apartment.availability" [disabled]="!isEditing" />
-  </div>
-
-  <div class="button-container">
-    <button *ngIf="isEditing" (click)="saveChanges()">Save</button>
-  </div>
-
-</div>
-
-<div *ngIf="!apartment" class="apartment-container">
-  <p>No apartment details available.</p>
-</div>
+</form>

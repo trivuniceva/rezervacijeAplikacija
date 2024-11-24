@@ -3,11 +3,15 @@ import { NotificationService } from '../../core/service/notification/notificatio
 import { AppNotification } from '../../core/service/notification/notification.service';
 import { CommonModule, NgForOf, NgIf } from '@angular/common';
 import {AuthService} from '../../core/service/auth/auth.service';
+import {
+  ApartmentDetailsComponent
+} from '../../features/apartment/apartment-view/apartment-details/apartment-details.component';
+import {EditApartmentComponent} from '../../features/apartment/edit-apartment/edit-apartment.component';
 
 @Component({
   selector: 'app-notifications',
   standalone: true,
-  imports: [NgForOf, NgIf, CommonModule],
+  imports: [NgForOf, NgIf, CommonModule, ApartmentDetailsComponent, EditApartmentComponent],
   templateUrl: './notifications.component.html',
   styleUrl: './notifications.component.css',
 })
@@ -31,7 +35,6 @@ export class NotificationsComponent implements OnInit {
     });
   }
 
-
   markAsRead(id: number) {
     this.notificationService.markAsRead(id).subscribe(() => {
       this.notifications = this.notifications.map((notification) =>
@@ -44,9 +47,14 @@ export class NotificationsComponent implements OnInit {
     if (this.selectedNotification === notification) {
       // Ako je isto obaveštenje, zatvori detalje
       this.selectedNotification = null;
+      console.log("1")
+      console.log(this.selectedNotification)
     } else {
       // Inače prikaži detalje
       this.selectedNotification = notification;
+      console.log("2")
+      console.log(this.selectedNotification)
     }
   }
+
 }
