@@ -1,25 +1,20 @@
-<div class="notification-container">
-  <div *ngFor="let notification of notifications" class="notification">
-    <p [class.read]="notification.read">{{ notification.message }} {{ notification.info }} </p>
-    <small>{{ notification.timestamp | date: 'short' }}</small>
-
-    <div *ngIf="userRole === 'ADMINISTRATOR'; else userButtons">
-      <button (click)="approveApartment()">
-<!--      <button>-->
-        Approve Apartment
-      </button>
-
-      <button (click)="markAsRead(notification.id)" *ngIf="!notification.read">
-        Mark as Read
-      </button>
+<div class="notification-layout">
+  <div class="notification-list" [class.expanded]="selectedNotification">
+    <div
+      *ngFor="let notification of notifications"
+      class="notification"
+      (click)="toggleDetails(notification)"
+      [class.active]="notification === selectedNotification"
+    >
+      <p [class.read]="notification.read">{{ notification.message }} {{notification.info}} </p>
+      <small>{{ notification.timestamp | date: 'short' }}</small>
     </div>
+  </div>
 
-    <ng-template #userButtons>
-      <div>
-        <button class="btn-primary" (click)="markAsRead(notification.id)" *ngIf="!notification.read">
-          Mark as Read
-        </button>
-      </div>
-    </ng-template>
+  <div class="notification-details" *ngIf="selectedNotification">
+    <h3>Detalji obaveštenja</h3>
+    <p>{{ selectedNotification.message }}</p>
+    <p>{{ selectedNotification.info }}</p>
+    <small>{{ selectedNotification.timestamp | date: 'long' }}</small>
   </div>
 </div>

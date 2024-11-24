@@ -15,6 +15,7 @@ export class NotificationsComponent implements OnInit {
   notifications: AppNotification[] = [];
   user: any;
   userRole: string = '';
+  selectedNotification: any = null;
 
   constructor(private notificationService: NotificationService, private authService: AuthService) {}
 
@@ -39,7 +40,13 @@ export class NotificationsComponent implements OnInit {
     });
   }
 
-  approveApartment() {
-
+  toggleDetails(notification: any) {
+    if (this.selectedNotification === notification) {
+      // Ako je isto obaveštenje, zatvori detalje
+      this.selectedNotification = null;
+    } else {
+      // Inače prikaži detalje
+      this.selectedNotification = notification;
+    }
   }
 }
