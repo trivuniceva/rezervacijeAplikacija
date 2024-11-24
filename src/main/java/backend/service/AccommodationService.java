@@ -64,7 +64,8 @@ public class AccommodationService {
     }
 
     public Accommodation getAccommodationById(Long id) {
-        return accommodationRepository.findById(id).orElse(null);
+        return accommodationRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Accommodation not found with id " + id));
     }
 
 }

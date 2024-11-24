@@ -7,6 +7,7 @@ import {
   ApartmentDetailsComponent
 } from '../../features/apartment/apartment-view/apartment-details/apartment-details.component';
 import {EditApartmentComponent} from '../../features/apartment/edit-apartment/edit-apartment.component';
+import {AccommodationService} from '../../core/service/accommodation/accommodation.service';
 
 @Component({
   selector: 'app-notifications',
@@ -21,7 +22,7 @@ export class NotificationsComponent implements OnInit {
   userRole: string = '';
   selectedNotification: any = null;
 
-  constructor(private notificationService: NotificationService, private authService: AuthService) {}
+  constructor(private notificationService: NotificationService, private authService: AuthService, private accomodationService: AccommodationService) {}
 
   ngOnInit() {
     this.user = this.authService.getLoggedUser();
@@ -43,18 +44,31 @@ export class NotificationsComponent implements OnInit {
     });
   }
 
+
+  loading: boolean = false;
+
   toggleDetails(notification: any) {
     if (this.selectedNotification === notification) {
-      // Ako je isto obaveštenje, zatvori detalje
       this.selectedNotification = null;
-      console.log("1")
-      console.log(this.selectedNotification)
     } else {
-      // Inače prikaži detalje
       this.selectedNotification = notification;
-      console.log("2")
-      console.log(this.selectedNotification)
+      const apartmentId = this.selectedNotification.info;
+      this.loading = true;
+
+      this.accomodationService.getAccommodationById(apartmentId).subscribe(
+        (apartment) => {
+          this.loading = false;
+          this.selectedNotification.apartment = apartment;
+        },
+        (error) => {
+          this.loading = false;
+          console.error("Error fetching apartment details:", error);
+        }
+      );
     }
   }
+
+
+
 
 }

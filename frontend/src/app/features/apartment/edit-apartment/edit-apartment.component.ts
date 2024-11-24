@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import {Location, NgIf} from '@angular/common';
-import {FormsModule, NgForm} from '@angular/forms';
+import { Component, OnInit, Input } from '@angular/core';
+import { Location, NgIf } from '@angular/common';
+import { FormsModule, NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-edit-apartment',
@@ -13,23 +13,13 @@ import {FormsModule, NgForm} from '@angular/forms';
   ]
 })
 export class EditApartmentComponent implements OnInit {
-  accommodation: any = null; // Možete postaviti na podrazumevanu vrednost ako je potrebno
+  @Input() accommodation: any = null;  // Ovdje primaš podatke o apartmanu
   isEditing: boolean = false;
 
   constructor(private location: Location) {}
 
   ngOnInit(): void {
-    this.accommodation = history.state.accommodation || {
-      name: '',
-      description: '',
-      location: '',
-      amenities: '',
-      minGuests: 1,
-      maxGuests: 1,
-      apartmentType: 'apartment',
-      price: 0,
-      availability: '',
-    };
+    // Nema potrebe za istorijom, jer podatke sada primaš kroz @Input
     console.log('Loaded accommodation:', this.accommodation);
   }
 
@@ -38,7 +28,6 @@ export class EditApartmentComponent implements OnInit {
     if (input.files && input.files.length > 0) {
       const files = Array.from(input.files);
       console.log('Selected files:', files);
-      // Ovde dodajte logiku za obradu fajlova (npr. upload na server)
     }
   }
 
@@ -46,7 +35,6 @@ export class EditApartmentComponent implements OnInit {
     if (form.valid) {
       console.log('Changes saved:', this.accommodation);
       console.log('Form data:', form.value);
-      // Dodajte logiku za čuvanje podataka, npr. poziv API-a
     } else {
       console.error('Form is invalid');
     }

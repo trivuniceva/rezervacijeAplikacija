@@ -32,10 +32,8 @@ public class AccommodationController {
     }
 
     @GetMapping("/accommodationById/{id}")
-    public ResponseEntity<Accommodation> getAccommodationById(@RequestParam String id) {
-        System.out.println("valjda radi");
-
-        return null;
+    public Accommodation getAccommodationById(@PathVariable("id") Long id) {
+        return accommodationService.getAccommodationById(id);
     }
 
 
