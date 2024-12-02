@@ -33,4 +33,16 @@ export class EditApartmentComponent implements OnInit{
   saveChanges() {
 
   }
+
+  enableEditing() {
+    this.isEditing = true;
+  }
+
+  deleteApartment() {
+
+  }
+
+  cancelEditing() {
+    this.isEditing = false;
+  }
 }
