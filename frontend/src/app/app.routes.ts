@@ -11,7 +11,7 @@ import {
   SearchAccommodationsComponent
 } from './shared/search-accommodations/search-accommodations.component';
 import {EditApartmentViewComponent} from './features/apartment/edit-apartment-view/edit-apartment-view.component';
-import {DetailedViewBaseComponent} from './features/apartment/apartment-view/detailed-view-base/detailed-view-base.component';
+import {DetailedViewBaseComponent} from './features/apartment/apartment-view-guest/detailed-view-base/detailed-view-base.component';
 import {NotificationsComponent} from './shared/notifications/notifications.component';
 
 export const routes: Routes = [

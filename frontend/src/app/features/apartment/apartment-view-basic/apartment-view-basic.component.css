@@ -1,0 +1,40 @@
+.apartment-details-card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 16px;
+  max-width: 600px;
+  margin: 16px auto;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+}
+
+.apartment-header {
+  text-align: center;
+}
+
+.apartment-photo {
+  width: 100%;
+  max-width: 300px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+}
+
+.apartment-info {
+  margin-top: 16px;
+  line-height: 1.5;
+}
+
+.description, .location, .guests, .owner, .amenities {
+  margin: 8px 0;
+}
+
+.apartment-status {
+  margin-top: 16px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.apartment-type {
+  font-style: italic;
+  color: #666;
+}

@@ -5,14 +5,17 @@ import { CommonModule, NgForOf, NgIf } from '@angular/common';
 import {AuthService} from '../../core/service/auth/auth.service';
 import {
   ApartmentDetailsComponent
-} from '../../features/apartment/apartment-view/apartment-details/apartment-details.component';
+} from '../../features/apartment/apartment-view-guest/apartment-details/apartment-details.component';
 import {EditApartmentComponent} from '../../features/apartment/edit-apartment/edit-apartment.component';
 import {AccommodationService} from '../../core/service/accommodation/accommodation.service';
+import {
+  ApartmentViewBasicComponent
+} from '../../features/apartment/apartment-view-basic/apartment-view-basic.component';
 
 @Component({
   selector: 'app-notifications',
   standalone: true,
-  imports: [NgForOf, NgIf, CommonModule, ApartmentDetailsComponent, EditApartmentComponent],
+  imports: [NgForOf, NgIf, CommonModule, ApartmentDetailsComponent, EditApartmentComponent, ApartmentViewBasicComponent, ApartmentViewBasicComponent],
   templateUrl: './notifications.component.html',
   styleUrl: './notifications.component.css',
 })
@@ -55,10 +58,14 @@ export class NotificationsComponent implements OnInit {
       const apartmentId = this.selectedNotification.info;
       this.loading = true;
 
+      console.log(this.selectedNotification)
+      console.log(apartmentId)
+
       this.accomodationService.getAccommodationById(apartmentId).subscribe(
         (apartment) => {
           this.loading = false;
           this.selectedNotification.apartment = apartment;
+          console.log(apartment)
         },
         (error) => {
           this.loading = false;

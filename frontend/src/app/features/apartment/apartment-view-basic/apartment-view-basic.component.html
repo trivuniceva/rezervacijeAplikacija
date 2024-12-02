@@ -1,0 +1,28 @@
+<div *ngIf="apartment" class="apartment-details-card">
+  <div class="apartment-header">
+    <img [src]="apartment.photos" class="apartment-photo" alt="Apartment Photo">
+    <h2>{{ apartment.name }}</h2>
+    <p class="apartment-type">{{ apartment.type }}</p>
+  </div>
+
+  <div class="apartment-info">
+    <p class="description"><strong>Opis:</strong> {{ apartment.description }}</p>
+    <p class="location"><strong>Lokacija:</strong> {{ apartment.location }}</p>
+    <p class="guests">
+      <strong>Kapacitet gostiju:</strong> od {{ apartment.minGuests }} do {{ apartment.maxGuests }} gostiju
+    </p>
+    <p class="owner">
+      <strong>Vlasnik:</strong> {{ apartment.owner.firstname }} {{ apartment.owner.lastname }} ({{ apartment.owner.email }})
+    </p>
+    <p *ngIf="apartment.amenities && apartment.amenities.length > 0" class="amenities">
+      <strong>Pogodnosti:</strong> {{ apartment.amenities.join(', ') }}
+    </p>
+    <p *ngIf="!apartment.amenities || apartment.amenities.length === 0" class="amenities">
+      <strong>Pogodnosti:</strong> Nema dodatnih pogodnosti.
+    </p>
+  </div>
+
+  <div class="apartment-status">
+    <p><strong>Odobren:</strong> {{ apartment.approved ? 'Da' : 'Ne' }}</p>
+  </div>
+</div>
