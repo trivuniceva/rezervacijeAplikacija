@@ -27,7 +27,7 @@
         </div>
 
         <div *ngIf="userRole === 'HOST'">
-          <button class="view-details" (click)="editApartment()">Edit Apartment</button>
+          <button class="view-details" (click)="editApartment(accommodation)">Edit Apartment</button>
         </div>
 
         <div *ngIf="userRole === 'GUEST'">
