@@ -19,6 +19,10 @@
 
     <app-apartment-view-basic [apartment]="selectedNotification.apartment"></app-apartment-view-basic>
 
+    <div class="button-container">
+      <button style="background-color: green" (click)="approveApartment()"> Approve Apartment </button>
+      <button style="background-color: #B80C09" (click)="rejectApartment()"> Reject Apartment </button>
+    </div>
 
   </div>
 
