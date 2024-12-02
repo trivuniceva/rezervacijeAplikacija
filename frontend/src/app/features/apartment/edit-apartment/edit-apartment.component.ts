@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import {NgIf} from '@angular/common';
+import {Component, OnInit} from '@angular/core';
+import {Location, NgIf} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 import {SearchAccommodationsComponent} from "../../../shared/search-accommodations/search-accommodations.component";
 
@@ -14,9 +14,17 @@ import {SearchAccommodationsComponent} from "../../../shared/search-accommodatio
   templateUrl: './edit-apartment.component.html',
   styleUrl: './edit-apartment.component.css'
 })
-export class EditApartmentComponent {
+export class EditApartmentComponent implements OnInit{
   apartment: any;
   isEditing: boolean = false;
+
+  constructor(private location: Location) {}
+
+  ngOnInit(): void {
+    console.log("caoosssss <33")
+    this.apartment = history.state.apartment;
+    console.log(this.apartment)
+  }
 
   onFileSelected($event: Event) {
 
@@ -24,5 +32,17 @@ export class EditApartmentComponent {
 
   saveChanges() {
 
+  }
+
+  enableEditing() {
+    this.isEditing = true;
+  }
+
+  deleteApartment() {
+
+  }
+
+  cancelEditing() {
+    this.isEditing = false;
   }
 }
