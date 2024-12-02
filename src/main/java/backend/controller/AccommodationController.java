@@ -31,5 +31,11 @@ public class AccommodationController {
         return ResponseEntity.ok(createdAccommodation);
     }
 
+    @GetMapping("/accommodationById/{id}")
+    public Accommodation getAccommodationById(@PathVariable("id") Long id) {
+        return accommodationService.getAccommodationById(id);
+    }
+
+
 }
 

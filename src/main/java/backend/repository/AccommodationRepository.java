@@ -12,4 +12,5 @@ public interface AccommodationRepository extends JpaRepository<Accommodation, Lo
     List<Accommodation> findByType(String type);
     List<Accommodation> findByLocation(String location);
     List<Accommodation> findByOwnerId(Long ownerId);
+
 }

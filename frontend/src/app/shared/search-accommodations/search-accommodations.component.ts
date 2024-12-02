@@ -57,6 +57,7 @@ export class SearchAccommodationsComponent implements OnInit{
     console.log("evo me u search")
     console.log(apartment)
     this.router.navigate(['/edit-apartment'], { state: { apartment } })
+
   }
 
   detailedViewApartment(accommodation: Accommodation) {
