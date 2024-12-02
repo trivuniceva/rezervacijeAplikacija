@@ -1,10 +1,10 @@
 <form #editApartmentForm="ngForm">
-  <div *ngIf="accommodation" class="apartment-container">
+  <div *ngIf="apartment" class="apartment-container">
     <div class="form-group">
       <label for="name">Apartment Name:</label>
       <input
         id="name"
-        [(ngModel)]="accommodation.name"
+        [(ngModel)]="apartment.name"
         name="name"
         [readonly]="!isEditing"
         type="text"
@@ -16,7 +16,7 @@
       <label for="description">Description:</label>
       <textarea
         id="description"
-        [(ngModel)]="accommodation.description"
+        [(ngModel)]="apartment.description"
         name="description"
         [readonly]="!isEditing">
       </textarea>
@@ -26,7 +26,7 @@
       <label for="location">Location:</label>
       <input
         id="location"
-        [(ngModel)]="accommodation.location"
+        [(ngModel)]="apartment.location"
         name="location"
         [readonly]="!isEditing"
         type="text"
@@ -38,7 +38,7 @@
       <label for="amenities">Amenities:</label>
       <input
         id="amenities"
-        [(ngModel)]="accommodation.amenities"
+        [(ngModel)]="apartment.amenities"
         name="amenities"
         [readonly]="!isEditing"
         type="text"
@@ -61,7 +61,7 @@
       <label for="minGuests">Minimum Guests:</label>
       <input
         id="minGuests"
-        [(ngModel)]="accommodation.minGuests"
+        [(ngModel)]="apartment.minGuests"
         name="minGuests"
         [readonly]="!isEditing"
         type="number"
@@ -74,7 +74,7 @@
       <label for="maxGuests">Maximum Guests:</label>
       <input
         id="maxGuests"
-        [(ngModel)]="accommodation.maxGuests"
+        [(ngModel)]="apartment.maxGuests"
         name="maxGuests"
         [readonly]="!isEditing"
         type="number"
@@ -87,7 +87,7 @@
       <label for="apartmentType">Apartment Type:</label>
       <select
         id="apartmentType"
-        [(ngModel)]="accommodation.apartmentType"
+        [(ngModel)]="apartment.apartmentType"
         name="apartmentType"
         [disabled]="!isEditing">
         <option value="studio">Studio</option>
@@ -100,7 +100,7 @@
       <label for="price">Price per Night:</label>
       <input
         id="price"
-        [(ngModel)]="accommodation.price"
+        [(ngModel)]="apartment.price"
         name="price"
         [readonly]="!isEditing"
         type="number"
@@ -114,17 +114,13 @@
       <input
         type="date"
         id="availability"
-        [(ngModel)]="accommodation.availability"
+        [(ngModel)]="apartment.availability"
         name="availability"
         [disabled]="!isEditing"
         required
       />
     </div>
 
-    <div class="button-container">
-      <button *ngIf="isEditing" (click)="saveChanges(editApartmentForm)">Save</button>
-      <button (click)="cancel()">Cancel</button>
-    </div>
   </div>
 
   <div class="button-container">
