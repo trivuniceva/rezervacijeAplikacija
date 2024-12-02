@@ -127,7 +127,10 @@
     </div>
   </div>
 
-  <div *ngIf="!accommodation" class="apartment-container">
-    <p>No apartment details available.</p>
+  <div class="button-container">
+    <button *ngIf="!isEditing" (click)="enableEditing()">Edit</button>
+    <button style="background-color: #B80C09;" *ngIf="!isEditing" (click)="deleteApartment()">Delete</button>
+    <button *ngIf="isEditing" (click)="saveChanges()">Save</button>
+    <button style="background-color: #555" *ngIf="isEditing" (click)="cancelEditing()">Cancel</button>
   </div>
 </form>

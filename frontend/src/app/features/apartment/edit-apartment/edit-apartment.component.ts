@@ -1,6 +1,8 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { Location, NgIf } from '@angular/common';
-import { FormsModule, NgForm } from '@angular/forms';
+import {Component, OnInit} from '@angular/core';
+import {Location, NgIf} from '@angular/common';
+import {FormsModule} from '@angular/forms';
+import {SearchAccommodationsComponent} from "../../../shared/search-accommodations/search-accommodations.component";
+
 
 @Component({
   selector: 'app-edit-apartment',
@@ -12,11 +14,21 @@ import { FormsModule, NgForm } from '@angular/forms';
     NgIf
   ]
 })
-export class EditApartmentComponent implements OnInit {
-  @Input() accommodation: any = null;  // Ovdje primaš podatke o apartmanu
+
+export class EditApartmentComponent implements OnInit{
+  apartment: any;
   isEditing: boolean = false;
 
   constructor(private location: Location) {}
+
+  ngOnInit(): void {
+    console.log("caoosssss <33")
+    this.apartment = history.state.apartment;
+    console.log(this.apartment)
+  }
+
+  onFileSelected($event: Event) {
+
 
   ngOnInit(): void {
     // Nema potrebe za istorijom, jer podatke sada primaš kroz @Input
@@ -42,5 +54,17 @@ export class EditApartmentComponent implements OnInit {
 
   cancel(): void {
     this.location.back();
+  }
+
+  enableEditing() {
+    this.isEditing = true;
+  }
+
+  deleteApartment() {
+
+  }
+
+  cancelEditing() {
+    this.isEditing = false;
   }
 }
