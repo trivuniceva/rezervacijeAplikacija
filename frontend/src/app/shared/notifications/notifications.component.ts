@@ -77,10 +77,33 @@ export class NotificationsComponent implements OnInit {
 
 
   approveApartment() {
+    console.log(this.selectedNotification);
 
+    this.notificationService.approveApartment(this.selectedNotification).subscribe(
+      () => {
+        console.log("Apartment approved successfully!");
+      },
+      (error) => {
+        console.error("Error approving apartment:", error);
+      }
+    );
   }
+
 
   rejectApartment() {
-
+    if (this.selectedNotification) {
+      this.notificationService.rejectApartment(this.selectedNotification).subscribe(
+        (response) => {
+          console.log("Success rejecting apartment:", response);
+        },
+        (error) => {
+          console.error("Error rejecting apartment:", error.message);
+          console.error("Detailed error:", error);
+        }
+      );
+    } else {
+      console.error("No notification selected!");
+    }
   }
+
 }

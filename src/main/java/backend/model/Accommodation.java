@@ -139,5 +139,22 @@ public class Accommodation {
         this.owner = owner;
     }
 
+    @Override
+    public String toString() {
+        return "Accommodation{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", location='" + location + '\'' +
+                ", amenities=" + amenities +
+                ", photos='" + photos + '\'' +
+                ", minGuests=" + minGuests +
+                ", maxGuests=" + maxGuests +
+                ", type=" + type +
+                ", approved=" + approved +
+                ", availabilityList=" + availabilityList +
+                ", owner=" + owner +
+                '}';
+    }
 }
 

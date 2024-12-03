@@ -31,4 +31,15 @@ export class NotificationService {
   markAsRead(id: number): Observable<void> {
     return this.http.put<void>(`${this.apiUrl}/${id}/read`, {});
   }
+
+
+  approveApartment(selectedNotification: any): Observable<void> {
+    return this.http.post<void>(`${this.apiUrl}/approve`, selectedNotification);
+  }
+
+  rejectApartment(selectedNotification: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/reject`, selectedNotification);
+  }
+
+
 }

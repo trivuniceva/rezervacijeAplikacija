@@ -79,4 +79,16 @@ public class Notification {
     public void setUser(User user) {
         this.user = user;
     }
+
+    @Override
+    public String toString() {
+        return "Notification{" +
+                "id=" + id +
+                ", message='" + message + '\'' +
+                ", is_read=" + is_read +
+                ", timestamp=" + timestamp +
+                ", user=" + user +
+                ", info='" + info + '\'' +
+                '}';
+    }
 }
