@@ -56,11 +56,11 @@ public class Notification {
         this.message = message;
     }
 
-    public boolean isIs_read() {
+    public boolean isRead() {
         return is_read;
     }
 
-    public void setIs_read(boolean is_read) {
+    public void setRead(boolean is_read) {
         this.is_read = is_read;
     }
 

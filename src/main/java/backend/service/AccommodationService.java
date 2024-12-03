@@ -57,7 +57,7 @@ public class AccommodationService {
     private void handleNotification(User user, String info){
         Notification notification = new Notification();
         notification.setMessage("Created new apartment with id: #");
-        notification.setIs_read(false);
+        notification.setRead(false);
         notification.setUser(user);
         notification.setInfo(info);
 

@@ -24,6 +24,7 @@ export class NotificationsComponent implements OnInit {
   user: any;
   userRole: string = '';
   selectedNotification: any = null;
+  loading: boolean = false;
 
   constructor(private notificationService: NotificationService, private authService: AuthService, private accomodationService: AccommodationService) {
   }
@@ -39,17 +40,6 @@ export class NotificationsComponent implements OnInit {
       this.notifications = data;
     });
   }
-
-  markAsRead(id: number) {
-    this.notificationService.markAsRead(id).subscribe(() => {
-      this.notifications = this.notifications.map((notification) =>
-        notification.id === id ? {...notification, read: true} : notification
-      );
-    });
-  }
-
-
-  loading: boolean = false;
 
   toggleDetails(notification: any) {
     if (this.selectedNotification === notification) {
