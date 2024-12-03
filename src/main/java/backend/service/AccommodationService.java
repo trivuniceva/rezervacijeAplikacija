@@ -1,5 +1,7 @@
 package backend.service;
 
+import backend.dto.ApartmentDTO;
+import backend.dto.NotificationRequest;
 import backend.model.Accommodation;
 import backend.model.Notification;
 import backend.repository.AccommodationRepository;
@@ -55,7 +57,7 @@ public class AccommodationService {
     private void handleNotification(User user, String info){
         Notification notification = new Notification();
         notification.setMessage("Created new apartment with id: #");
-        notification.setIs_read(false);
+        notification.setRead(false);
         notification.setUser(user);
         notification.setInfo(info);
 
@@ -67,6 +69,30 @@ public class AccommodationService {
         return accommodationRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Accommodation not found with id " + id));
     }
+
+    public void approveApartment(ApartmentDTO apartment) {
+        Accommodation accommodation = getAccommodationById(apartment.getId());
+        System.out.println(accommodation);
+        System.out.println("^^^^");
+    }
+
+    public void approveApartment(NotificationRequest notificationRequest) {
+        notificationService.markAsRead(notificationRequest.getId());
+        Accommodation accommodation = getAccommodationById(notificationRequest.getApartment().getId());
+        accommodation.setApproved(true);
+
+        accommodationRepository.save(accommodation);
+    }
+
+    public void rejectApartment(NotificationRequest notificationRequest) {
+        notificationService.markAsRead(notificationRequest.getId());
+        Accommodation accommodation = getAccommodationById(notificationRequest.getApartment().getId());
+        accommodation.setApproved(false);
+
+        accommodationRepository.save(accommodation);
+    }
+
+
 
 }
 

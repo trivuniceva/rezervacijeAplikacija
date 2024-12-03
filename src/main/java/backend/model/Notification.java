@@ -56,11 +56,11 @@ public class Notification {
         this.message = message;
     }
 
-    public boolean isIs_read() {
+    public boolean isRead() {
         return is_read;
     }
 
-    public void setIs_read(boolean is_read) {
+    public void setRead(boolean is_read) {
         this.is_read = is_read;
     }
 
@@ -78,5 +78,17 @@ public class Notification {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    @Override
+    public String toString() {
+        return "Notification{" +
+                "id=" + id +
+                ", message='" + message + '\'' +
+                ", is_read=" + is_read +
+                ", timestamp=" + timestamp +
+                ", user=" + user +
+                ", info='" + info + '\'' +
+                '}';
     }
 }
