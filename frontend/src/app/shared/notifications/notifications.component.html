@@ -6,7 +6,7 @@
       (click)="toggleDetails(notification)"
       [class.active]="notification === selectedNotification"
     >
-      <p [class.read]="notification.read">{{ notification.message }} {{notification.info}} </p>
+      <p [class.read]="notification.read">{{ notification.message }} {{ notification.info }}</p>
       <small>{{ notification.timestamp | date: 'short' }}</small>
     </div>
   </div>
@@ -20,11 +20,8 @@
     <app-apartment-view-basic [apartment]="selectedNotification.apartment"></app-apartment-view-basic>
 
     <div class="button-container">
-      <button style="background-color: green" (click)="approveApartment()"> Approve Apartment </button>
-      <button style="background-color: #B80C09" (click)="rejectApartment()"> Reject Apartment </button>
+      <button style="background-color: green" (click)="approveApartment()">Approve Apartment</button>
+      <button style="background-color: #B80C09" (click)="rejectApartment()">Reject Apartment</button>
     </div>
-
   </div>
-
-
 </div>

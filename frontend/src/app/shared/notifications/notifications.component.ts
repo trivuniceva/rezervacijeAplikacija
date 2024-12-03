@@ -25,7 +25,8 @@ export class NotificationsComponent implements OnInit {
   userRole: string = '';
   selectedNotification: any = null;
 
-  constructor(private notificationService: NotificationService, private authService: AuthService, private accomodationService: AccommodationService) {}
+  constructor(private notificationService: NotificationService, private authService: AuthService, private accomodationService: AccommodationService) {
+  }
 
   ngOnInit() {
     this.user = this.authService.getLoggedUser();
@@ -42,7 +43,7 @@ export class NotificationsComponent implements OnInit {
   markAsRead(id: number) {
     this.notificationService.markAsRead(id).subscribe(() => {
       this.notifications = this.notifications.map((notification) =>
-        notification.id === id ? { ...notification, read: true } : notification
+        notification.id === id ? {...notification, read: true} : notification
       );
     });
   }
@@ -75,35 +76,51 @@ export class NotificationsComponent implements OnInit {
     }
   }
 
-
   approveApartment() {
-    console.log(this.selectedNotification);
-
-    this.notificationService.approveApartment(this.selectedNotification).subscribe(
-      () => {
-        console.log("Apartment approved successfully!");
-      },
-      (error) => {
-        console.error("Error approving apartment:", error);
-      }
-    );
+    if (this.selectedNotification) {
+      this.notificationService.approveApartment(this.selectedNotification).subscribe(
+        () => {
+          console.log("Apartment approved successfully!");
+          this.moveToNextNotification();
+        },
+        (error) => {
+          console.error("Error approving apartment:", error);
+        }
+      );
+    }
   }
-
 
   rejectApartment() {
     if (this.selectedNotification) {
       this.notificationService.rejectApartment(this.selectedNotification).subscribe(
-        (response) => {
-          console.log("Success rejecting apartment:", response);
+        () => {
+          console.log("Apartment rejected successfully!");
+          this.moveToNextNotification();
         },
         (error) => {
           console.error("Error rejecting apartment:", error.message);
-          console.error("Detailed error:", error);
         }
       );
-    } else {
-      console.error("No notification selected!");
     }
   }
 
+  private moveToNextNotification() {
+    const currentIndex = this.notifications.findIndex(
+      (notification) => notification === this.selectedNotification
+    );
+
+    if (currentIndex !== -1) {
+      // Ukloni trenutnu notifikaciju
+      this.notifications.splice(currentIndex, 1);
+
+      // Postavi sledecu
+      if (this.notifications.length > 0) {
+        const nextIndex = currentIndex < this.notifications.length ? currentIndex : 0;
+        this.toggleDetails(this.notifications[nextIndex]);
+      } else {
+        // Ako nema vise notifikacija, resetuj prikaz
+        this.selectedNotification = null;
+      }
+    }
+  }
 }
