@@ -1,6 +1,6 @@
-<div class="container" style="display: flex;">
+<div class="container" style="display: flex; height: 100vh;">
   <!-- Leva strana - 1/4 širine -->
-  <div class="left-side" style="flex: 1; padding: 20px;">
+  <div class="left-side">
     <div class="form-group">
       <label for="price">Price</label>
       <input type="number" id="price" class="form-control" [(ngModel)]="price" />
@@ -8,12 +8,14 @@
 
     <div class="form-group">
       <label>Pricing Method</label>
-      <div>
-        <label for="perGuest">
-          <input type="radio" id="perGuest" [(ngModel)]="pricingMethod" value="perGuest" /> Per Guest
+      <div class="pricing-method-options">
+        <label for="perGuest" class="custom-radio">
+          <input type="radio" id="perGuest" [(ngModel)]="pricingMethod" value="perGuest" />
+          <span>Per Guest</span>
         </label>
-        <label for="perUnit">
-          <input type="radio" id="perUnit" [(ngModel)]="pricingMethod" value="perUnit" /> Per Unit
+        <label for="perUnit" class="custom-radio">
+          <input type="radio" id="perUnit" [(ngModel)]="pricingMethod" value="perUnit" />
+          <span>Per Unit</span>
         </label>
       </div>
     </div>
