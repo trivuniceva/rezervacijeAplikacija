@@ -67,6 +67,7 @@ export class CalendarComponent implements OnInit {
   onMouseDown(date: Date): void {
     this.isSelecting = true;
     this.startDate = date;
+    this.toggleDateSelection(date);  // Selektuj odmah kada klikneš na datum
   }
 
   onMouseUp(): void {
