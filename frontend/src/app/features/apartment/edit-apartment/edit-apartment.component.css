@@ -49,6 +49,8 @@
 
 .details-container {
   width: 90%;
+  border: solid red;
+
 }
 
 .details-container h2 {
@@ -122,4 +124,19 @@ button {
   font-size: 1em;
   color: #555;
   cursor: pointer;
+}
+
+.info-container{
+  width: 50%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  border: solid red;
+  padding-bottom: 20px;
+  margin: 0 auto;
+}
+
+.info-container input, select{
+  text-align: center;
 }

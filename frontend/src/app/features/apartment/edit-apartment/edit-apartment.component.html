@@ -10,7 +10,7 @@
   <!-- Desna strana -->
   <div class="edit-details">
     <div class="details-container">
-      <div *ngIf="selectedSection === 'basic'">
+      <div *ngIf="selectedSection === 'basic'" class="info-container">
         <h2>Edit Basic Info</h2>
         <label for="name">Name:</label>
         <input id="name" [(ngModel)]="apartment.name" type="text">
@@ -40,7 +40,7 @@
         </div>
       </div>
 
-      <div *ngIf="selectedSection === 'more'">
+      <div *ngIf="selectedSection === 'more'" class="info-container">
         <h2>Edit More Info</h2>
         <label for="description">Description:</label>
         <textarea id="description" [(ngModel)]="apartment.description"></textarea>
