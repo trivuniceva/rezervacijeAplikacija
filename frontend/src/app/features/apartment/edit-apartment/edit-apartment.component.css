@@ -53,8 +53,11 @@
   min-width: 400px;
 }
 
-.details-container h3 {
+.details-container h2 {
   text-align: center;
+  color: #333;
+  margin-bottom: 50px;
+
 }
 
 .edit-details label {

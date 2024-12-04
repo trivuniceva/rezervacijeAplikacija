@@ -27,18 +27,34 @@ export class CalendarComponent implements OnInit {
     this.updateCalendar();
   }
 
-  prevMonth(): void {
-    this.currentMonth.setMonth(this.currentMonth.getMonth() - 1);
+  prevMonth() {
+    this.currentMonth = new Date(
+      this.currentMonth.getFullYear(),
+      this.currentMonth.getMonth() - 1,
+      1
+    );
     this.updateCalendar();
   }
 
-  nextMonth(): void {
-    this.currentMonth.setMonth(this.currentMonth.getMonth() + 1);
+  nextMonth() {
+    this.currentMonth = new Date(
+      this.currentMonth.getFullYear(),
+      this.currentMonth.getMonth() + 1,
+      1
+    );
     this.updateCalendar();
   }
 
-  private updateCalendar(): void {
-    this.datesInMonth = this.getDaysInMonth(this.currentMonth);
+  updateCalendar() {
+    const year = this.currentMonth.getFullYear();
+    const month = this.currentMonth.getMonth();
+    const firstDay = new Date(year, month, 1);
+    const lastDay = new Date(year, month + 1, 0);
+
+    this.datesInMonth = [];
+    for (let day = firstDay.getDate(); day <= lastDay.getDate(); day++) {
+      this.datesInMonth.push(new Date(year, month, day));
+    }
   }
 
   private getDaysInMonth(month: Date): Date[] {
