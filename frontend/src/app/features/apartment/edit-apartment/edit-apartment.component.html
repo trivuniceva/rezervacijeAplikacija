@@ -3,7 +3,7 @@
   <div class="edit-menu">
     <button [class.active]="selectedSection === 'basic'" (click)="selectedSection = 'basic'">Basic Info</button>
     <button [class.active]="selectedSection === 'more'" (click)="selectedSection = 'more'">More Info</button>
-    <button [class.active]="selectedSection === 'pricing'" (click)="selectedSection = 'pricing'">Pricing</button>
+    <button [class.active]="selectedSection === 'pricing'" (click)="selectedSection = 'pricing'">Pricing & Availability</button>
   </div>
 
   <!-- Desna strana -->
@@ -56,7 +56,8 @@
 
       <div *ngIf="selectedSection === 'pricing'">
         <h3>Edit Pricing & Availability</h3>
-        
+
+        <app-pricing-and-availability></app-pricing-and-availability>
       </div>
 
       <div class="button-container">

@@ -48,7 +48,7 @@
 }
 
 .details-container {
-  width: 60%;
+  width: 90%;
   max-width: 800px;
   min-width: 400px;
 }
@@ -65,7 +65,7 @@
 .edit-details input,
 .edit-details textarea,
 .edit-details select {
-  width: 100%;
+  width: 90%;
   padding: 10px;
   margin-top: 5px;
   border: 1px solid #ccc;

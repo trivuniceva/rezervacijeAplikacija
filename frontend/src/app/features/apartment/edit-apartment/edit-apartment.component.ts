@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Location, NgIf} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 import {SearchAccommodationsComponent} from "../../../shared/search-accommodations/search-accommodations.component";
+import {PricingAndAvailabilityComponent} from '../pricing-and-availability/pricing-and-availability.component';
 
 @Component({
   selector: 'app-edit-apartment',
@@ -10,6 +11,7 @@ import {SearchAccommodationsComponent} from "../../../shared/search-accommodatio
     NgIf,
     FormsModule,
     SearchAccommodationsComponent,
+    PricingAndAvailabilityComponent,
   ],
   templateUrl: './edit-apartment.component.html',
   styleUrl: './edit-apartment.component.css'
@@ -48,6 +50,6 @@ export class EditApartmentComponent implements OnInit{
   }
 
   onFileSelected($event: Event) {
-    
+
   }
 }

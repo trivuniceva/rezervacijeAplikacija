@@ -1,0 +1,32 @@
+<div class="container" style="display: flex;">
+  <!-- Leva strana - 1/4 širine -->
+  <div class="left-side" style="flex: 1; padding: 20px;">
+    <div class="form-group">
+      <label for="price">Price</label>
+      <input type="number" id="price" class="form-control" [(ngModel)]="price" />
+    </div>
+
+    <div class="form-group">
+      <label>Pricing Method</label>
+      <div>
+        <label for="perGuest">
+          <input type="radio" id="perGuest" [(ngModel)]="pricingMethod" value="perGuest" /> Per Guest
+        </label>
+        <label for="perUnit">
+          <input type="radio" id="perUnit" [(ngModel)]="pricingMethod" value="perUnit" /> Per Unit
+        </label>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="cancellationDeadline">Cancellation Deadline</label>
+      <input type="date" id="cancellationDeadline" class="form-control" [(ngModel)]="cancellationDeadline" />
+    </div>
+  </div>
+
+  <!-- Desna strana - 3/4 širine -->
+  <div class="right-side" style="flex: 3; padding: 20px;">
+    <app-calendar></app-calendar>
+
+  </div>
+</div>
