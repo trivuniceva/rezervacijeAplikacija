@@ -19,14 +19,13 @@
     </div>
 
     <div class="form-group">
-      <label for="cancellationDeadline">Cancellation Deadline</label>
-      <input type="date" id="cancellationDeadline" class="form-control" [(ngModel)]="cancellationDeadline" />
+      <label for="cancellationDeadline">Cancellation Deadline (Days)</label>
+      <input type="number" id="cancellationDeadline" class="form-control" [(ngModel)]="cancellationDeadline" min="1" />
     </div>
   </div>
 
   <!-- Desna strana - 3/4 širine -->
   <div class="right-side" style="flex: 3; padding: 20px;">
     <app-calendar></app-calendar>
-
   </div>
 </div>
