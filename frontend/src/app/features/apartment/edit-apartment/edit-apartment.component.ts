@@ -9,14 +9,14 @@ import {SearchAccommodationsComponent} from "../../../shared/search-accommodatio
   imports: [
     NgIf,
     FormsModule,
-    SearchAccommodationsComponent
+    SearchAccommodationsComponent,
   ],
   templateUrl: './edit-apartment.component.html',
   styleUrl: './edit-apartment.component.css'
 })
 export class EditApartmentComponent implements OnInit{
   apartment: any;
-  isEditing: boolean = false;
+  selectedSection: string = 'basic';
 
   constructor(private location: Location) {}
 
@@ -26,23 +26,28 @@ export class EditApartmentComponent implements OnInit{
     console.log(this.apartment)
   }
 
+
+  showBasicInfo() {
+    this.selectedSection = 'basic';
+  }
+
+  showMoreInfo() {
+    this.selectedSection = 'more';
+  }
+
+  showPricingAvailability() {
+    this.selectedSection = 'pricing';
+  }
+
+  saveApartment() {
+    console.log('Apartment saved:', this.apartment);
+  }
+
+  cancelEdit() {
+    console.log('Edit cancelled');
+  }
+
   onFileSelected($event: Event) {
-
-  }
-
-  saveChanges() {
-
-  }
-
-  enableEditing() {
-    this.isEditing = true;
-  }
-
-  deleteApartment() {
-
-  }
-
-  cancelEditing() {
-    this.isEditing = false;
+    
   }
 }

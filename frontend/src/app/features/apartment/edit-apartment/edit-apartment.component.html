@@ -1,132 +1,68 @@
-<form #editApartmentForm="ngForm">
-  <div *ngIf="apartment" class="apartment-container">
-    <div class="form-group">
-      <label for="name">Apartment Name:</label>
-      <input
-        id="name"
-        [(ngModel)]="apartment.name"
-        name="name"
-        [readonly]="!isEditing"
-        type="text"
-        required
-      />
-    </div>
-
-    <div class="form-group">
-      <label for="description">Description:</label>
-      <textarea
-        id="description"
-        [(ngModel)]="apartment.description"
-        name="description"
-        [readonly]="!isEditing">
-      </textarea>
-    </div>
-
-    <div class="form-group">
-      <label for="location">Location:</label>
-      <input
-        id="location"
-        [(ngModel)]="apartment.location"
-        name="location"
-        [readonly]="!isEditing"
-        type="text"
-        required
-      />
-    </div>
-
-    <div class="form-group">
-      <label for="amenities">Amenities:</label>
-      <input
-        id="amenities"
-        [(ngModel)]="apartment.amenities"
-        name="amenities"
-        [readonly]="!isEditing"
-        type="text"
-        placeholder="e.g., WiFi, Kitchen, Air Conditioning"
-      />
-    </div>
-
-    <div class="form-group">
-      <label for="photos">Add Photos:</label>
-      <input
-        type="file"
-        id="photos"
-        (change)="onFileSelected($event)"
-        [disabled]="!isEditing"
-        multiple
-      />
-    </div>
-
-    <div class="form-group">
-      <label for="minGuests">Minimum Guests:</label>
-      <input
-        id="minGuests"
-        [(ngModel)]="apartment.minGuests"
-        name="minGuests"
-        [readonly]="!isEditing"
-        type="number"
-        min="1"
-        required
-      />
-    </div>
-
-    <div class="form-group">
-      <label for="maxGuests">Maximum Guests:</label>
-      <input
-        id="maxGuests"
-        [(ngModel)]="apartment.maxGuests"
-        name="maxGuests"
-        [readonly]="!isEditing"
-        type="number"
-        min="1"
-        required
-      />
-    </div>
-
-    <div class="form-group">
-      <label for="apartmentType">Apartment Type:</label>
-      <select
-        id="apartmentType"
-        [(ngModel)]="apartment.apartmentType"
-        name="apartmentType"
-        [disabled]="!isEditing">
-        <option value="studio">Studio</option>
-        <option value="room">Room</option>
-        <option value="apartment">Apartment</option>
-      </select>
-    </div>
-
-    <div class="form-group">
-      <label for="price">Price per Night:</label>
-      <input
-        id="price"
-        [(ngModel)]="apartment.price"
-        name="price"
-        [readonly]="!isEditing"
-        type="number"
-        min="0"
-        required
-      />
-    </div>
-
-    <div class="form-group">
-      <label for="availability">Availability:</label>
-      <input
-        type="date"
-        id="availability"
-        [(ngModel)]="apartment.availability"
-        name="availability"
-        [disabled]="!isEditing"
-        required
-      />
-    </div>
-
+<div class="edit-layout">
+  <!-- Leva strana -->
+  <div class="edit-menu">
+    <button [class.active]="selectedSection === 'basic'" (click)="selectedSection = 'basic'">Basic Info</button>
+    <button [class.active]="selectedSection === 'more'" (click)="selectedSection = 'more'">More Info</button>
+    <button [class.active]="selectedSection === 'pricing'" (click)="selectedSection = 'pricing'">Pricing</button>
   </div>
 
-  <div class="button-container">
-    <button *ngIf="!isEditing" (click)="enableEditing()">Edit</button>
-    <button style="background-color: #B80C09;" *ngIf="!isEditing" (click)="deleteApartment()">Delete</button>
-    <button *ngIf="isEditing" (click)="saveChanges()">Save</button>
-    <button style="background-color: #555" *ngIf="isEditing" (click)="cancelEditing()">Cancel</button>
+  <!-- Desna strana -->
+  <div class="edit-details">
+    <div class="details-container">
+      <div *ngIf="selectedSection === 'basic'">
+        <h3>Edit Basic Info</h3>
+        <label for="name">Name:</label>
+        <input id="name" [(ngModel)]="apartment.name" type="text">
+
+        <label for="location">Location:</label>
+        <input id="location" [(ngModel)]="apartment.location" type="text">
+
+        <label for="price">Price:</label>
+        <input id="price" [(ngModel)]="apartment.price" type="number">
+
+        <label for="apartmentType">Apartment Type:</label>
+        <select id="apartmentType" [(ngModel)]="apartment.apartmentType" name="apartmentType">
+          <option value="studio">Studio</option>
+          <option value="room">Room</option>
+          <option value="apartment">Apartment</option>
+        </select>
+
+        <div class="guest-inputs">
+          <div>
+            <label for="minGuests">Minimum Guests:</label>
+            <input id="minGuests" [(ngModel)]="apartment.minGuests" name="minGuests" type="number" min="1" required />
+          </div>
+          <div>
+            <label for="maxGuests">Maximum Guests:</label>
+            <input id="maxGuests" [(ngModel)]="apartment.maxGuests" name="maxGuests" type="number" min="1" required />
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="selectedSection === 'more'">
+        <h3>Edit More Info</h3>
+        <label for="description">Description:</label>
+        <textarea id="description" [(ngModel)]="apartment.description"></textarea>
+
+        <label for="size">Size:</label>
+        <input id="size" [(ngModel)]="apartment.size" type="number">
+
+        <label for="amenities">Amenities:</label>
+        <input id="amenities" [(ngModel)]="apartment.amenities" type="text">
+
+        <label for="photos">Add Photos:</label>
+        <input type="file" id="photos" (change)="onFileSelected($event)" multiple />
+      </div>
+
+      <div *ngIf="selectedSection === 'pricing'">
+        <h3>Edit Pricing & Availability</h3>
+        
+      </div>
+
+      <div class="button-container">
+        <button style="background-color: green; color: white" (click)="saveApartment()">Save</button>
+        <button style="background-color: #B80C09; color: white" (click)="cancelEdit()">Cancel</button>
+      </div>
+    </div>
   </div>
-</form>
+</div>
