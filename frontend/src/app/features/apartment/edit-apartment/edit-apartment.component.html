@@ -3,7 +3,8 @@
   <div class="edit-menu">
     <button [class.active]="selectedSection === 'basic'" (click)="selectedSection = 'basic'">Basic Info</button>
     <button [class.active]="selectedSection === 'more'" (click)="selectedSection = 'more'">More Info</button>
-    <button [class.active]="selectedSection === 'pricing'" (click)="selectedSection = 'pricing'">Pricing & Availability</button>
+    <button [class.active]="selectedSection === 'pricing'" (click)="selectedSection = 'pricing'">Pricing</button>
+    <button [class.active]="selectedSection === 'availability'" (click)="selectedSection = 'availability'">Availability</button>
   </div>
 
   <!-- Desna strana -->
@@ -55,9 +56,14 @@
       </div>
 
       <div *ngIf="selectedSection === 'pricing'">
-        <h2>Edit Pricing & Availability</h2>
+        <h2>Edit Pricing</h2>
 
         <app-pricing-and-availability></app-pricing-and-availability>
+      </div>
+      <div *ngIf="selectedSection === 'availability'">
+        <h2>Edit Availability</h2>
+        <app-calendar></app-calendar>
+
       </div>
 
       <div class="button-container">

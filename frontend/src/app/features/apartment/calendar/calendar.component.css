@@ -59,7 +59,7 @@
 
 .calendar-day.selected {
   font-weight: bold;
-  background-color: green;
+  background-color:  #707070;
   color: white;
 
 }

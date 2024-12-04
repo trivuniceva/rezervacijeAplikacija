@@ -3,6 +3,7 @@ import {Location, NgIf} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 import {SearchAccommodationsComponent} from "../../../shared/search-accommodations/search-accommodations.component";
 import {PricingAndAvailabilityComponent} from '../pricing-and-availability/pricing-and-availability.component';
+import {CalendarComponent} from '../calendar/calendar.component';
 
 @Component({
   selector: 'app-edit-apartment',
@@ -12,6 +13,7 @@ import {PricingAndAvailabilityComponent} from '../pricing-and-availability/prici
     FormsModule,
     SearchAccommodationsComponent,
     PricingAndAvailabilityComponent,
+    CalendarComponent,
   ],
   templateUrl: './edit-apartment.component.html',
   styleUrl: './edit-apartment.component.css'
@@ -37,8 +39,12 @@ export class EditApartmentComponent implements OnInit{
     this.selectedSection = 'more';
   }
 
-  showPricingAvailability() {
+  showPricing() {
     this.selectedSection = 'pricing';
+  }
+
+  showAvailability() {
+    this.selectedSection = 'availability';
   }
 
   saveApartment() {
