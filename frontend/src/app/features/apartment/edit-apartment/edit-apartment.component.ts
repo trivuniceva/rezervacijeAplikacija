@@ -49,6 +49,7 @@ export class EditApartmentComponent implements OnInit{
 
   saveApartment() {
     console.log('Apartment saved:', this.apartment);
+
   }
 
   cancelEdit() {

@@ -58,11 +58,11 @@
       <div *ngIf="selectedSection === 'pricing'">
         <h2>Edit Pricing</h2>
 
-        <app-pricing-and-availability></app-pricing-and-availability>
+        <app-pricing-and-availability [apartment]="apartment"></app-pricing-and-availability>
       </div>
       <div *ngIf="selectedSection === 'availability'">
         <h2>Edit Availability</h2>
-        <app-calendar></app-calendar>
+        <app-calendar [apartment]="apartment"></app-calendar>
 
       </div>
 

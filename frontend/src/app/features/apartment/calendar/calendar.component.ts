@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import { DatePipe, NgForOf } from '@angular/common';
 
 @Component({
@@ -12,6 +12,7 @@ import { DatePipe, NgForOf } from '@angular/common';
   styleUrls: ['./calendar.component.css']
 })
 export class CalendarComponent implements OnInit {
+  @Input() apartment: any;
 
   currentMonth: Date = new Date();
   selectedDates: Date[] = [];
@@ -25,6 +26,7 @@ export class CalendarComponent implements OnInit {
 
   ngOnInit(): void {
     this.updateCalendar();
+    console.log('Received apartment:', this.apartment);
   }
 
   prevMonth() {
@@ -57,26 +59,19 @@ export class CalendarComponent implements OnInit {
     }
   }
 
-  private getDaysInMonth(month: Date): Date[] {
-    const firstDayOfMonth = new Date(month.getFullYear(), month.getMonth(), 1);
-    const lastDayOfMonth = new Date(month.getFullYear(), month.getMonth() + 1, 0);
-    const days: Date[] = [];
-
-    for (let d = firstDayOfMonth; d <= lastDayOfMonth; d.setDate(d.getDate() + 1)) {
-      days.push(new Date(d));
-    }
-
-    return days;
-  }
-
   toggleDateSelection(date: Date) {
     const index = this.selectedDates.findIndex(d => this.isSameDay(d, date));
     if (index === -1) {
       // Ako nije selektovan, dodajemo datum
       this.selectedDates.push(date);
+      this.apartment.availabilityList.push(date);
+      console.log(this.apartment.availabilityList)
+      console.log("<3")
+
     } else {
       // Ako je selektovan, uklanjamo datum
       this.selectedDates.splice(index, 1);
+      this.apartment.availabilityList.splice(index, 1);
     }
   }
 
@@ -95,15 +90,6 @@ export class CalendarComponent implements OnInit {
     if (this.isSelecting && this.startDate) {
       this.toggleDateSelection(date);
     }
-  }
-
-  private getDateRange(start: Date, end: Date): Date[] {
-    const range: Date[] = [];
-    const direction = start <= end ? 1 : -1;
-    for (let d = new Date(start); this.isSameDay(d, end) || d <= end; d.setDate(d.getDate() + direction)) {
-      range.push(new Date(d));
-    }
-    return range;
   }
 
   private isSameDay(d1: Date, d2: Date): boolean {
