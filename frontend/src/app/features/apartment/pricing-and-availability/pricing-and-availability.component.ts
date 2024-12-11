@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import { NgIf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {CalendarComponent} from '../calendar/calendar.component';
@@ -14,18 +14,14 @@ import {CalendarComponent} from '../calendar/calendar.component';
   templateUrl: './pricing-and-availability.component.html',
   styleUrls: ['./pricing-and-availability.component.css']
 })
-export class PricingAndAvailabilityComponent {
+export class PricingAndAvailabilityComponent implements OnInit {
   @Input() apartment: any;
   price: number = 0;
   pricingMethod: string = 'perGuest';
   cancellationDeadline: string = '';
-  selectedSection: string = '';
 
-  savePricing() {
-
+  ngOnInit(): void {
+    console.log('apartmaaaaaan:', this.apartment);
   }
 
-  cancelPricing() {
-
-  }
 }

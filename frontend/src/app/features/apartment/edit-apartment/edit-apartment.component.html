@@ -5,6 +5,7 @@
     <button [class.active]="selectedSection === 'more'" (click)="selectedSection = 'more'">More Info</button>
     <button [class.active]="selectedSection === 'pricing'" (click)="selectedSection = 'pricing'">Pricing</button>
     <button [class.active]="selectedSection === 'availability'" (click)="selectedSection = 'availability'">Availability</button>
+    <button [class.active]="selectedSection === 'priceReview'" (click)="selectedSection = 'priceReview'">Price Review</button>
   </div>
 
   <!-- Desna strana -->
@@ -45,9 +46,6 @@
         <label for="description">Description:</label>
         <textarea id="description" [(ngModel)]="apartment.description"></textarea>
 
-        <label for="size">Size:</label>
-        <input id="size" [(ngModel)]="apartment.size" type="number">
-
         <label for="amenities">Amenities:</label>
         <input id="amenities" [(ngModel)]="apartment.amenities" type="text">
 
@@ -60,12 +58,16 @@
 
       <div *ngIf="selectedSection === 'pricing'">
         <h2>Edit Pricing</h2>
-
-        <app-pricing-and-availability></app-pricing-and-availability>
+        <app-pricing-and-availability [apartment]="apartment"></app-pricing-and-availability>
       </div>
+
       <div *ngIf="selectedSection === 'availability'">
         <h2>Edit Availability</h2>
-        <app-calendar></app-calendar>
+        <app-calendar [apartment]="apartment"></app-calendar>
+      </div>
+
+      <div *ngIf="selectedSection === 'priceReview'">
+        <h2>Price Review</h2>
 
       </div>
 

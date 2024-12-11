@@ -47,8 +47,13 @@ export class EditApartmentComponent implements OnInit{
     this.selectedSection = 'availability';
   }
 
+  showPriceReview() {
+    this.selectedSection = 'priceReview';
+  }
+
   saveApartment() {
     console.log('Apartment saved:', this.apartment);
+
   }
 
   cancelEdit() {
