@@ -36,9 +36,6 @@ public class Accommodation {
 
     private boolean approved;
 
-    @OneToMany(mappedBy = "accommodation")
-    private List<Availability> availabilityList;
-
     @ManyToOne
     @JoinColumn(name = "owner_id")
     private User owner;
@@ -123,14 +120,6 @@ public class Accommodation {
         this.approved = approved;
     }
 
-    public List<Availability> getAvailabilityList() {
-        return availabilityList;
-    }
-
-    public void setAvailabilityList(List<Availability> availabilityList) {
-        this.availabilityList = availabilityList;
-    }
-
     public User getOwner() {
         return owner;
     }
@@ -152,7 +141,6 @@ public class Accommodation {
                 ", maxGuests=" + maxGuests +
                 ", type=" + type +
                 ", approved=" + approved +
-                ", availabilityList=" + availabilityList +
                 ", owner=" + owner +
                 '}';
     }
