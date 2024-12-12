@@ -4,6 +4,7 @@ import {FormsModule} from '@angular/forms';
 import {SearchAccommodationsComponent} from "../../../shared/search-accommodations/search-accommodations.component";
 import {PricingAndAvailabilityComponent} from '../pricing-and-availability/pricing-and-availability.component';
 import {CalendarComponent} from '../calendar/calendar.component';
+import {PriceReviewComponent} from '../price-review/price-review.component';
 
 @Component({
   selector: 'app-edit-apartment',
@@ -14,6 +15,7 @@ import {CalendarComponent} from '../calendar/calendar.component';
     SearchAccommodationsComponent,
     PricingAndAvailabilityComponent,
     CalendarComponent,
+    PriceReviewComponent,
   ],
   templateUrl: './edit-apartment.component.html',
   styleUrl: './edit-apartment.component.css'
