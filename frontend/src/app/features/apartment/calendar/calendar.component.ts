@@ -40,14 +40,30 @@ export class CalendarComponent implements OnInit {
     console.log('Received apartment:', this.apartment);
 
     if (this.apartment.id) {
+      this.getReservedDates(this.apartment.id);
+    }
+    
+    if (this.apartment.id) {
       this.getAvailableDates(this.apartment.id);
     }
   }
 
-  getAvailableDates(apartmentId: number): void {
+  getReservedDates(apartmentId: number): void {
     this.specialPriceService.getReservedDates(apartmentId)
       .subscribe(data => {
         this.reservedDates = data.flatMap(dateRange =>
+          this.generateDateRange(new Date(dateRange[0]), new Date(dateRange[1]))
+        );
+        console.log('Reserved Dates:', this.reservedDates);
+      }, error => {
+        console.error('Error fetching reserved dates:', error);
+      });
+  }
+
+  getAvailableDates(apartmentId: number): void {
+    this.specialPriceService.getAvailableDates(apartmentId)
+      .subscribe(data => {
+        this.selectedDates = data.flatMap(dateRange =>
           this.generateDateRange(new Date(dateRange[0]), new Date(dateRange[1]))
         );
         console.log('Reserved Dates:', this.reservedDates);

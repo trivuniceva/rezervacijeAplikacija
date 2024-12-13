@@ -44,13 +44,18 @@ public class SpecialPriceAndAvailabilityService {
         return repository.findByAccommodation_Id(apartmentId);
     }
 
-    public List<LocalDate[]> getReservedDates(Long apartmentId) {
+    public List<LocalDate[]> getUnavailableDates(Long apartmentId) {
         // Dohvatanje svih datuma koji nisu dostupni iz SpecialPriceAndAvailability
-        List<LocalDate[]> reservedSpecialDates = repository.findByAccommodation_Id(apartmentId).stream()
+        List<LocalDate[]> unavailableDates = repository.findByAccommodation_Id(apartmentId).stream()
                 .filter(price -> SpecialPriceAndAvailability.Availability.NOT_AVAILABLE.equals(price.getAvailability()))
                 .map(price -> new LocalDate[]{price.getStartDate(), price.getDateEnd()})
                 .collect(Collectors.toList());
 
+        return unavailableDates;
+    }
+
+
+    public List<LocalDate[]> getReservedDates(Long apartmentId) {
         // Dohvatanje rezervacija koje su prihvaćene iz ReservationRequest
         List<LocalDate[]> reservedRequestDates = reservationRequestRepository.findAll().stream()
                 .filter(reservation -> apartmentId.equals(reservation.getAccommodation().getId()) &&
@@ -58,12 +63,7 @@ public class SpecialPriceAndAvailabilityService {
                 .map(reservation -> new LocalDate[]{reservation.getStartDate(), reservation.getEndDate()})
                 .collect(Collectors.toList());
 
-        // Kombinovanje svih rezervisanih datuma u jednu listu
-        List<LocalDate[]> reservedDates = new ArrayList<>();
-        reservedDates.addAll(reservedSpecialDates);
-        reservedDates.addAll(reservedRequestDates);
-
-        return reservedDates;
+        return reservedRequestDates;
     }
 
     public void updateAvailability(Long apartmentId, List<String> dates) {
