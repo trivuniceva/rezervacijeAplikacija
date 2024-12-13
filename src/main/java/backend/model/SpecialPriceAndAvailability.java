@@ -20,7 +20,7 @@ public class SpecialPriceAndAvailability {
     private LocalDate startDate;
 
     @Column(name = "end_date", nullable = false)
-    private LocalDate endDate;
+    private LocalDate dateEnd;
 
     @Column(name = "price", nullable = false, precision = 10, scale = 2)
     private BigDecimal price;
@@ -28,8 +28,6 @@ public class SpecialPriceAndAvailability {
     @Enumerated(EnumType.STRING)
     @Column(name = "availability", nullable = false)
     private Availability availability;
-
-    // Getters and Setters
 
     public Long getId() {
         return id;
@@ -55,12 +53,12 @@ public class SpecialPriceAndAvailability {
         this.startDate = startDate;
     }
 
-    public LocalDate getEndDate() {
-        return endDate;
+    public LocalDate getDateEnd() {
+        return dateEnd;
     }
 
-    public void setEndDate(LocalDate endDate) {
-        this.endDate = endDate;
+    public void setDateEnd(LocalDate dateEnd) {
+        this.dateEnd = dateEnd;
     }
 
     public BigDecimal getPrice() {
@@ -85,7 +83,7 @@ public class SpecialPriceAndAvailability {
                 "id=" + id +
                 ", accommodation=" + accommodation +
                 ", startDate=" + startDate +
-                ", endDate=" + endDate +
+                ", endDate=" + dateEnd +
                 ", price=" + price +
                 ", availability=" + availability +
                 '}';

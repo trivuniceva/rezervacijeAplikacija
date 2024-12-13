@@ -1,14 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import {CurrencyPipe, NgForOf, NgIf} from '@angular/common';
-
-interface SpecialPrice {
-  id: number;
-  accommodation_id: number;
-  start_date: string;
-  end_date: string;
-  price: number;
-  availability: 'AVAILABLE' | 'NOT_AVAILABLE';
-}
+import {Component, Input, OnInit} from '@angular/core';
+import { NgForOf, NgIf, CurrencyPipe } from '@angular/common';
+import {
+  SpecialPrice,
+  SpecialPriceServiceService
+} from '../../../core/service/special_prices/special-price-service.service';
 
 @Component({
   selector: 'app-price-review',
@@ -16,52 +11,40 @@ interface SpecialPrice {
   imports: [
     NgForOf,
     NgIf,
-    CurrencyPipe,
+    CurrencyPipe
   ],
   templateUrl: './price-review.component.html',
   styleUrls: ['./price-review.component.css']
 })
 export class PriceReviewComponent implements OnInit {
+  @Input() apartment: any;
   specialPrices: SpecialPrice[] = [];
   loading: boolean = false;
   error: string | null = null;
 
-  constructor() { }
+  constructor(private specialPriceService: SpecialPriceServiceService) { }
 
   ngOnInit(): void {
-    this.specialPrices = [
-      {
-        id: 1,
-        accommodation_id: 101,
-        start_date: '2024-12-01',
-        end_date: '2024-12-10',
-        price: 120.50,
-        availability: 'AVAILABLE'
-      },
-      {
-        id: 2,
-        accommodation_id: 102,
-        start_date: '2024-12-05',
-        end_date: '2024-12-15',
-        price: 95.75,
-        availability: 'NOT_AVAILABLE'
-      },
-      {
-        id: 3,
-        accommodation_id: 103,
-        start_date: '2024-12-10',
-        end_date: '2024-12-20',
-        price: 150.00,
-        availability: 'AVAILABLE'
-      },
-      {
-        id: 4,
-        accommodation_id: 104,
-        start_date: '2024-12-01',
-        end_date: '2024-12-05',
-        price: 110.00,
-        availability: 'NOT_AVAILABLE'
-      }
-    ];
+    console.log(this.apartment)
+    this.fetchSpecialPrices(this.apartment.id);
   }
+
+  fetchSpecialPrices(apartmentId: number): void {
+    this.loading = true;
+    this.error = null;
+
+    this.specialPriceService.getAvailableSpecialPrices(apartmentId).subscribe({
+      next: (prices) => {
+        this.specialPrices = prices;
+        console.log(this.specialPrices)
+        this.loading = false;
+      },
+      error: (err) => {
+        this.error = 'Greška prilikom dohvatanja dostupnih cena.';
+        this.loading = false;
+      }
+    });
+  }
+
+
 }

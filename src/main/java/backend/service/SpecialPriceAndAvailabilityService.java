@@ -28,4 +28,10 @@ public class SpecialPriceAndAvailabilityService {
     public void deleteSpecialPriceAndAvailability(Long id) {
         specialPriceAndAvailabilityRepository.deleteById(id);
     }
+
+    public List<SpecialPriceAndAvailability> getSpecialPrice(Long apartmentId) {
+        System.out.println("ajdee");
+        System.out.println(specialPriceAndAvailabilityRepository.findByAccommodation_Id(apartmentId));
+        return specialPriceAndAvailabilityRepository.findByAccommodation_Id(apartmentId);
+    }
 }
