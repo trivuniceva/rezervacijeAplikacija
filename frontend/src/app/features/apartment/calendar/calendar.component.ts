@@ -25,12 +25,23 @@ export class CalendarComponent implements OnInit {
   constructor(private specialPriceService: SpecialPriceServiceService) {}
 
   ngOnInit(): void {
+    if (!this.apartment) {
+      console.error('Apartment input is not provided!');
+      return;
+    }
+
+    if (!this.apartment.availabilityList) {
+      this.apartment.availabilityList = []; // inicijalizuj ako nije definisan
+    }
+
     this.updateCalendar();
     console.log('Received apartment:', this.apartment);
-    if (this.apartment && this.apartment.id) {
+
+    if (this.apartment.id) {
       this.getAvailableDates(this.apartment.id);
     }
   }
+
 
   getAvailableDates(apartmentId: number): void {
     this.specialPriceService.getReservedDates(apartmentId)
@@ -89,20 +100,27 @@ export class CalendarComponent implements OnInit {
   }
 
   toggleDateSelection(date: Date) {
+    if (!this.apartment) {
+      console.error('Apartment is not defined!');
+      return;
+    }
+
+    if (!this.apartment.availabilityList) {
+      console.warn('availabilityList is not initialized. Initializing it now.');
+      this.apartment.availabilityList = [];
+    }
+
     const index = this.selectedDates.findIndex(d => this.isSameDay(d, date));
     if (index === -1) {
-      // Ako nije selektovan, dodajemo datum
       this.selectedDates.push(date);
       this.apartment.availabilityList.push(date);
-      console.log(this.apartment.availabilityList)
-      console.log("<3")
-
+      console.log(this.apartment.availabilityList);
     } else {
-      // Ako je selektovan, uklanjamo datum
       this.selectedDates.splice(index, 1);
       this.apartment.availabilityList.splice(index, 1);
     }
   }
+
 
   onMouseDown(date: Date): void {
     this.isSelecting = true;
