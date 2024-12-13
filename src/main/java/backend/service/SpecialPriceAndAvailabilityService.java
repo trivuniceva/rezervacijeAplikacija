@@ -65,4 +65,8 @@ public class SpecialPriceAndAvailabilityService {
 
         return reservedDates;
     }
+
+    public void updateAvailability(Long apartmentId, List<String> dates) {
+        System.out.println("Ažuriranje dostupnosti za apartman " + apartmentId + " sa datumima: " + dates);
+    }
 }

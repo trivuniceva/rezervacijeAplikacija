@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Location, NgIf} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 import {SearchAccommodationsComponent} from "../../../shared/search-accommodations/search-accommodations.component";
-import {PricingAndAvailabilityComponent} from '../pricing-and-availability/pricing-and-availability.component';
+import {SpecialPricing} from '../SpecialPricing/SpecialPricing';
 import {CalendarComponent} from '../calendar/calendar.component';
 import {PriceReviewComponent} from '../price-review/price-review.component';
 
@@ -13,7 +13,7 @@ import {PriceReviewComponent} from '../price-review/price-review.component';
     NgIf,
     FormsModule,
     SearchAccommodationsComponent,
-    PricingAndAvailabilityComponent,
+    SpecialPricing,
     CalendarComponent,
     PriceReviewComponent,
   ],

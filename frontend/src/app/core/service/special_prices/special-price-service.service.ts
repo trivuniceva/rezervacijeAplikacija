@@ -27,4 +27,14 @@ export class SpecialPriceServiceService {
     return this.http.get<Date[][]>(`${this.apiUrl}/reservedDates?apartmentId=${apartmentId}`);
   }
 
+  createSpecialPrice(payload: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}`, payload);
+  }
+
+  updateAvailability(apartmentId: number, dates: Date[]): Observable<any> {
+    // datumi u ISO stringove za slanje
+    const formattedDates = dates.map(date => date.toISOString());
+    return this.http.post(`${this.apiUrl}/update-availability`, { apartmentId, dates: formattedDates });
+  }
+
 }
