@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 public interface SpecialPriceAndAvailabilityRepository extends JpaRepository<SpecialPriceAndAvailability, Long> {
     List<SpecialPriceAndAvailability> findByAvailability(SpecialPriceAndAvailability.Availability availability);
-    public List<SpecialPriceAndAvailability> findByAccommodation_Id(Long accommodationId);
+    List<SpecialPriceAndAvailability> findByAccommodation_Id(Long accommodationId);
 
 
 }
