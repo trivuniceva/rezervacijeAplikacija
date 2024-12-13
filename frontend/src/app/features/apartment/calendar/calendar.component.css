@@ -41,34 +41,44 @@
 }
 
 .calendar-day {
-  padding: 15px 0; /* Povećan padding za visinu */
+  padding: 15px 0;
   text-align: center;
   border-top: 1px solid #ddd;
   border-right: 1px solid #ddd;
   font-size: 14px;
   color: #333;
-  min-height: 50px; /* Minimalna visina za dodatno povećanje */
+  min-height: 50px;
   display: flex;
   align-items: center;
-  justify-content: center; /* Centriranje brojeva */
+  justify-content: center;
 }
 
 .calendar-day:nth-child(7n) {
-  border-right: none; /* Uklanja desnu liniju na kraju nedelje */
+  border-right: none;
 }
 
 .calendar-day.selected {
   font-weight: bold;
-  background-color:  #707070;
+  background-color: #B80C09;
   color: white;
-
 }
 
 .calendar-day.reserved {
   font-weight: bold;
   color: white;
   background-color: #B80C09;
-  pointer-events: none;
+  opacity: 0.6;
+  cursor: not-allowed; !important;
+  pointer-events: none; !important;
+}
+
+.calendar-day.reserved:hover {
+  background-color: #B80C09; !important;
+}
+
+
+.calendar-day.selected:hover {
+  background-color: #D32F2F;
 }
 
 .selected-dates {

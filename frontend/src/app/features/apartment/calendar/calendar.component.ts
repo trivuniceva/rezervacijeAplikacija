@@ -12,6 +12,7 @@ import {SpecialPriceServiceService} from '../../../core/service/special_prices/s
   ],
   styleUrls: ['./calendar.component.css']
 })
+
 export class CalendarComponent implements OnInit {
   @Input() apartment: any;
   @Input() isEditAvailability: boolean = false;
@@ -19,8 +20,8 @@ export class CalendarComponent implements OnInit {
   currentMonth: Date = new Date();
   selectedDates: Date[] = [];
   reservedDates: Date[] = [];
-  isSelecting: boolean = false;  // Praćenje da li korisnik selektuje dane
-  startDate: Date | null = null;  // Početni datum selekcije
+  isSelecting: boolean = false;
+  startDate: Date | null = null;
   datesInMonth: Date[] = [];
 
   constructor(private specialPriceService: SpecialPriceServiceService) {}
@@ -32,7 +33,7 @@ export class CalendarComponent implements OnInit {
     }
 
     if (!this.apartment.availabilityList) {
-      this.apartment.availabilityList = []; // inicijalizuj ako nije definisan
+      this.apartment.availabilityList = []; // Inicijalizuj ako nije definisan
     }
 
     this.updateCalendar();
@@ -103,6 +104,10 @@ export class CalendarComponent implements OnInit {
       return;
     }
 
+    if (this.isReserved(date)) {
+      return;  // Ako je datum rezervisan, ne dozvoljavamo selektovanje
+    }
+
     if (!this.apartment.availabilityList) {
       console.warn('availabilityList is not initialized. Initializing it now.');
       this.apartment.availabilityList = [];
@@ -119,7 +124,7 @@ export class CalendarComponent implements OnInit {
       this.apartment.availabilityList.splice(index, 1);
     }
 
-    // ako je edit dostupnosti
+// Ako je edit dostupnosti
     if (this.isEditAvailability) {
       this.sendSelectedDatesToBackend();
     }
@@ -146,7 +151,7 @@ export class CalendarComponent implements OnInit {
   }
 
   onMouseOver(date: Date): void {
-    if (this.isSelecting && this.startDate) {
+    if (this.isSelecting && this.startDate && !this.isReserved(date)) {
       this.toggleDateSelection(date);
     }
   }
