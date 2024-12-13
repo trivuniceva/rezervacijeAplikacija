@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -21,6 +22,11 @@ public class SpecialPriceController {
     @GetMapping("/prices")
     public List<SpecialPriceAndAvailability> getAvailableSpecialPrices(@RequestParam Long apartmentId) {
         return service.getSpecialPrice(apartmentId);
+    }
+
+    @GetMapping("/reservedDates")
+    public List<LocalDate[]> getReservedDates(@RequestParam Long apartmentId) {
+        return service.getReservedDates(apartmentId);
     }
 
 }

@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import { DatePipe, NgForOf } from '@angular/common';
+import {SpecialPriceServiceService} from '../../../core/service/special_prices/special-price-service.service';
 
 @Component({
   selector: 'app-calendar',
@@ -16,18 +17,46 @@ export class CalendarComponent implements OnInit {
 
   currentMonth: Date = new Date();
   selectedDates: Date[] = [];
-  reservedDates: Date[] = [
-    new Date(2024, 11, 12),  // Rezervisani dani
-    new Date(2024, 11, 14)
-  ];
+  reservedDates: Date[] = [];
   isSelecting: boolean = false;  // Praćenje da li korisnik selektuje dane
   startDate: Date | null = null;  // Početni datum selekcije
   datesInMonth: Date[] = [];
 
+  constructor(private specialPriceService: SpecialPriceServiceService) {}
+
   ngOnInit(): void {
     this.updateCalendar();
     console.log('Received apartment:', this.apartment);
+    if (this.apartment && this.apartment.id) {
+      this.getAvailableDates(this.apartment.id);  // Poziv na preuzimanje datuma
+    }
   }
+
+  getAvailableDates(apartmentId: number): void {
+    this.specialPriceService.getReservedDates(apartmentId)
+      .subscribe(data => {
+        this.reservedDates = data.flatMap(dateRange =>
+          this.generateDateRange(new Date(dateRange[0]), new Date(dateRange[1]))
+        );
+        console.log('Reserved Dates:', this.reservedDates);
+      }, error => {
+        console.error('Error fetching reserved dates:', error);
+      });
+  }
+
+  private generateDateRange(startDate: Date, endDate: Date): Date[] {
+    const dates: Date[] = [];
+    let currentDate = new Date(startDate);
+
+    while (currentDate <= endDate) {
+      dates.push(new Date(currentDate));
+      currentDate.setDate(currentDate.getDate() + 1);
+    }
+
+    return dates;
+  }
+
+
 
   prevMonth() {
     this.currentMonth = new Date(

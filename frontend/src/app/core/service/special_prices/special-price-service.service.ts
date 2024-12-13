@@ -23,5 +23,8 @@ export class SpecialPriceServiceService {
     return this.http.get<SpecialPrice[]>(`${this.apiUrl}/prices?apartmentId=${apartmentId}`);
   }
 
+  getReservedDates(apartmentId: number): Observable<Date[][]> {
+    return this.http.get<Date[][]>(`${this.apiUrl}/reservedDates?apartmentId=${apartmentId}`);
+  }
 
 }
