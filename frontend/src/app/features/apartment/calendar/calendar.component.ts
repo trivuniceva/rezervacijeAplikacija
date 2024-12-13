@@ -14,6 +14,7 @@ import {SpecialPriceServiceService} from '../../../core/service/special_prices/s
 })
 export class CalendarComponent implements OnInit {
   @Input() apartment: any;
+  @Input() isEditAvailability: boolean = false;
 
   currentMonth: Date = new Date();
   selectedDates: Date[] = [];
@@ -42,7 +43,6 @@ export class CalendarComponent implements OnInit {
     }
   }
 
-
   getAvailableDates(apartmentId: number): void {
     this.specialPriceService.getReservedDates(apartmentId)
       .subscribe(data => {
@@ -66,8 +66,6 @@ export class CalendarComponent implements OnInit {
 
     return dates;
   }
-
-
 
   prevMonth() {
     this.currentMonth = new Date(
@@ -114,13 +112,27 @@ export class CalendarComponent implements OnInit {
     if (index === -1) {
       this.selectedDates.push(date);
       this.apartment.availabilityList.push(date);
+      console.log("lutko <333")
       console.log(this.apartment.availabilityList);
     } else {
       this.selectedDates.splice(index, 1);
       this.apartment.availabilityList.splice(index, 1);
     }
+
+    // ako je edit dostupnosti
+    if (this.isEditAvailability) {
+      this.sendSelectedDatesToBackend();
+    }
   }
 
+  sendSelectedDatesToBackend() {
+    this.specialPriceService.updateAvailability(this.apartment.id, this.selectedDates)
+      .subscribe(response => {
+        console.log('Dates updated successfully', response);
+      }, error => {
+        console.error('Error updating dates', error);
+      });
+  }
 
   onMouseDown(date: Date): void {
     this.isSelecting = true;

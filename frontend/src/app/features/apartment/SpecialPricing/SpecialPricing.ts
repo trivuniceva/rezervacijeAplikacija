@@ -29,7 +29,7 @@ export class SpecialPricing implements OnInit {
 
   sendToBackend() {
     if (!this.apartment) {
-      console.error('Apartment data is missing!');
+      alert('Apartment data is missing!');
       return;
     }
 
@@ -41,15 +41,20 @@ export class SpecialPricing implements OnInit {
       availabilityList: this.apartment.availabilityList || []
     };
 
-    this.specialPriceService
-      .createSpecialPrice(payload)
-      .subscribe(
-        response => {
-          console.log('Data sent successfully:', response);
-        },
-        error => {
-          console.error('Error sending data:', error);
+    this.specialPriceService.createSpecialPrice(payload).subscribe(
+      response => {
+        if (typeof response === 'string' || (response && response.message)) {
+          alert('Data has been sent successfully!');
+        } else {
+          alert('Unexpected response from server.');
         }
-      );
+        console.log('Data sent successfully:', response);
+      },
+      error => {
+        alert('An error occurred while sending data. Please try again.'); // Error message
+        console.error('Error sending data:', error);
+      }
+    );
   }
+
 }
