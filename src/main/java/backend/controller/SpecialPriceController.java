@@ -18,7 +18,7 @@ public class SpecialPriceController {
         this.service = service;
     }
 
-    @GetMapping("/available")
+    @GetMapping("/prices")
     public List<SpecialPriceAndAvailability> getAvailableSpecialPrices(@RequestParam Long apartmentId) {
         return service.getSpecialPrice(apartmentId);
     }

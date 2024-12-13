@@ -20,7 +20,7 @@ export class SpecialPriceServiceService {
   constructor(private http: HttpClient) { }
 
   getAvailableSpecialPrices(apartmentId: number): Observable<SpecialPrice[]> {
-    return this.http.get<SpecialPrice[]>(`${this.apiUrl}/available?apartmentId=${apartmentId}`);
+    return this.http.get<SpecialPrice[]>(`${this.apiUrl}/prices?apartmentId=${apartmentId}`);
   }
 
 
