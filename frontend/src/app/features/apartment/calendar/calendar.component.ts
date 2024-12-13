@@ -28,7 +28,7 @@ export class CalendarComponent implements OnInit {
     this.updateCalendar();
     console.log('Received apartment:', this.apartment);
     if (this.apartment && this.apartment.id) {
-      this.getAvailableDates(this.apartment.id);  // Poziv na preuzimanje datuma
+      this.getAvailableDates(this.apartment.id);
     }
   }
 
