@@ -39,6 +39,11 @@
             <input id="maxGuests" [(ngModel)]="apartment.maxGuests" name="maxGuests" type="number" min="1" required />
           </div>
         </div>
+
+        <div class="button-container">
+          <button style="background-color: green; color: white" (click)="saveApartment()">Save</button>
+          <button style="background-color: #B80C09; color: white" (click)="cancelEdit()">Cancel</button>
+        </div>
       </div>
 
       <div *ngIf="selectedSection === 'more'" class="info-container">
@@ -53,6 +58,11 @@
           <label for="photos">Add Photos:</label>
           <button type="button" class="file-upload-button" (click)="fileInput.click()">Choose Files</button>
           <input type="file" id="photos" #fileInput (change)="onFileSelected($event)" multiple style="display: none;" />
+        </div>
+
+        <div class="button-container">
+          <button style="background-color: green; color: white" (click)="saveApartment()">Save</button>
+          <button style="background-color: #B80C09; color: white" (click)="cancelEdit()">Cancel</button>
         </div>
       </div>
 
@@ -71,11 +81,6 @@
         <app-price-review [apartment]="apartment"></app-price-review>
 
 
-      </div>
-
-      <div class="button-container">
-        <button style="background-color: green; color: white" (click)="saveApartment()">Save</button>
-        <button style="background-color: #B80C09; color: white" (click)="cancelEdit()">Cancel</button>
       </div>
     </div>
   </div>

@@ -28,13 +28,11 @@ public class SpecialPriceController {
 
     @GetMapping("/reservedDates")
     public List<LocalDate[]> getReservedDates(@RequestParam Long apartmentId) {
-        System.out.println("poziv 1");
         return service.getReservedDates(apartmentId);
     }
 
     @GetMapping("/unavailableDates")
     public List<LocalDate[]> getUnavailableDates(@RequestParam Long apartmentId) {
-        System.out.println("poziv 2");
         return service.getUnavailableDates(apartmentId);
     }
 
