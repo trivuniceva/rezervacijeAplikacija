@@ -20,7 +20,7 @@ public class SpecialPriceAndAvailability {
     private LocalDate startDate;
 
     @Column(name = "end_date", nullable = false)
-    private LocalDate dateEnd;
+    private LocalDate endDate;
 
     @Column(name = "price", nullable = false, precision = 10, scale = 2)
     private BigDecimal price;
@@ -28,6 +28,13 @@ public class SpecialPriceAndAvailability {
     @Enumerated(EnumType.STRING)
     @Column(name = "availability", nullable = false)
     private Availability availability;
+
+    @Column(name = "deadline", nullable = false)
+    private int deadline;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "pricing_method", nullable = false)
+    private PricingMethod pricingMethod;
 
     public Long getId() {
         return id;
@@ -53,12 +60,12 @@ public class SpecialPriceAndAvailability {
         this.startDate = startDate;
     }
 
-    public LocalDate getDateEnd() {
-        return dateEnd;
+    public LocalDate getEndDate() {
+        return endDate;
     }
 
-    public void setDateEnd(LocalDate dateEnd) {
-        this.dateEnd = dateEnd;
+    public void setEndDate(LocalDate dateEnd) {
+        this.endDate = dateEnd;
     }
 
     public BigDecimal getPrice() {
@@ -77,13 +84,29 @@ public class SpecialPriceAndAvailability {
         this.availability = availability;
     }
 
+    public int getDeadline() {
+        return deadline;
+    }
+
+    public void setDeadline(int deadline) {
+        this.deadline = deadline;
+    }
+
+    public PricingMethod getPricingMethod() {
+        return pricingMethod;
+    }
+
+    public void setPricingMethod(PricingMethod pricingMethod) {
+        this.pricingMethod = pricingMethod;
+    }
+
     @Override
     public String toString() {
         return "SpecialPriceAndAvailability{" +
                 "id=" + id +
                 ", accommodation=" + accommodation +
                 ", startDate=" + startDate +
-                ", endDate=" + dateEnd +
+                ", endDate=" + endDate +
                 ", price=" + price +
                 ", availability=" + availability +
                 '}';
@@ -93,4 +116,6 @@ public class SpecialPriceAndAvailability {
         AVAILABLE,
         NOT_AVAILABLE
     }
+
+
 }
