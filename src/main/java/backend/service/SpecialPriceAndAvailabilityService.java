@@ -13,6 +13,7 @@ import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -77,35 +78,29 @@ public class SpecialPriceAndAvailabilityService {
     public void updateAvailability(Long apartmentId, List<String> dates) {
         System.out.println("Ažuriranje dostupnosti za apartman " + apartmentId + " sa datumima: " + dates);
 
-        // Definisanje formata datuma (d.M.yyyy)
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d.M.yyyy");
 
-        // Preuzimanje svih datuma iz baze za dati apartman
         List<SpecialPriceAndAvailability> existingEntries = specialPriceAndAvailabilityRepository.findByAccommodation_Id(apartmentId);
 
-        // Lista koja sadrži datume koji su u bazi
-        List<LocalDate> existingDates = existingEntries.stream()
+        Set<LocalDate> existingDates = existingEntries.stream()
                 .map(SpecialPriceAndAvailability::getStartDate)
-                .collect(Collectors.toList());
+                .collect(Collectors.toSet());
 
-        // Lista koja sadrži datume koji su u zahtevima (dates)
-        List<LocalDate> requestedDates = dates.stream()
+        Set<LocalDate> requestedDates = dates.stream()
                 .map(dateString -> {
-                    // Ako je datum u formatu sa vremenskim delom (ISO 8601), koristi ZonedDateTime
                     LocalDate date;
                     if (dateString.contains("T")) {
-                        // Ako datum sadrži vreme (u formatu sa T), koristi ZonedDateTime da bi uzeo samo datum
-                        ZonedDateTime zonedDateTime = ZonedDateTime.parse(dateString); // Format: "2024-12-15T00:00:00.000Z"
-                        date = zonedDateTime.toLocalDate(); // Dobijanje samo datuma
+                        date = ZonedDateTime.parse(dateString).toLocalDate();
                     } else {
-                        // Ako je datum u formatu "d.M.yyyy", koristi LocalDate
                         date = LocalDate.parse(dateString, formatter);
                     }
                     return date;
                 })
-                .collect(Collectors.toList());
+                .collect(Collectors.toSet()); // Eliminacija duplikata
 
-        // Dodavanje novih datuma koji nisu u bazi
+        System.out.println("Postojeći datumi u bazi: " + existingDates);
+        System.out.println("Zahtevani datumi: " + requestedDates);
+
         for (LocalDate date : requestedDates) {
             if (!existingDates.contains(date)) {
                 SpecialPriceAndAvailability specialPriceAndAvailability = new SpecialPriceAndAvailability();
@@ -122,17 +117,16 @@ public class SpecialPriceAndAvailabilityService {
             }
         }
 
-        // Brisanje datuma koji su u bazi, a nisu u listi requestedDates
         List<SpecialPriceAndAvailability> entriesToRemove = existingEntries.stream()
                 .filter(entry -> !requestedDates.contains(entry.getStartDate()))
                 .collect(Collectors.toList());
 
         for (SpecialPriceAndAvailability entry : entriesToRemove) {
-            // Brisanje zapisa iz baze koji nisu u listi requestedDates
             specialPriceAndAvailabilityRepository.delete(entry);
             System.out.println("Obrisan datum: " + entry.getStartDate());
         }
     }
+
 
 
 
