@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import { DatePipe, NgForOf } from '@angular/common';
+import {CurrencyPipe, DatePipe, NgForOf, NgIf} from '@angular/common';
 import {SpecialPriceServiceService} from '../../../core/service/special_prices/special-price-service.service';
 
 @Component({
@@ -8,7 +8,10 @@ import {SpecialPriceServiceService} from '../../../core/service/special_prices/s
   templateUrl: './calendar.component.html',
   imports: [
     DatePipe,
-    NgForOf
+    NgForOf,
+    NgIf,
+    CurrencyPipe,
+
   ],
   styleUrls: ['./calendar.component.css']
 })
@@ -23,6 +26,8 @@ export class CalendarComponent implements OnInit {
   isSelecting: boolean = false;
   startDate: Date | null = null;
   datesInMonth: Date[] = [];
+
+  specialPrices: { [key: string]: number } = {};
 
   constructor(private specialPriceService: SpecialPriceServiceService) {}
 
@@ -41,11 +46,10 @@ export class CalendarComponent implements OnInit {
 
     if (this.apartment.id) {
       this.getReservedDates(this.apartment.id);
-    }
-    
-    if (this.apartment.id) {
       this.getAvailableDates(this.apartment.id);
+      this.loadSpecialPrices();
     }
+
   }
 
   getReservedDates(apartmentId: number): void {
@@ -70,6 +74,24 @@ export class CalendarComponent implements OnInit {
       }, error => {
         console.error('Error fetching reserved dates:', error);
       });
+  }
+
+  loadSpecialPrices(): void {
+    this.specialPriceService.getSpecialPricesForMonth(this.currentMonth).subscribe((data) => {
+      data.forEach((item: any) => {
+        const startDate = new Date(item.start_date);
+        const endDate = new Date(item.end_date);
+        const price = item.price;
+
+        // Spremi cenu za svaki datum u opsegu od start_date do end_date
+        let currentDate = new Date(startDate);
+        while (currentDate <= endDate) {
+          const formattedDate = this.getFormattedDate(currentDate);
+          this.specialPrices[formattedDate] = price;
+          currentDate.setDate(currentDate.getDate() + 1);
+        }
+      });
+    });
   }
 
   private generateDateRange(startDate: Date, endDate: Date): Date[] {

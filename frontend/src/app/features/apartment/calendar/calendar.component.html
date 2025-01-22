@@ -12,7 +12,15 @@
          (mousedown)="onMouseDown(date)"
          (mouseup)="onMouseUp()"
          (mouseover)="onMouseOver(date)">
-      {{ date.getDate() }}
+
+      <span class="date">{{ date.getDate() }}</span>
+      <p *ngIf="specialPrices[getFormattedDate(date)]">
+        <small class="price">Price: {{ specialPrices[getFormattedDate(date)] | currency:'USD' }}</small>
+      </p>
+      <p *ngIf="!specialPrices[getFormattedDate(date)]">
+        <small class="price">Price: $400</small>
+      </p>
+
     </div>
   </div>
 </div>
