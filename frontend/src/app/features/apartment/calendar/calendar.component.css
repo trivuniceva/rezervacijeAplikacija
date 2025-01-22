@@ -63,6 +63,11 @@
   background-color: dimgray;
   color: white;
 }
+.calendar-day.srecni {
+  font-weight: bold;
+  background-color: hotpink;
+  color: white;
+}
 
 .calendar-day.reserved {
   font-weight: bold;
@@ -75,6 +80,19 @@
 
 .calendar-day.reserved:hover {
   background-color: #B80C09;
+}
+
+.calendar-day.unavailable {
+  font-weight: bold;
+  color: white;
+  background-color: darkslateblue;
+  opacity: 0.6;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.calendar-day.unavailable:hover {
+  background-color: darkblue;
 }
 
 .calendar-day.selected:hover {
