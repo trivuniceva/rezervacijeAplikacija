@@ -49,6 +49,7 @@
   color: #333;
   min-height: 50px;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
 }
@@ -68,17 +69,27 @@
   color: white;
   background-color: #B80C09;
   opacity: 0.6;
-  cursor: not-allowed; !important;
-  pointer-events: none; !important;
+  cursor: not-allowed;
+  pointer-events: none;
 }
 
 .calendar-day.reserved:hover {
-  background-color: #B80C09; !important;
+  background-color: #B80C09;
 }
-
 
 .calendar-day.selected:hover {
   background-color: #D32F2F;
+}
+
+.date {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.price {
+  font-size: 12px;
+  color: #888;
+  margin-top: 5px;
 }
 
 .selected-dates {
