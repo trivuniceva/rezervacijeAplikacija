@@ -1,7 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {MatInputModule} from '@angular/material/input';
-import {MatDatepickerModule} from '@angular/material/datepicker';
 import {FormsModule} from '@angular/forms';
 import {AuthService} from '../../../../core/service/auth/auth.service';
 
@@ -9,8 +7,6 @@ import {AuthService} from '../../../../core/service/auth/auth.service';
   selector: 'app-reservation-dialog',
   standalone: true,
   imports: [
-    MatInputModule,
-    MatDatepickerModule,
     FormsModule,
   ],
   templateUrl: './reservation-dialog.component.html',
