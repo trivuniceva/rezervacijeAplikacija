@@ -1,0 +1,27 @@
+<div class="overlay" (click)="closeDialog()">
+  <div class="dialog" (click)="$event.stopPropagation()">
+    <button class="close-button" (click)="closeDialog()">X</button>
+
+    <div class="dialog-content">
+      <div class="user-info">
+        <h2>User Information</h2>
+        <p><strong>Name:</strong> {{ user.firstname }} {{ user.lastname}}</p>
+        <p><strong>Email:</strong> {{ user.email }}</p>
+        <p><strong>Address:</strong> {{ user.address }}</p>
+        <p><strong>Phone:</strong> {{ user.phone }}</p>
+      </div>
+
+      <div class="calendar">
+        <h2>Select Reservation Date</h2>
+<!--        <mat-form-field appearance="fill">-->
+<!--          <mat-label>Choose a date</mat-label>-->
+<!--          <input matInput [matDatepicker]="picker" [(ngModel)]="selectedDate">-->
+<!--          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>-->
+<!--          <mat-datepicker #picker></mat-datepicker>-->
+<!--        </mat-form-field>-->
+      </div>
+    </div>
+
+    <button mat-raised-button (click)="confirmReservation()">Reserve Now</button>
+  </div>
+</div>
