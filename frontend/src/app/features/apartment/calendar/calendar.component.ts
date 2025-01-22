@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {CurrencyPipe, DatePipe, NgForOf, NgIf} from '@angular/common';
 import {SpecialPriceServiceService} from '../../../core/service/special_prices/special-price-service.service';
+import {AuthService} from '../../../core/service/auth/auth.service';
 
 @Component({
   selector: 'app-calendar',
@@ -29,7 +30,9 @@ export class CalendarComponent implements OnInit {
 
   specialPrices: { [key: string]: number } = {};
 
-  constructor(private specialPriceService: SpecialPriceServiceService) {}
+  user: any;
+
+  constructor(private specialPriceService: SpecialPriceServiceService, private authService: AuthService) {}
 
   ngOnInit(): void {
     if (!this.apartment) {
@@ -49,6 +52,11 @@ export class CalendarComponent implements OnInit {
       this.getAvailableDates(this.apartment.id);
       this.loadSpecialPrices();
     }
+
+    this.user = this.authService.getLoggedUser()
+    console.log("evo juzera breee")
+    console.log(this.user)
+
 
   }
 
