@@ -27,7 +27,7 @@ export class SpecialPriceServiceService {
     return this.http.get<Date[][]>(`${this.apiUrl}/reservedDates?apartmentId=${apartmentId}`);
   }
 
-  getAvailableDates(apartmentId: number): Observable<Date[][]> {
+  getUnavailableDates(apartmentId: number): Observable<Date[][]> {
     return this.http.get<Date[][]>(`${this.apiUrl}/unavailableDates?apartmentId=${apartmentId}`);
   }
 

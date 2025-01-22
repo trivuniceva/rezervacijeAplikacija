@@ -1,17 +1,15 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {MatInputModule} from '@angular/material/input';
-import {MatDatepickerModule} from '@angular/material/datepicker';
 import {FormsModule} from '@angular/forms';
 import {AuthService} from '../../../../core/service/auth/auth.service';
+import {CalendarComponent} from '../../calendar/calendar.component';
 
 @Component({
   selector: 'app-reservation-dialog',
   standalone: true,
   imports: [
-    MatInputModule,
-    MatDatepickerModule,
     FormsModule,
+    CalendarComponent,
   ],
   templateUrl: './reservation-dialog.component.html',
   styleUrl: './reservation-dialog.component.css'
@@ -22,7 +20,7 @@ export class ReservationDialogComponent implements OnInit{
 
   constructor(
     public dialogRef: MatDialogRef<ReservationDialogComponent>, // Inject MatDialogRef
-    @Inject(MAT_DIALOG_DATA) public data: { accommodation: any, user: any },
+    @Inject(MAT_DIALOG_DATA) public data: { accommodation: any },
     private authService: AuthService
   ) {
   }
