@@ -13,11 +13,12 @@
 
       <div class="calendar">
         <h2>Select Reservation Date</h2>
+        <app-calendar [apartment]="data.accommodation"></app-calendar>
 
-        
+
       </div>
     </div>
 
-    <button mat-raised-button (click)="confirmReservation()">Reserve Now</button>
+    <button mat-raised-button (click)="confirmReservation()" class="reserve-button">Reserve Now</button>
   </div>
 </div>

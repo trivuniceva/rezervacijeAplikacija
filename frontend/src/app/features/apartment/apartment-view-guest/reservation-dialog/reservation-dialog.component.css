@@ -14,7 +14,7 @@
 
 .dialog {
   width: 80%;
-  height: 70%;
+  height: 75%;
   background: white;
   padding: 30px;
   border-radius: 12px;
@@ -38,10 +38,6 @@
   transition: color 0.2s ease-in-out;
 }
 
-.close-button:hover {
-  color: red;
-}
-
 .dialog-content {
   display: flex;
   justify-content: space-between;
@@ -58,7 +54,6 @@
 
 .user-info{
   flex: 1;
-
 }
 
 .calendar{
@@ -80,7 +75,7 @@ mat-form-field {
   width: 100%;
 }
 
-button[mat-raised-button] {
+.reserve-button[mat-raised-button] {
   font-weight: bold;
   text-transform: uppercase;
   margin: 0 auto;
@@ -95,7 +90,7 @@ button[mat-raised-button] {
   z-index: 10;
 }
 
-button:hover{
+.reserve-button:hover{
   background-color: #0056b3;
 }
 
