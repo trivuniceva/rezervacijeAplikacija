@@ -9,9 +9,6 @@ import {AmenitiesInfoComponent} from '../amenities-info/amenities-info.component
 import { Location } from '@angular/common';
 import {ReservationDialogComponent} from '../reservation-dialog/reservation-dialog.component';
 import {MatDialog} from '@angular/material/dialog';
-import {MatDatepickerModule} from '@angular/material/datepicker';
-import {MatNativeDateModule} from '@angular/material/core';
-// import { MatThemeModule } from '@angular/material/core';
 
 @Component({
   selector: 'app-detailed-view',
@@ -23,9 +20,6 @@ import {MatNativeDateModule} from '@angular/material/core';
     MapSectionComponent,
     AmenitiesInfoComponent,
     NgIf,
-    // MatThemeModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
   ],
   templateUrl: './detailed-view-base.component.html',
   styleUrl: './detailed-view-base.component.css'
