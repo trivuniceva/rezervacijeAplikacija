@@ -60,7 +60,7 @@
 
 .calendar-day.selected {
   font-weight: bold;
-  background-color: #B80C09;
+  background-color: dimgray;
   color: white;
 }
 
@@ -78,7 +78,7 @@
 }
 
 .calendar-day.selected:hover {
-  background-color: #D32F2F;
+  background-color: darkgray;
 }
 
 .date {
