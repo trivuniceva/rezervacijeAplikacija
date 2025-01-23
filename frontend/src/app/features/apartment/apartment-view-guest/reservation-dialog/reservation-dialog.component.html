@@ -12,14 +12,14 @@
 
         <hr>
 
-        <p><strong>Selected days:</strong> 7 </p>
+        <p><strong>Selected days:</strong> {{ reservedDaysNum }} </p>
         <p><strong>Price: {{data.accommodation.price}}  $</strong></p>
 
       </div>
 
       <div class="calendar">
         <h2>Select Reservation Date</h2>
-        <app-calendar [apartment]="data.accommodation"></app-calendar>
+        <app-calendar [apartment]="data.accommodation" (reservedDaysNumChange)="updateReservedDaysNum($event)">></app-calendar>
 
 
       </div>

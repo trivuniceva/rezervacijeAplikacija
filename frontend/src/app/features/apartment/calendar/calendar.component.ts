@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {CurrencyPipe, DatePipe, NgForOf, NgIf} from '@angular/common';
 import {SpecialPriceServiceService} from '../../../core/service/special_prices/special-price-service.service';
 import {AuthService} from '../../../core/service/auth/auth.service';
@@ -20,6 +20,8 @@ import {AuthService} from '../../../core/service/auth/auth.service';
 export class CalendarComponent implements OnInit {
   @Input() apartment: any;
   @Input() isEditAvailability: boolean = false;
+
+  @Output() reservedDaysNumChange = new EventEmitter<number>();
 
   currentMonth: Date = new Date();
   srecniVikend: Date[] = [];
@@ -192,10 +194,15 @@ export class CalendarComponent implements OnInit {
         this.apartment.availabilityList.push(date);
         console.log("srecni ljudi::")
         console.log(this.apartment.availabilityList);
+
+
       } else {
         this.srecniVikend.splice(index, 1);
         this.apartment.availabilityList.splice(index, 1);
       }
+
+      this.reservedDaysNumChange.emit(this.srecniVikend.length);
+
     }
   }
 
