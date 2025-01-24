@@ -206,19 +206,17 @@ export class CalendarComponent implements OnInit {
       } else {
         this.srecniVikend.splice(index, 1);
         this.apartment.availabilityList.splice(index, 1);
-        console.log("nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn")
         const dateString = this.formatDate(date);
+
         if(this.checkIfSpecialPrice(dateString)){
           this.fullPrice -= this.specialPrices[dateString];
         } else {
           this.fullPrice -= this.apartment.defaultPrice;
         }
-
       }
 
       this.reservedDaysNumChange.emit(this.srecniVikend.length);
       this.fullPriceNum.emit(this.fullPrice);
-
 
     }
   }
