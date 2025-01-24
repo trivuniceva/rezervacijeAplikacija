@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {CurrencyPipe, DatePipe, NgForOf, NgIf} from '@angular/common';
 import {SpecialPriceServiceService} from '../../../core/service/special_prices/special-price-service.service';
 import {AuthService} from '../../../core/service/auth/auth.service';
@@ -20,6 +20,8 @@ import {AuthService} from '../../../core/service/auth/auth.service';
 export class CalendarComponent implements OnInit {
   @Input() apartment: any;
   @Input() isEditAvailability: boolean = false;
+
+  @Output() reservedDaysNumChange = new EventEmitter<number>();
 
   currentMonth: Date = new Date();
   srecniVikend: Date[] = [];
@@ -54,7 +56,7 @@ export class CalendarComponent implements OnInit {
 
     if (this.apartment.id) {
       this.getReservedDates(this.apartment.id);
-      this.loadSpecialPrices();
+      this.loadSpecialPrices(this.apartment.id);
       this.getUnavailableDates(this.apartment.id);
 
     }
@@ -86,11 +88,15 @@ export class CalendarComponent implements OnInit {
       });
   }
 
-  loadSpecialPrices(): void {
-    this.specialPriceService.getSpecialPricesForMonth(this.currentMonth).subscribe((data) => {
+  loadSpecialPrices(accommodationId: number): void {
+    this.specialPriceService.getSpecialPricesByAccommodationId(accommodationId).subscribe((data) => {
+      console.log("ljubavvvvvv")
+      console.log(data);
+      console.log("ljubavvvvvv")
+
       data.forEach((item: any) => {
-        const startDate = new Date(item.start_date);
-        const endDate = new Date(item.end_date);
+        const startDate = new Date(item.startDate);
+        const endDate = new Date(item.endDate);
         const price = item.price;
 
         // Spremi cenu za svaki datum u opsegu od start_date do end_date
@@ -103,6 +109,7 @@ export class CalendarComponent implements OnInit {
       });
     });
   }
+
 
   private generateDateRange(startDate: Date, endDate: Date): Date[] {
     const dates: Date[] = [];
@@ -192,10 +199,15 @@ export class CalendarComponent implements OnInit {
         this.apartment.availabilityList.push(date);
         console.log("srecni ljudi::")
         console.log(this.apartment.availabilityList);
+
+
       } else {
         this.srecniVikend.splice(index, 1);
         this.apartment.availabilityList.splice(index, 1);
       }
+
+      this.reservedDaysNumChange.emit(this.srecniVikend.length);
+
     }
   }
 

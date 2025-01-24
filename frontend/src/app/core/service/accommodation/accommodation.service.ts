@@ -13,6 +13,7 @@ export interface Accommodation {
   approved: boolean;
   amenities: string[];
   photos: string;
+  defaultPrice: number;
 }
 
 @Injectable({

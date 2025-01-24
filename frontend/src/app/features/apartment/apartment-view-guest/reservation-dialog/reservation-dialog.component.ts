@@ -17,11 +17,12 @@ import {CalendarComponent} from '../../calendar/calendar.component';
 export class ReservationDialogComponent implements OnInit{
   selectedDate: Date  | null = null;
   user: any;
+  reservedDaysNum: number = 0;
 
   constructor(
     public dialogRef: MatDialogRef<ReservationDialogComponent>, // Inject MatDialogRef
     @Inject(MAT_DIALOG_DATA) public data: { accommodation: any },
-    private authService: AuthService
+    private authService: AuthService,
   ) {
   }
 
@@ -29,10 +30,12 @@ export class ReservationDialogComponent implements OnInit{
     this.user = this.authService.getLoggedUser()
     console.log(this.user)
     console.log("oko moje  <333333")
+
   }
 
-  onDateSelected(event: any) {
-    this.selectedDate = event.value;
+  updateReservedDaysNum(count: number) {
+    this.reservedDaysNum = count;
+    console.log(`Broj rezervisanih dana: ${this.reservedDaysNum}`);
   }
 
   confirmReservation() {

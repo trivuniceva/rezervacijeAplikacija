@@ -33,6 +33,7 @@ export class SearchAccommodationsComponent implements OnInit{
     if(this.userRole === '' || this.userRole === 'GUEST'){
       this.accommodationService.getAccommodations().subscribe((data) => {
         this.accommodations = data;
+        console.log("get Accommodations")
         console.log(this.accommodations)
       });
     }

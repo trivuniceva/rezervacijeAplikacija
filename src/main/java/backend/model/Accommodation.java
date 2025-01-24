@@ -1,5 +1,6 @@
 package backend.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import menadzerisanjeuser.menadzerisanjeuser.model.User;
 import org.springframework.data.annotation.Id;
@@ -39,6 +40,9 @@ public class Accommodation {
     @ManyToOne
     @JoinColumn(name = "owner_id")
     private User owner;
+
+    @Column(name = "default_price", nullable = false)
+    private double defaultPrice;
 
     public Long getId() {
         return id;
@@ -128,6 +132,14 @@ public class Accommodation {
         this.owner = owner;
     }
 
+    public double getDefaultPrice() {
+        return defaultPrice;
+    }
+
+    public void setDefaultPrice(double defaultPrice) {
+        this.defaultPrice = defaultPrice;
+    }
+
     @Override
     public String toString() {
         return "Accommodation{" +
@@ -142,6 +154,7 @@ public class Accommodation {
                 ", type=" + type +
                 ", approved=" + approved +
                 ", owner=" + owner +
+                ", defaultPrice=" + defaultPrice +
                 '}';
     }
 }

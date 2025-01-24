@@ -20,7 +20,7 @@
           <small class="price">Price: {{ specialPrices[getFormattedDate(date)] | currency:'USD' }}</small>
         </p>
         <p *ngIf="!specialPrices[getFormattedDate(date)]">
-          <small class="price">Price: $400</small>
+          <small class="price">Price: ${{apartment.defaultPrice}} </small>
         </p>
 
       </div>
