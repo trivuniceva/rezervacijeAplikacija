@@ -4,6 +4,7 @@ import {FormsModule} from '@angular/forms';
 import {AuthService} from '../../../../core/service/auth/auth.service';
 import {CalendarComponent} from '../../calendar/calendar.component';
 import {AccommodationService} from '../../../../core/service/accommodation/accommodation.service';
+import {NgIf} from '@angular/common';
 
 @Component({
   selector: 'app-reservation-dialog',
@@ -11,6 +12,7 @@ import {AccommodationService} from '../../../../core/service/accommodation/accom
   imports: [
     FormsModule,
     CalendarComponent,
+    NgIf,
   ],
   templateUrl: './reservation-dialog.component.html',
   styleUrl: './reservation-dialog.component.css'
@@ -21,6 +23,11 @@ export class ReservationDialogComponent implements OnInit{
   reservedDaysNum: number = 0;
   fullPrice: number = 0;
 
+
+  accommodation: any;
+  guestError: string = '';
+  numGuests: any;
+
   constructor(
     public dialogRef: MatDialogRef<ReservationDialogComponent>, // Inject MatDialogRef
     @Inject(MAT_DIALOG_DATA) public data: { accommodation: any },
@@ -30,6 +37,10 @@ export class ReservationDialogComponent implements OnInit{
   }
 
   ngOnInit() {
+    this.accommodation = history.state.accommodation;
+    this.numGuests = this.accommodation.minGuests;
+
+
     this.user = this.authService.getLoggedUser()
     console.log(this.user)
     console.log("oko moje  <333333")
@@ -49,7 +60,8 @@ export class ReservationDialogComponent implements OnInit{
       accommodationId: this.data.accommodation.id,
       userId: this.user.id,
       fullPrice: this.fullPrice,
-      selectedDates: this.selectedDate
+      selectedDates: this.selectedDate,
+      numberOfGuests: this.numGuests
     };
 
     console.log("heloooooo accccc")
@@ -71,5 +83,32 @@ export class ReservationDialogComponent implements OnInit{
 
   closeDialog() {
     this.dialogRef.close();
+  }
+
+
+  validateGuests() {
+    if (this.numGuests < this.data.accommodation.minGuests) {
+      this.numGuests = this.data.accommodation.minGuests;
+      this.guestError = `Minimum number of guests is ${this.data.accommodation.minGuests}.`;
+    } else if (this.numGuests > this.data.accommodation.maxGuests) {
+      this.numGuests = this.data.accommodation.maxGuests;
+      this.guestError = `Maximum number of guests is ${this.data.accommodation.maxGuests}.`;
+    } else {
+      this.guestError = '';
+    }
+  }
+
+  increaseGuests() {
+    if (this.numGuests < this.data.accommodation.maxGuests) {
+      this.numGuests++;
+      this.validateGuests();
+    }
+  }
+
+  decreaseGuests() {
+    if (this.numGuests > this.data.accommodation.minGuests) {
+      this.numGuests--;
+      this.validateGuests();
+    }
   }
 }

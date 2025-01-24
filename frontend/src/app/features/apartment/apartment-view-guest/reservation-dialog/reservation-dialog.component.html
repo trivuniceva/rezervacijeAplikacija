@@ -12,6 +12,28 @@
 
         <hr>
 
+        <div class="guest-selection">
+          <label for="guests">Number of Guests:</label>
+          <div class="guest-input-container">
+            <button (click)="decreaseGuests()" class="guest-btn">-</button>
+            <input
+              id="guests"
+              type="number"
+              [(ngModel)]="numGuests"
+              [min]="data.accommodation.minGuests"
+              [max]="data.accommodation.maxGuests"
+              (change)="validateGuests()"
+              readonly
+            />
+            <button (click)="increaseGuests()" class="guest-btn">+</button>
+          </div>
+          <p *ngIf="guestError" class="error-message">{{ guestError }}</p>
+        </div>
+
+
+        <hr>
+
+
         <p><strong>Selected days:</strong> {{ reservedDaysNum }} </p>
         <p><strong>Price: {{fullPrice}}  $</strong></p>
 

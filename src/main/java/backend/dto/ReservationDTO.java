@@ -7,6 +7,7 @@ public class ReservationDTO {
     private Long userId;
     private Double fullPrice;
     private List<String> selectedDates;
+    private int numberOfGuests;
 
 
     public Long getAccommodationId() {
@@ -39,5 +40,13 @@ public class ReservationDTO {
 
     public void setSelectedDates(List<String> selectedDates) {
         this.selectedDates = selectedDates;
+    }
+
+    public int getNumberOfGuests() {
+        return numberOfGuests;
+    }
+
+    public void setNumberOfGuests(int numberOfGuests) {
+        this.numberOfGuests = numberOfGuests;
     }
 }
