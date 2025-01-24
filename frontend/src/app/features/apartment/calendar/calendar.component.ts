@@ -56,7 +56,7 @@ export class CalendarComponent implements OnInit {
 
     if (this.apartment.id) {
       this.getReservedDates(this.apartment.id);
-      this.loadSpecialPrices();
+      this.loadSpecialPrices(this.apartment.id);
       this.getUnavailableDates(this.apartment.id);
 
     }
@@ -88,11 +88,15 @@ export class CalendarComponent implements OnInit {
       });
   }
 
-  loadSpecialPrices(): void {
-    this.specialPriceService.getSpecialPricesForMonth(this.currentMonth).subscribe((data) => {
+  loadSpecialPrices(accommodationId: number): void {
+    this.specialPriceService.getSpecialPricesByAccommodationId(accommodationId).subscribe((data) => {
+      console.log("ljubavvvvvv")
+      console.log(data);
+      console.log("ljubavvvvvv")
+
       data.forEach((item: any) => {
-        const startDate = new Date(item.start_date);
-        const endDate = new Date(item.end_date);
+        const startDate = new Date(item.startDate);
+        const endDate = new Date(item.endDate);
         const price = item.price;
 
         // Spremi cenu za svaki datum u opsegu od start_date do end_date
@@ -105,6 +109,7 @@ export class CalendarComponent implements OnInit {
       });
     });
   }
+
 
   private generateDateRange(startDate: Date, endDate: Date): Date[] {
     const dates: Date[] = [];

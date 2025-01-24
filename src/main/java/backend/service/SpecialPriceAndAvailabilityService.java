@@ -135,9 +135,16 @@ public class SpecialPriceAndAvailabilityService {
     }
 
 
+    public List<SpecialPriceAndAvailability> getSpecialPricesByAccommodationId(Long accommodationId) {
+        List<SpecialPriceAndAvailability> lst = repository.findByAccommodationIdAndAvailability(accommodationId, SpecialPriceAndAvailability.Availability.AVAILABLE);
 
+        for(SpecialPriceAndAvailability l : lst) {
+            System.out.println(l);
+        }
 
+        System.out.println("baj id");
 
-
+        return lst;
+    }
 
 }
