@@ -206,6 +206,14 @@ export class CalendarComponent implements OnInit {
       } else {
         this.srecniVikend.splice(index, 1);
         this.apartment.availabilityList.splice(index, 1);
+        console.log("nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn")
+        const dateString = this.formatDate(date);
+        if(this.checkIfSpecialPrice(dateString)){
+          this.fullPrice -= this.specialPrices[dateString];
+        } else {
+          this.fullPrice -= this.apartment.defaultPrice;
+        }
+
       }
 
       this.reservedDaysNumChange.emit(this.srecniVikend.length);
@@ -224,17 +232,27 @@ export class CalendarComponent implements OnInit {
   }
 
   private countPrice(date: Date) {
+
     const dateString = this.formatDate(date);
 
+    if(this.checkIfSpecialPrice(dateString)){
+      this.fullPrice += this.specialPrices[dateString];
+    } else{
+      this.fullPrice += this.apartment.defaultPrice;
+    }
+  }
+
+  private checkIfSpecialPrice(dateString: string): boolean{
     const specialPriceKeys = Object.keys(this.specialPrices);
+
     if (specialPriceKeys.includes(dateString)) {
       console.log("---------------------")
       console.log("Special price found for " + dateString);
       console.log(this.specialPrices[dateString]);
-      this.fullPrice += this.specialPrices[dateString];
+      return true;
     } else {
       console.log("Date not found in special prices");
-      this.fullPrice += this.apartment.defaultPrice;
+      return false;
     }
   }
 
