@@ -3,6 +3,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {FormsModule} from '@angular/forms';
 import {AuthService} from '../../../../core/service/auth/auth.service';
 import {CalendarComponent} from '../../calendar/calendar.component';
+import {AccommodationService} from '../../../../core/service/accommodation/accommodation.service';
 
 @Component({
   selector: 'app-reservation-dialog',
@@ -24,6 +25,7 @@ export class ReservationDialogComponent implements OnInit{
     public dialogRef: MatDialogRef<ReservationDialogComponent>, // Inject MatDialogRef
     @Inject(MAT_DIALOG_DATA) public data: { accommodation: any },
     private authService: AuthService,
+    private accommodationService: AccommodationService,
   ) {
   }
 
@@ -34,29 +36,37 @@ export class ReservationDialogComponent implements OnInit{
 
   }
 
-  updateReservedDaysNum(count: number) {
-    this.reservedDaysNum = count;
-    console.log(`Broj rezervisanih dana: ${this.reservedDaysNum}`);
+  updateReservedDaysNum(selectedDates: Date[]) {
+    this.reservedDaysNum = selectedDates.length;
   }
 
   updateFullPrice(price: number) {
     this.fullPrice = price;
-    console.log(this.fullPrice)
   }
 
   confirmReservation() {
     const reservationData = {
       accommodationId: this.data.accommodation.id,
       userId: this.user.id,
-      startDate: this.selectedDate
+      fullPrice: this.fullPrice,
+      selectedDates: this.selectedDate
     };
 
     console.log("heloooooo accccc")
     console.log(this.data.accommodation.id)
     console.log(this.data.accommodation)
+    console.log(this.fullPrice)
+    console.log(this.selectedDate)
 
+    this.accommodationService.reserveAccommodation(reservationData).subscribe({
+      next: (response) => {
+        console.log('Rezervacija uspešno potvrđena:', response.message);  // Pristup poruci
+      },
+      error: (error) => {
+        console.error('Došlo je do greške:', error);
+      }
+    });
 
-    this.dialogRef.close(reservationData);
   }
 
   closeDialog() {

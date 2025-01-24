@@ -42,5 +42,9 @@ export class AccommodationService {
     return this.http.get<Accommodation>(`${this.apiUrl}/accommodationById/${id}`);
   }
 
+  reserveAccommodation(reservationData: any): Observable<any> {
+    const url = `${this.apiUrl}/reserve`;
+    return this.http.post<any>(url, reservationData);
+  }
 
 }

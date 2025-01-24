@@ -1,5 +1,6 @@
 package backend.service;
 
+import backend.dto.ReservationDTO;
 import backend.repository.ReservationRequestRepository;
 import backend.model.ReservationRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class ReservationRequestService {
+public class ReservationService {
 
     @Autowired
     private ReservationRequestRepository reservationRequestRepository;
@@ -27,5 +28,10 @@ public class ReservationRequestService {
 
     public void deleteReservationRequest(Long id) {
         reservationRequestRepository.deleteById(id);
+    }
+
+    public boolean processReservation(ReservationDTO reservationData) {
+
+        return true;
     }
 }

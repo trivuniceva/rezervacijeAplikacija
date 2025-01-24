@@ -21,7 +21,7 @@ export class CalendarComponent implements OnInit {
   @Input() apartment: any;
   @Input() isEditAvailability: boolean = false;
 
-  @Output() reservedDaysNumChange = new EventEmitter<number>();
+  @Output() reservedDaysNumChange = new EventEmitter<Date[]>();
   @Output() fullPriceNum = new EventEmitter<number>();
 
   currentMonth: Date = new Date();
@@ -215,7 +215,7 @@ export class CalendarComponent implements OnInit {
         }
       }
 
-      this.reservedDaysNumChange.emit(this.srecniVikend.length);
+      this.reservedDaysNumChange.emit(this.srecniVikend);
       this.fullPriceNum.emit(this.fullPrice);
 
     }
