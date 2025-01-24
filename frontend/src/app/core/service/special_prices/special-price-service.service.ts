@@ -20,14 +20,14 @@ export class SpecialPriceServiceService {
   constructor(private http: HttpClient) { }
 
   getAvailableSpecialPrices(apartmentId: number): Observable<SpecialPrice[]> {
-    return this.http.get<SpecialPrice[]>(`${this.apiUrl}/prices?apartmentId=${apartmentId}`);
+    return this.http.get<SpecialPrice[]>(`${this.apiUrl}/pricesSSS?apartmentId=${apartmentId}`);
   }
 
   getReservedDates(apartmentId: number): Observable<Date[][]> {
     return this.http.get<Date[][]>(`${this.apiUrl}/reservedDates?apartmentId=${apartmentId}`);
   }
 
-  getAvailableDates(apartmentId: number): Observable<Date[][]> {
+  getUnavailableDates(apartmentId: number): Observable<Date[][]> {
     return this.http.get<Date[][]>(`${this.apiUrl}/unavailableDates?apartmentId=${apartmentId}`);
   }
 
@@ -39,6 +39,10 @@ export class SpecialPriceServiceService {
     // datumi u ISO stringove za slanje
     const formattedDates = dates.map(date => date.toISOString());
     return this.http.post(`${this.apiUrl}/update-availability`, { apartmentId, dates: formattedDates });
+  }
+
+  getSpecialPricesByAccommodationId(accommodationId: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/prices/${accommodationId}`);
   }
 
 }

@@ -1,6 +1,7 @@
-import {Component, Input, OnInit} from '@angular/core';
-import { DatePipe, NgForOf } from '@angular/common';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {CurrencyPipe, DatePipe, NgForOf, NgIf} from '@angular/common';
 import {SpecialPriceServiceService} from '../../../core/service/special_prices/special-price-service.service';
+import {AuthService} from '../../../core/service/auth/auth.service';
 
 @Component({
   selector: 'app-calendar',
@@ -8,7 +9,10 @@ import {SpecialPriceServiceService} from '../../../core/service/special_prices/s
   templateUrl: './calendar.component.html',
   imports: [
     DatePipe,
-    NgForOf
+    NgForOf,
+    NgIf,
+    CurrencyPipe,
+
   ],
   styleUrls: ['./calendar.component.css']
 })
@@ -17,16 +21,27 @@ export class CalendarComponent implements OnInit {
   @Input() apartment: any;
   @Input() isEditAvailability: boolean = false;
 
+  @Output() reservedDaysNumChange = new EventEmitter<number>();
+
   currentMonth: Date = new Date();
-  selectedDates: Date[] = [];
+  srecniVikend: Date[] = [];
+  unavailabledDates: Date[] = [];
   reservedDates: Date[] = [];
   isSelecting: boolean = false;
   startDate: Date | null = null;
   datesInMonth: Date[] = [];
 
-  constructor(private specialPriceService: SpecialPriceServiceService) {}
+  specialPrices: { [key: string]: number } = {};
+
+  user: any;
+
+  constructor(private specialPriceService: SpecialPriceServiceService, private authService: AuthService) {}
 
   ngOnInit(): void {
+    this.user = this.authService.getLoggedUser()
+    console.log("evo juzera breee")
+    console.log(this.user)
+
     if (!this.apartment) {
       console.error('Apartment input is not provided!');
       return;
@@ -41,11 +56,12 @@ export class CalendarComponent implements OnInit {
 
     if (this.apartment.id) {
       this.getReservedDates(this.apartment.id);
+      this.loadSpecialPrices(this.apartment.id);
+      this.getUnavailableDates(this.apartment.id);
+
     }
-    
-    if (this.apartment.id) {
-      this.getAvailableDates(this.apartment.id);
-    }
+
+
   }
 
   getReservedDates(apartmentId: number): void {
@@ -60,17 +76,40 @@ export class CalendarComponent implements OnInit {
       });
   }
 
-  getAvailableDates(apartmentId: number): void {
-    this.specialPriceService.getAvailableDates(apartmentId)
+  getUnavailableDates(apartmentId: number): void {
+    this.specialPriceService.getUnavailableDates(apartmentId)
       .subscribe(data => {
-        this.selectedDates = data.flatMap(dateRange =>
+        this.unavailabledDates = data.flatMap(dateRange =>
           this.generateDateRange(new Date(dateRange[0]), new Date(dateRange[1]))
         );
-        console.log('Reserved Dates:', this.reservedDates);
+        console.log('Unavailable Dates:', this.reservedDates);
       }, error => {
         console.error('Error fetching reserved dates:', error);
       });
   }
+
+  loadSpecialPrices(accommodationId: number): void {
+    this.specialPriceService.getSpecialPricesByAccommodationId(accommodationId).subscribe((data) => {
+      console.log("ljubavvvvvv")
+      console.log(data);
+      console.log("ljubavvvvvv")
+
+      data.forEach((item: any) => {
+        const startDate = new Date(item.startDate);
+        const endDate = new Date(item.endDate);
+        const price = item.price;
+
+        // Spremi cenu za svaki datum u opsegu od start_date do end_date
+        let currentDate = new Date(startDate);
+        while (currentDate <= endDate) {
+          const formattedDate = this.getFormattedDate(currentDate);
+          this.specialPrices[formattedDate] = price;
+          currentDate.setDate(currentDate.getDate() + 1);
+        }
+      });
+    });
+  }
+
 
   private generateDateRange(startDate: Date, endDate: Date): Date[] {
     const dates: Date[] = [];
@@ -129,25 +168,51 @@ export class CalendarComponent implements OnInit {
       this.apartment.availabilityList = [];
     }
 
-    const index = this.selectedDates.findIndex(d => this.isSameDay(d, date));
-    if (index === -1) {
-      this.selectedDates.push(date);
-      this.apartment.availabilityList.push(date);
-      console.log("lutko <333")
-      console.log(this.apartment.availabilityList);
-    } else {
-      this.selectedDates.splice(index, 1);
-      this.apartment.availabilityList.splice(index, 1);
-    }
-
 // Ako je edit dostupnosti
     if (this.isEditAvailability) {
       this.sendSelectedDatesToBackend();
     }
+
+
+    if(this.user.userRole === 'HOST'){
+      const index = this.unavailabledDates.findIndex(d => this.isSameDay(d, date));
+      if (index === -1) {
+        this.unavailabledDates.push(date);
+        this.apartment.availabilityList.push(date);
+        console.log("lutko <333")
+        console.log(this.apartment.availabilityList);
+      } else {
+        this.unavailabledDates.splice(index, 1);
+        this.apartment.availabilityList.splice(index, 1);
+      }
+    }
+
+
+    if(this.user.userRole === 'GUEST'){
+      if (this.isUnavailableDate(date)) {
+        return;
+      }
+
+      const index = this.srecniVikend.findIndex(d => this.isSameDay(d, date));
+      if (index === -1) {
+        this.srecniVikend.push(date);
+        this.apartment.availabilityList.push(date);
+        console.log("srecni ljudi::")
+        console.log(this.apartment.availabilityList);
+
+
+      } else {
+        this.srecniVikend.splice(index, 1);
+        this.apartment.availabilityList.splice(index, 1);
+      }
+
+      this.reservedDaysNumChange.emit(this.srecniVikend.length);
+
+    }
   }
 
   sendSelectedDatesToBackend() {
-    this.specialPriceService.updateAvailability(this.apartment.id, this.selectedDates)
+    this.specialPriceService.updateAvailability(this.apartment.id, this.unavailabledDates)
       .subscribe(response => {
         console.log('Dates updated successfully', response);
       }, error => {
@@ -186,7 +251,12 @@ export class CalendarComponent implements OnInit {
     return this.reservedDates.some(d => this.isSameDay(d, date));
   }
 
-  isSelected(date: Date): boolean {
-    return this.selectedDates.some(d => this.isSameDay(d, date));
+  isUnavailableDate(date: Date): boolean {
+    return this.unavailabledDates.some(d => this.isSameDay(d, date));
   }
+
+  isSrecni(date: Date): boolean {
+    return this.srecniVikend.some(d => this.isSameDay(d, date));
+  }
+
 }

@@ -21,7 +21,7 @@ public class SpecialPriceController {
         this.service = service;
     }
 
-    @GetMapping("/prices")
+    @GetMapping("/pricesSS")
     public List<SpecialPriceAndAvailability> getAvailableSpecialPrices(@RequestParam Long apartmentId) {
         return service.getSpecialPrice(apartmentId);
     }
@@ -49,6 +49,12 @@ public class SpecialPriceController {
         // Poziv servisa da ažurira dostupnost za te datume
         service.updateAvailability(request.getApartmentId(), request.getDates());
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/prices/{accommodationId}")
+    public ResponseEntity<List<SpecialPriceAndAvailability>> getSpecialPricesByAccommodationId(@PathVariable Long accommodationId) {
+        List<SpecialPriceAndAvailability> specialPrices = service.getSpecialPricesByAccommodationId(accommodationId);
+        return ResponseEntity.ok(specialPrices);
     }
 
 
