@@ -22,6 +22,7 @@ export class CalendarComponent implements OnInit {
   @Input() isEditAvailability: boolean = false;
 
   @Output() reservedDaysNumChange = new EventEmitter<number>();
+  @Output() fullPriceNum = new EventEmitter<number>();
 
   currentMonth: Date = new Date();
   srecniVikend: Date[] = [];
@@ -32,6 +33,7 @@ export class CalendarComponent implements OnInit {
   datesInMonth: Date[] = [];
 
   specialPrices: { [key: string]: number } = {};
+  fullPrice: number = 0;
 
   user: any;
 
@@ -199,7 +201,7 @@ export class CalendarComponent implements OnInit {
         this.apartment.availabilityList.push(date);
         console.log("srecni ljudi::")
         console.log(this.apartment.availabilityList);
-
+        this.countPrice(date);
 
       } else {
         this.srecniVikend.splice(index, 1);
@@ -207,9 +209,35 @@ export class CalendarComponent implements OnInit {
       }
 
       this.reservedDaysNumChange.emit(this.srecniVikend.length);
+      this.fullPriceNum.emit(this.fullPrice);
+
 
     }
   }
+
+
+  private formatDate(date: Date): string {
+    const day = String(date.getDate());
+    const month = String(date.getMonth() + 1);
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;  // Ovaj format: D/M/YYYY
+  }
+
+  private countPrice(date: Date) {
+    const dateString = this.formatDate(date);
+
+    const specialPriceKeys = Object.keys(this.specialPrices);
+    if (specialPriceKeys.includes(dateString)) {
+      console.log("---------------------")
+      console.log("Special price found for " + dateString);
+      console.log(this.specialPrices[dateString]);
+      this.fullPrice += this.specialPrices[dateString];
+    } else {
+      console.log("Date not found in special prices");
+      this.fullPrice += this.apartment.defaultPrice;
+    }
+  }
+
 
   sendSelectedDatesToBackend() {
     this.specialPriceService.updateAvailability(this.apartment.id, this.unavailabledDates)

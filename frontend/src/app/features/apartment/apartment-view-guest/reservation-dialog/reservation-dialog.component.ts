@@ -18,6 +18,7 @@ export class ReservationDialogComponent implements OnInit{
   selectedDate: Date  | null = null;
   user: any;
   reservedDaysNum: number = 0;
+  fullPrice: number = 0;
 
   constructor(
     public dialogRef: MatDialogRef<ReservationDialogComponent>, // Inject MatDialogRef
@@ -36,6 +37,11 @@ export class ReservationDialogComponent implements OnInit{
   updateReservedDaysNum(count: number) {
     this.reservedDaysNum = count;
     console.log(`Broj rezervisanih dana: ${this.reservedDaysNum}`);
+  }
+
+  updateFullPrice(price: number) {
+    this.fullPrice = price;
+    console.log(this.fullPrice)
   }
 
   confirmReservation() {
