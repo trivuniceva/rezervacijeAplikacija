@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ReservationService {
@@ -52,19 +53,15 @@ public class ReservationService {
 
         if(!areDatesReserved(reservationData.getAccommodationId(), reservationData.getSelectedDates())){
             if (!areDatesNotAvailable(reservationData.getAccommodationId(), reservationData.getSelectedDates())){
-                // TODO 4: rezervisi
                 Long accommodationId = reservationData.getAccommodationId();
                 Accommodation accommodation = accommodationRepository.findById(accommodationId).get();
 
-                System.out.println("accommodation: " + accommodation.toString());
-                System.out.println(">>>>>>>>>>>>");
-
-//                User guest =
-
+                Long guestId = reservationData.getUserId();
+                User guest = userRepository.findById(guestId).get();
 
                 Reservation reservation = new Reservation();
 
-//                reservation.setGuest();
+                reservation.setGuest(guest);
                 reservation.setAccommodation(accommodation);
                 reservation.setStartDate(LocalDate.parse(reservationData.getSelectedDates().get(0))); // Assuming the first date is the start date
                 reservation.setEndDate(LocalDate.parse(reservationData.getSelectedDates().get(reservationData.getSelectedDates().size() - 1))); // Assuming the last date is the end date
