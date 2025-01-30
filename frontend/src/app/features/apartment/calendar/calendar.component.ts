@@ -234,9 +234,7 @@ export class CalendarComponent implements OnInit {
   }
 
   private countPrice(date: Date) {
-
     const dateString = this.formatDate(date);
-
     if(this.checkIfSpecialPrice(dateString)){
       this.fullPrice += this.specialPrices[dateString];
     } else{

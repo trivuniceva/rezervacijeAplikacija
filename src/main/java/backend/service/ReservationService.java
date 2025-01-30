@@ -5,6 +5,8 @@ import backend.model.*;
 import backend.repository.AccommodationRepository;
 import backend.repository.ReservationRepository;
 import backend.repository.SpecialPriceAndAvailabilityRepository;
+import menadzerisanjeuser.menadzerisanjeuser.model.User;
+import menadzerisanjeuser.menadzerisanjeuser.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +25,9 @@ public class ReservationService {
 
     @Autowired
     private AccommodationRepository accommodationRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
 
     public Reservation createReservationRequest(Reservation reservation) {
@@ -43,26 +48,34 @@ public class ReservationService {
 
     public boolean processReservation(ReservationDTO reservationData) {
 
-        System.out.println(reservationData.toString());
-
-        // TODO 3: proveri da li je prosledjena dobra cena
-
         BigDecimal fullPrice = calculateTotalPrice(reservationData.getAccommodationId(), reservationData.getSelectedDates(), reservationData.getNumberOfGuests());
-        System.out.println("fullPriceeeeeeeee + " + fullPrice);
 
         if(!areDatesReserved(reservationData.getAccommodationId(), reservationData.getSelectedDates())){
-            System.out.println("regulara sve");
-        if (!areDatesNotAvailable(reservationData.getAccommodationId(), reservationData.getSelectedDates())){
-            System.out.println("dobre dane izabroo");
+            if (!areDatesNotAvailable(reservationData.getAccommodationId(), reservationData.getSelectedDates())){
+                // TODO 4: rezervisi
+                Long accommodationId = reservationData.getAccommodationId();
+                Accommodation accommodation = accommodationRepository.findById(accommodationId).get();
 
-            // TODO 4: rezervisi
+                System.out.println("accommodation: " + accommodation.toString());
+                System.out.println(">>>>>>>>>>>>");
+
+//                User guest =
 
 
+                Reservation reservation = new Reservation();
 
+//                reservation.setGuest();
+                reservation.setAccommodation(accommodation);
+                reservation.setStartDate(LocalDate.parse(reservationData.getSelectedDates().get(0))); // Assuming the first date is the start date
+                reservation.setEndDate(LocalDate.parse(reservationData.getSelectedDates().get(reservationData.getSelectedDates().size() - 1))); // Assuming the last date is the end date
+                reservation.setNumberOfGuests(reservationData.getNumberOfGuests());
+                reservation.setPrice(fullPrice);
+                reservation.setStatus(ReservationStatus.PENDING);
+
+                reservationRepository.save(reservation);
+
+            }
         }
-
-        }
-
 
         return true;
     }
