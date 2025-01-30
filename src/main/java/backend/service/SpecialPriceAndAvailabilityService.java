@@ -3,7 +3,7 @@ package backend.service;
 import backend.model.PricingMethod;
 import backend.model.SpecialPriceAndAvailability;
 import backend.model.ReservationStatus;
-import backend.repository.ReservationRequestRepository;
+import backend.repository.ReservationRepository;
 import backend.repository.SpecialPriceAndAvailabilityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,7 +22,7 @@ public class SpecialPriceAndAvailabilityService {
     private SpecialPriceAndAvailabilityRepository repository;
 
     @Autowired
-    private ReservationRequestRepository reservationRequestRepository;
+    private ReservationRepository reservationRequestRepository;
 
     @Autowired
     private AccommodationService accommodationService;
@@ -134,16 +134,12 @@ public class SpecialPriceAndAvailabilityService {
         }
     }
 
-
     public List<SpecialPriceAndAvailability> getSpecialPricesByAccommodationId(Long accommodationId) {
         List<SpecialPriceAndAvailability> lst = repository.findByAccommodationIdAndAvailability(accommodationId, SpecialPriceAndAvailability.Availability.AVAILABLE);
 
         for(SpecialPriceAndAvailability l : lst) {
             System.out.println(l);
         }
-
-        System.out.println("baj id");
-
         return lst;
     }
 

@@ -15,6 +15,8 @@ public interface SpecialPriceAndAvailabilityRepository extends JpaRepository<Spe
     boolean existsByStartDateAndEndDateAndAccommodation_Id(LocalDate startDate, LocalDate dateEnd, Long accommodationId);
 
     List<SpecialPriceAndAvailability> findByAccommodationIdAndAvailability(Long accommodationId, SpecialPriceAndAvailability.Availability availability);
+    List<SpecialPriceAndAvailability> findByAccommodationIdAndAvailability(Long accommodationId, String availability);
+
 
 
 

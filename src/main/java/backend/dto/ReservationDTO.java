@@ -49,4 +49,15 @@ public class ReservationDTO {
     public void setNumberOfGuests(int numberOfGuests) {
         this.numberOfGuests = numberOfGuests;
     }
+
+    @Override
+    public String toString() {
+        return "ReservationDTO{" +
+                "accommodationId=" + accommodationId +
+                ", userId=" + userId +
+                ", fullPrice=" + fullPrice +
+                ", selectedDates=" + selectedDates +
+                ", numberOfGuests=" + numberOfGuests +
+                '}';
+    }
 }

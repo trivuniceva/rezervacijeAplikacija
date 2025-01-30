@@ -18,11 +18,10 @@ import {NgIf} from '@angular/common';
   styleUrl: './reservation-dialog.component.css'
 })
 export class ReservationDialogComponent implements OnInit{
-  selectedDate: Date  | null = null;
+  selectedDate: Date[] = [];
   user: any;
   reservedDaysNum: number = 0;
   fullPrice: number = 0;
-
 
   accommodation: any;
   guestError: string = '';
@@ -49,6 +48,7 @@ export class ReservationDialogComponent implements OnInit{
 
   updateReservedDaysNum(selectedDates: Date[]) {
     this.reservedDaysNum = selectedDates.length;
+    this.selectedDate = selectedDates;
   }
 
   updateFullPrice(price: number) {
@@ -56,11 +56,18 @@ export class ReservationDialogComponent implements OnInit{
   }
 
   confirmReservation() {
+    const formattedDates = this.selectedDate.map((date) => {
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0'); // Dodaje 0 ako je jednocifren broj
+      const day = String(date.getDate()).padStart(2, '0'); // Dodaje 0 ako je jednocifren broj
+      return `${year}-${month}-${day}`;
+    });
+
     const reservationData = {
       accommodationId: this.data.accommodation.id,
       userId: this.user.id,
       fullPrice: this.fullPrice,
-      selectedDates: this.selectedDate,
+      selectedDates: formattedDates,
       numberOfGuests: this.numGuests
     };
 
@@ -68,7 +75,9 @@ export class ReservationDialogComponent implements OnInit{
     console.log(this.data.accommodation.id)
     console.log(this.data.accommodation)
     console.log(this.fullPrice)
+    console.log("evo")
     console.log(this.selectedDate)
+    console.log("formatted dates:", formattedDates);
 
     this.accommodationService.reserveAccommodation(reservationData).subscribe({
       next: (response) => {
