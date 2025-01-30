@@ -17,7 +17,7 @@
 
         <span class="date">{{ date.getDate() }}</span>
         <p *ngIf="specialPrices[getFormattedDate(date)]">
-          <small class="price">Price: {{ specialPrices[getFormattedDate(date)] | currency:'USD' }}</small>
+          <small class="price">Price: {{ specialPrices[getFormattedDate(date)] | currency:'EUR' }}</small>
         </p>
         <p *ngIf="!specialPrices[getFormattedDate(date)]">
           <small class="price">Price: €{{apartment.defaultPrice}} </small>
@@ -40,7 +40,7 @@
 
         <span class="date">{{ date.getDate() }}</span>
         <p *ngIf="specialPrices[getFormattedDate(date)]">
-          <small class="price">Price: {{ specialPrices[getFormattedDate(date)] | currency:'USD' }}</small>
+          <small class="price">Price: {{ specialPrices[getFormattedDate(date)] | currency:'EUR' }}</small>
         </p>
         <p *ngIf="!specialPrices[getFormattedDate(date)]">
           <small class="price">Price: €400</small>
