@@ -49,6 +49,10 @@ public class Accommodation {
     @Column(name = "pricing_method")
     private PricingMethod pricingMethod;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "reservation_type")
+    private ReservationType reservationType;
+
     public Long getId() {
         return id;
     }
@@ -151,6 +155,14 @@ public class Accommodation {
 
     public void setPricingMethod(PricingMethod pricingMethod) {
         this.pricingMethod = pricingMethod;
+    }
+
+    public ReservationType getReservationType() {
+        return reservationType;
+    }
+
+    public void setReservationType(ReservationType reservationType) {
+        this.reservationType = reservationType;
     }
 
     @Override

@@ -67,14 +67,25 @@ public class ReservationService {
                 reservation.setEndDate(LocalDate.parse(reservationData.getSelectedDates().get(reservationData.getSelectedDates().size() - 1))); // Assuming the last date is the end date
                 reservation.setNumberOfGuests(reservationData.getNumberOfGuests());
                 reservation.setPrice(fullPrice);
-                reservation.setStatus(ReservationStatus.PENDING);
+
+
+                if(isManualReservation(accommodation.getReservationType())) {
+                    reservation.setStatus(ReservationStatus.PENDING);
+                } else {
+                    reservation.setStatus(ReservationStatus.ACCEPTED);
+                }
 
                 reservationRepository.save(reservation);
-
             }
         }
-
         return true;
+    }
+
+    private boolean isManualReservation(ReservationType reservationType) {
+        if(reservationType.equals(ReservationType.MANUAL)){
+            return true;
+        }
+        return false;
     }
 
 
