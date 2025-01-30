@@ -2,6 +2,7 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {CurrencyPipe, DatePipe, NgForOf, NgIf} from '@angular/common';
 import {SpecialPriceServiceService} from '../../../core/service/special_prices/special-price-service.service';
 import {AuthService} from '../../../core/service/auth/auth.service';
+import {PricingMethodFormatPipe} from '../../../pipes/pricing-method-format.pipe';
 
 @Component({
   selector: 'app-calendar',
@@ -12,6 +13,7 @@ import {AuthService} from '../../../core/service/auth/auth.service';
     NgForOf,
     NgIf,
     CurrencyPipe,
+    PricingMethodFormatPipe,
 
   ],
   styleUrls: ['./calendar.component.css']
@@ -21,7 +23,9 @@ export class CalendarComponent implements OnInit {
   @Input() apartment: any;
   @Input() isEditAvailability: boolean = false;
 
-  @Output() reservedDaysNumChange = new EventEmitter<number>();
+  // @Output() reservedDaysNumChange = new EventEmitter<number>();
+  @Output() reservedDaysLstChange = new EventEmitter<Date[]>();
+  @Output() fullPriceNum = new EventEmitter<number>();
 
   currentMonth: Date = new Date();
   srecniVikend: Date[] = [];
@@ -32,6 +36,7 @@ export class CalendarComponent implements OnInit {
   datesInMonth: Date[] = [];
 
   specialPrices: { [key: string]: number } = {};
+  fullPrice: number = 0;
 
   user: any;
 
@@ -199,17 +204,58 @@ export class CalendarComponent implements OnInit {
         this.apartment.availabilityList.push(date);
         console.log("srecni ljudi::")
         console.log(this.apartment.availabilityList);
-
+        this.countPrice(date);
 
       } else {
         this.srecniVikend.splice(index, 1);
         this.apartment.availabilityList.splice(index, 1);
+        const dateString = this.formatDate(date);
+
+        if(this.checkIfSpecialPrice(dateString)){
+          this.fullPrice -= this.specialPrices[dateString];
+        } else {
+          this.fullPrice -= this.apartment.defaultPrice;
+        }
       }
 
-      this.reservedDaysNumChange.emit(this.srecniVikend.length);
+      this.reservedDaysLstChange.emit(this.srecniVikend);
+      // this.reservedDaysNumChange.emit(this.srecniVikend.length);
+      this.fullPriceNum.emit(this.fullPrice);
 
     }
   }
+
+
+  private formatDate(date: Date): string {
+    const day = String(date.getDate());
+    const month = String(date.getMonth() + 1);
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;  // Ovaj format: D/M/YYYY
+  }
+
+  private countPrice(date: Date) {
+    const dateString = this.formatDate(date);
+    if(this.checkIfSpecialPrice(dateString)){
+      this.fullPrice += this.specialPrices[dateString];
+    } else{
+      this.fullPrice += this.apartment.defaultPrice;
+    }
+  }
+
+  private checkIfSpecialPrice(dateString: string): boolean{
+    const specialPriceKeys = Object.keys(this.specialPrices);
+
+    if (specialPriceKeys.includes(dateString)) {
+      console.log("---------------------")
+      console.log("Special price found for " + dateString);
+      console.log(this.specialPrices[dateString]);
+      return true;
+    } else {
+      console.log("Date not found in special prices");
+      return false;
+    }
+  }
+
 
   sendSelectedDatesToBackend() {
     this.specialPriceService.updateAvailability(this.apartment.id, this.unavailabledDates)

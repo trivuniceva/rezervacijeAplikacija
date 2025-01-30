@@ -1,8 +1,10 @@
 <div *ngIf="accommodation" class="property-container">
   <div class="property-header">
     <div class="price">
-      <h2>{{ accommodation.price }} 400 €</h2>
-      <small>per night</small>
+      <h2>
+        <strong>{{ accommodation.defaultPrice }}€</strong>
+        <small> {{accommodation.pricingMethod  | pricingMethodFormat}}</small>
+      </h2>
     </div>
     <div class="location">
       <h2>565 Broome Str, NY</h2>

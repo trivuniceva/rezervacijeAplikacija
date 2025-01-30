@@ -1,12 +1,14 @@
 import { Component } from '@angular/core';
 import {Location, NgIf} from '@angular/common';
+import {PricingMethodFormatPipe} from "../../../../pipes/pricing-method-format.pipe";
 
 @Component({
   selector: 'app-apartment-details',
   standalone: true,
-  imports: [
-    NgIf
-  ],
+    imports: [
+        NgIf,
+        PricingMethodFormatPipe
+    ],
   templateUrl: './apartment-details.component.html',
   styleUrl: './apartment-details.component.css'
 })

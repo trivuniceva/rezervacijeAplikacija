@@ -36,8 +36,9 @@
 
 .calendar-grid {
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
+  grid-template-columns: repeat(7, minmax(100px, 1fr));
   width: 100%;
+
 }
 
 .calendar-day {
@@ -68,6 +69,19 @@
   background-color: hotpink;
   color: white;
 }
+
+.calendar-day.srecni .date,
+.calendar-day.selected .date,
+.calendar-day.srecni .price,
+.calendar-day.selected .price {
+  color: white;
+}
+
+.calendar-day.selected p .price,
+.calendar-day.srecni p .price {
+  color: white;
+}
+
 
 .calendar-day.reserved {
   font-weight: bold;
@@ -119,3 +133,11 @@
   list-style-type: none;
   padding: 0;
 }
+
+.smaller-text {
+  font-size: 0.7em;
+  display: block;
+  color: inherit;
+}
+
+

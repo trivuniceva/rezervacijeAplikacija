@@ -45,4 +45,6 @@ export class SpecialPriceServiceService {
     return this.http.get<any>(`${this.apiUrl}/prices/${accommodationId}`);
   }
 
+
+
 }
