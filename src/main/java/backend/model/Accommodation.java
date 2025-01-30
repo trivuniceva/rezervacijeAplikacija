@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import menadzerisanjeuser.menadzerisanjeuser.model.User;
 import org.springframework.data.annotation.Id;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
@@ -42,7 +43,7 @@ public class Accommodation {
     private User owner;
 
     @Column(name = "default_price", nullable = false)
-    private double defaultPrice;
+    private BigDecimal defaultPrice;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "pricing_method")
@@ -136,11 +137,11 @@ public class Accommodation {
         this.owner = owner;
     }
 
-    public double getDefaultPrice() {
+    public BigDecimal getDefaultPrice() {
         return defaultPrice;
     }
 
-    public void setDefaultPrice(double defaultPrice) {
+    public void setDefaultPrice(BigDecimal defaultPrice) {
         this.defaultPrice = defaultPrice;
     }
 

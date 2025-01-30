@@ -1,8 +1,10 @@
 package backend.service;
 
 import backend.dto.ReservationDTO;
+import backend.model.Accommodation;
 import backend.model.ReservationStatus;
 import backend.model.SpecialPriceAndAvailability;
+import backend.repository.AccommodationRepository;
 import backend.repository.ReservationRepository;
 import backend.model.Reservation;
 import backend.repository.SpecialPriceAndAvailabilityRepository;
@@ -21,6 +23,10 @@ public class ReservationService {
 
     @Autowired
     private SpecialPriceAndAvailabilityRepository specialPriceAndAvailabilityRepository;
+
+    @Autowired
+    private AccommodationRepository accommodationRepository;
+
 
     public Reservation createReservationRequest(Reservation reservation) {
         return reservationRepository.save(reservation);
@@ -44,7 +50,8 @@ public class ReservationService {
 
         // TODO 3: proveri da li je prosledjena dobra cena
 
-//        BigDecimal fullPrice = calculateTotalPrice();
+        BigDecimal fullPrice = calculateTotalPrice(reservationData.getAccommodationId(), reservationData.getSelectedDates(), reservationData.getNumberOfGuests());
+        System.out.println("fullPriceeeeeeeee + " + fullPrice);
 
         if(!areDatesReserved(reservationData.getAccommodationId(), reservationData.getSelectedDates())){
             System.out.println("regulara sve");
@@ -62,6 +69,45 @@ public class ReservationService {
 
         return true;
     }
+
+
+    public BigDecimal calculateTotalPrice(Long accommodationId, List<String> selectedDates, int numberOfGuests) {
+        List<SpecialPriceAndAvailability> specialPrices =
+                specialPriceAndAvailabilityRepository.findByAccommodationIdAndAvailability(accommodationId, SpecialPriceAndAvailability.Availability.AVAILABLE);
+        Accommodation accommodation = accommodationRepository.findById(accommodationId)
+                .orElseThrow(() -> new RuntimeException("Accommodation not found"));
+
+        BigDecimal totalPrice = BigDecimal.ZERO;
+
+        for (String dateStr : selectedDates) {
+            LocalDate date = LocalDate.parse(dateStr);
+            BigDecimal dailyPrice = BigDecimal.ZERO;
+            boolean priceFound = false;
+
+            for (SpecialPriceAndAvailability specialPrice : specialPrices) {
+                if (!date.isBefore(specialPrice.getStartDate()) && !date.isAfter(specialPrice.getEndDate())) {
+                    dailyPrice = specialPrice.getPrice();
+                    priceFound = true;
+                    if (specialPrice.getPricingMethod().equals("PER_GUEST")) {
+                        dailyPrice = dailyPrice.multiply(BigDecimal.valueOf(numberOfGuests));
+                    }
+                    break;
+                }
+            }
+
+            if (!priceFound) {
+                dailyPrice = accommodation.getDefaultPrice();
+                if (accommodation.getPricingMethod().equals("PER_GUEST")) {
+                    dailyPrice = dailyPrice.multiply(BigDecimal.valueOf(numberOfGuests));
+                }
+            }
+
+            totalPrice = totalPrice.add(dailyPrice);
+        }
+
+        return totalPrice;
+    }
+
 
     private boolean areDatesReserved(Long accommodationId, List<String> selectedDates) {
 
@@ -106,5 +152,6 @@ public class ReservationService {
         }
         return false;
     }
+
 
 }
