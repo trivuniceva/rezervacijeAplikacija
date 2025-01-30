@@ -35,7 +35,11 @@
 
 
         <p><strong>Selected days:</strong> {{ reservedDaysNum }} </p>
-        <p><strong>Price: {{fullPrice}}  $</strong></p>
+        <p>
+          <strong>Price: {{fullPrice}} €</strong>
+          <small>  {{accommodation.pricingMethod  | pricingMethodFormat}}</small>
+        </p>
+        <p></p>
 
       </div>
 

@@ -14,6 +14,7 @@ export interface Accommodation {
   amenities: string[];
   photos: string;
   defaultPrice: number;
+  pricingMethod: string;
 }
 
 @Injectable({

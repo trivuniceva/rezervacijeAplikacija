@@ -44,6 +44,10 @@ public class Accommodation {
     @Column(name = "default_price", nullable = false)
     private double defaultPrice;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "pricing_method")
+    private PricingMethod pricingMethod;
+
     public Long getId() {
         return id;
     }
@@ -138,6 +142,14 @@ public class Accommodation {
 
     public void setDefaultPrice(double defaultPrice) {
         this.defaultPrice = defaultPrice;
+    }
+
+    public PricingMethod getPricingMethod() {
+        return pricingMethod;
+    }
+
+    public void setPricingMethod(PricingMethod pricingMethod) {
+        this.pricingMethod = pricingMethod;
     }
 
     @Override

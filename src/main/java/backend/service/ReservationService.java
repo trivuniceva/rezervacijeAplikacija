@@ -44,7 +44,7 @@ public class ReservationService {
 
         // TODO 3: proveri da li je prosledjena dobra cena
 
-        BigDecimal fullPrice = calculateTotalPrice();
+//        BigDecimal fullPrice = calculateTotalPrice();
 
         if(!areDatesReserved(reservationData.getAccommodationId(), reservationData.getSelectedDates())){
             System.out.println("regulara sve");

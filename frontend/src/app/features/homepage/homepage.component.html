@@ -14,7 +14,7 @@
         <img [src]="apartment.image" alt="Apartment Image">
         <h3>{{ apartment.name }}</h3>
         <p>{{ apartment.location }}</p>
-        <p>Price: {{ apartment.price | currency:'USD' }}</p>
+        <p>Price: {{ apartment.price | currency:'EUR' }}</p>
         <button (click)="viewDetails(apartment.id)">View Details</button>
       </div>
     </div>

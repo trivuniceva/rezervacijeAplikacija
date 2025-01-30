@@ -5,6 +5,7 @@ import {AuthService} from '../../../../core/service/auth/auth.service';
 import {CalendarComponent} from '../../calendar/calendar.component';
 import {AccommodationService} from '../../../../core/service/accommodation/accommodation.service';
 import {NgIf} from '@angular/common';
+import {PricingMethodFormatPipe} from '../../../../pipes/pricing-method-format.pipe';
 
 @Component({
   selector: 'app-reservation-dialog',
@@ -13,6 +14,7 @@ import {NgIf} from '@angular/common';
     FormsModule,
     CalendarComponent,
     NgIf,
+    PricingMethodFormatPipe,
   ],
   templateUrl: './reservation-dialog.component.html',
   styleUrl: './reservation-dialog.component.css'
