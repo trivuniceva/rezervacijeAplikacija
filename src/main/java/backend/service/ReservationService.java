@@ -1,12 +1,9 @@
 package backend.service;
 
 import backend.dto.ReservationDTO;
-import backend.model.Accommodation;
-import backend.model.ReservationStatus;
-import backend.model.SpecialPriceAndAvailability;
+import backend.model.*;
 import backend.repository.AccommodationRepository;
 import backend.repository.ReservationRepository;
-import backend.model.Reservation;
 import backend.repository.SpecialPriceAndAvailabilityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -88,7 +85,7 @@ public class ReservationService {
                 if (!date.isBefore(specialPrice.getStartDate()) && !date.isAfter(specialPrice.getEndDate())) {
                     dailyPrice = specialPrice.getPrice();
                     priceFound = true;
-                    if (specialPrice.getPricingMethod().equals("PER_GUEST")) {
+                    if (specialPrice.getPricingMethod().equals(PricingMethod.PER_GUEST)) {
                         dailyPrice = dailyPrice.multiply(BigDecimal.valueOf(numberOfGuests));
                     }
                     break;
@@ -97,7 +94,7 @@ public class ReservationService {
 
             if (!priceFound) {
                 dailyPrice = accommodation.getDefaultPrice();
-                if (accommodation.getPricingMethod().equals("PER_GUEST")) {
+                if (accommodation.getPricingMethod().equals(PricingMethod.PER_GUEST)) {
                     dailyPrice = dailyPrice.multiply(BigDecimal.valueOf(numberOfGuests));
                 }
             }

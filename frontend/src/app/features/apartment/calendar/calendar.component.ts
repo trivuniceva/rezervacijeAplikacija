@@ -2,6 +2,7 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {CurrencyPipe, DatePipe, NgForOf, NgIf} from '@angular/common';
 import {SpecialPriceServiceService} from '../../../core/service/special_prices/special-price-service.service';
 import {AuthService} from '../../../core/service/auth/auth.service';
+import {PricingMethodFormatPipe} from '../../../pipes/pricing-method-format.pipe';
 
 @Component({
   selector: 'app-calendar',
@@ -12,6 +13,7 @@ import {AuthService} from '../../../core/service/auth/auth.service';
     NgForOf,
     NgIf,
     CurrencyPipe,
+    PricingMethodFormatPipe,
 
   ],
   styleUrls: ['./calendar.component.css']
