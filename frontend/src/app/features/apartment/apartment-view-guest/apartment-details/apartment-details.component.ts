@@ -18,6 +18,7 @@ export class ApartmentDetailsComponent {
   constructor(private location: Location) {}
 
   ngOnInit(): void {
+
     this.accommodation = history.state.accommodation;
   }
 

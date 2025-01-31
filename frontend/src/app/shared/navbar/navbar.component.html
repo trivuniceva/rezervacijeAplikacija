@@ -15,7 +15,17 @@
     <a routerLink="/change-password" (click)="closeMenu()">Change Password</a>
   </div>
 
-  <a routerLink="/guest-reservation" (click)="closeMenu()">Reservation</a>
+<!--  <a routerLink="/guest-reservation" (click)="closeMenu()">Reservation</a>-->
+
+  <a (click)="toggleProfileMenu()"> Reservation </a>
+
+  <div *ngIf="isProfileMenuOpen" class="dropdown-menu">
+    <div class="hover">
+      <a routerLink="/guest-reservation" (click)="closeMenu()">Make Reservation</a>
+    </div>
+    <a routerLink="/history" (click)="closeMenu()">History</a>
+  </div>
+
   <a routerLink="/notifications">Notifications</a>
   <a href="#" (click)="logout()">Logout</a>
 </div>
