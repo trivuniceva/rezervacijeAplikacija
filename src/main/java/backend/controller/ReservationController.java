@@ -1,14 +1,15 @@
 package backend.controller;
 
 import backend.dto.ReservationDTO;
+import backend.model.Reservation;
 import backend.model.ResponseMessage;
 import backend.service.ReservationService;
+import menadzerisanjeuser.menadzerisanjeuser.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api")
@@ -30,6 +31,17 @@ public class ReservationController {
         } catch (Exception e) {
             return ResponseEntity.status(500).body(new ResponseMessage("Interna greška servera: " + e.getMessage()));
         }
+    }
+
+    @GetMapping("/reservations/guest/{guestId}")
+    public List<Reservation> getReservationsForGuest(@PathVariable Long guestId) {
+        System.out.println("usoooo");
+
+
+        // Pretpostavljamo da je User servis na backendu koji prepoznaje korisnika
+        User guest = new User(); // Logika za pretragu korisnika sa guestId
+        guest.setId(guestId);
+        return service.getReservationsForGuest(guest);
     }
 
 

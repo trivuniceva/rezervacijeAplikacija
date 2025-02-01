@@ -3,6 +3,7 @@ import {CurrencyPipe, DatePipe, NgClass, NgForOf, NgIf} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 import {SpecialPriceServiceService} from '../../../core/service/special_prices/special-price-service.service';
 import {Observable} from 'rxjs';
+import {Reservation, ReservationService} from '../../../core/service/reservation/reservation.service';
 
 @Component({
   selector: 'app-reservation-history',
@@ -18,41 +19,74 @@ import {Observable} from 'rxjs';
   templateUrl: './reservation-history.component.html',
   styleUrl: './reservation-history.component.css'
 })
-export class ReservationHistoryComponent {
+export class ReservationHistoryComponent implements OnInit{
+  rezervacije: Reservation[] = [];
 
-  rezervacije = [
-    { nazivSmestaja: 'Hotel Beograd', datum: new Date(2024, 7, 15), status: 'accepted' },
-    { nazivSmestaja: 'Apartman Novi Sad', datum: new Date(2024, 8, 10), status: 'rejected' },
-    { nazivSmestaja: 'Vikendica Tara', datum: new Date(2024, 5, 20), status: 'accepted' },
-    { nazivSmestaja: 'Motel Subotica', datum: new Date(2024, 9, 5), status: 'pending' }
-  ];
+  searchTerm: string = ''; // Pretraga po nazivu smeštaja
+  searchDate: string = ''; // Pretraga po datumu
+  filterStatus: string = ''; // Filtriranje po statusu
 
-  searchTerm: string = '';
-  searchDate: string = '';
-  filterStatus: string = '';
+  constructor(private reservationService: ReservationService) { }
 
-
-  isPastReservation(datum: Date): boolean {
-    return datum.getTime() < new Date().getTime();
+  ngOnInit() {
+    this.fetchReservations();
   }
 
-
-  filtriraneRezervacije() {
-    return this.rezervacije.filter(rezervacija => {
-      const matchesSearch = (rezervacija.nazivSmestaja || '').toLowerCase().includes(this.searchTerm.toLowerCase());
-      const matchesDate = this.searchDate ? new Date(rezervacija.datum).toISOString().split('T')[0] === this.searchDate : true;
-      const matchesStatus = this.filterStatus ? rezervacija.status === this.filterStatus : true;
-      return matchesSearch && matchesDate && matchesStatus;
+  // Dohvatanje svih rezervacija sa backend-a
+  fetchReservations() {
+    this.reservationService.getReservationsForGuest(56).subscribe((data: any[]) => {
+      this.rezervacije = data;
     });
   }
 
+  // Metoda za filtriranje rezervacija
+  filtriraneRezervacije() {
+    return this.rezervacije.filter(rezervacija => {
+      let match = true;
 
+      // Pretraga po nazivu smeštaja
+      if (this.searchTerm && !rezervacija.accommodationName.toLowerCase().includes(this.searchTerm.toLowerCase())) {
+        match = false;
+      }
+
+      // Pretraga po datumu
+      if (this.searchDate && rezervacija.startDate !== this.searchDate) {
+        match = false;
+      }
+
+      // Filtriranje po statusu
+      if (this.filterStatus && rezervacija.status !== this.filterStatus.toUpperCase()) {
+        match = false;
+      }
+
+      return match;
+    });
+  }
+
+  // Metoda koja proverava da li je rezervacija prošla
+  isPastReservation(date: string): boolean {
+    const today = new Date();
+    const reservationDate = new Date(date);
+    return reservationDate < today;
+  }
+
+  // Metoda za odbijanje rezervacije
   odbijRezervaciju(rezervacija: any) {
-    console.log('Odbijanje rezervacije:', rezervacija);
+    // Logika za odbijanje rezervacije
+    alert(`Rezervacija za smeštaj ${rezervacija.accommodationName} je odbijena.`);
+    // Možeš pozvati API da ažurira status rezervacije na 'rejected'
   }
 
+  // Metoda za brisanje rezervacije
   obrisiRezervaciju(rezervacija: any) {
-    console.log('Brisanje rezervacije:', rezervacija);
+    // Logika za brisanje rezervacije
+    const index = this.rezervacije.indexOf(rezervacija);
+    if (index !== -1) {
+      this.rezervacije.splice(index, 1);
+      alert(`Rezervacija za smeštaj ${rezervacija.accommodationName} je obrisana.`);
+      // Možeš pozvati API da ukloni rezervaciju sa backend-a
+    }
   }
+
 
 }

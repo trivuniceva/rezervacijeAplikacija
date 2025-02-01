@@ -1,5 +1,5 @@
 <div class="filter-container">
-  <input type="text" [(ngModel)]="searchTerm" placeholder="Pretraži po nazivu smeštaja..." class="search-input" >
+  <input type="text" [(ngModel)]="searchTerm" placeholder="Pretraži po nazivu smeštaja..." class="search-input">
 
   <input type="date" [(ngModel)]="searchDate" class="date-input">
 
@@ -16,27 +16,29 @@
     *ngFor="let rezervacija of filtriraneRezervacije()"
     class="rezervacija-kartica"
     [ngClass]="{
-      'stara-rezervacija': isPastReservation(rezervacija.datum),
-      'aktivna-rezervacija': !isPastReservation(rezervacija.datum)
+      'stara-rezervacija': isPastReservation(rezervacija.startDate),
+      'aktivna-rezervacija': !isPastReservation(rezervacija.startDate)
     }">
 
-    <h3>{{ rezervacija.nazivSmestaja }}</h3>
-    <p> <small>Datum: </small> {{ rezervacija.datum | date: 'dd.MM.yyyy' }}</p>
+    <h3>{{ rezervacija.accommodationName }}</h3>
+    <p> <small>Datum početka: </small> {{ rezervacija.startDate | date: 'dd.MM.yyyy' }} <br>
+      <small>Datum završetka: </small> {{ rezervacija.endDate | date: 'dd.MM.yyyy' }}</p>
     <p><small>Status: </small>
-      <span *ngIf="rezervacija.status === 'pending'">Čekanje</span>
-      <span *ngIf="rezervacija.status === 'accepted'">Prihvaćena</span>
-      <span *ngIf="rezervacija.status === 'rejected'">Odbijena</span>
+      <span *ngIf="rezervacija.status === 'PENDING'">Čekanje</span>
+      <span *ngIf="rezervacija.status === 'ACCEPTED'">Prihvaćena</span>
+      <span *ngIf="rezervacija.status === 'REJECTED'">Odbijena</span>
     </p>
+    <p><small>Cena: </small>{{ rezervacija.price | currency:'USD':'symbol':'1.2-2' }}</p>
 
     <div class="dugmad">
       <button
-        *ngIf="rezervacija.status === 'accepted' && !isPastReservation(rezervacija.datum)"
+        *ngIf="rezervacija.status === 'ACCEPTED' && !isPastReservation(rezervacija.startDate)"
         (click)="odbijRezervaciju(rezervacija)"
         class="btn btn-odbij">
         Odbij rezervaciju
       </button>
 
-      <span *ngIf="rezervacija.status === 'rejected'" class="status-odbijena">Odbijena rezervacija</span>
+      <span *ngIf="rezervacija.status === 'REJECTED'" class="status-odbijena">Odbijena rezervacija</span>
 
       <button (click)="obrisiRezervaciju(rezervacija)" class="btn btn-obrisi">Obriši</button>
     </div>

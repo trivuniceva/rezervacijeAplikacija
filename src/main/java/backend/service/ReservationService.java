@@ -171,5 +171,9 @@ public class ReservationService {
         return false;
     }
 
+    public List<Reservation> getReservationsForGuest(User guest) {
+        System.out.println("ajm o lutkoooo");
+        return reservationRepository.findByGuest(guest);
+    }
 
 }
