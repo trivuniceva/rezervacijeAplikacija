@@ -40,7 +40,9 @@
 
       <span *ngIf="rezervacija.status === 'REJECTED'" class="status-odbijena">Odbijena rezervacija</span>
 
-      <button (click)="obrisiRezervaciju(rezervacija)" class="btn btn-obrisi">Obriši</button>
+      <button *ngIf="!(rezervacija.status === 'ACCEPTED' && !isPastReservation(rezervacija.startDate))"
+              (click)="obrisiRezervaciju(rezervacija)"
+              class="btn btn-obrisi">Obriši</button>
     </div>
   </div>
 </div>
