@@ -1,7 +1,7 @@
 .filter-container {
   display: flex;
   gap: 10px;
-  width: 80%;
+  width: 50%;
   margin: 40px auto 15px;
 }
 
@@ -17,10 +17,108 @@
   width: 15%;
 }
 
-.search-input{
+.search-input {
   width: 70%;
 }
 
+.card-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 90%;
+  max-width: 600px;
+  margin: 3% auto auto;
+}
+
+.card {
+  background-color: #F6F6F4;
+  border-radius: 12px;
+  padding: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-left: 6px solid;
+  height: 150px;
+  margin-bottom: 3%;
+  display: flex;
+  position: relative;
+}
+
+.card-content {
+  display: flex;
+  width: 100%;
+}
+
+.leftSide {
+  flex: 0.8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  position: relative;
+}
+
+.price {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.status {
+  font-size: 10px;
+  color: #555;
+  position: absolute;
+  bottom: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+}
+
+.info {
+  flex: 2.2;
+  padding-left: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.route {
+  font-size: 14px;
+}
+
+.dot {
+  height: 8px;
+  width: 8px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 5px;
+}
+
+.green {
+  background: #015E61;
+}
+
+.details {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 5px;
+  font-size: 14px;
+  color: #555;
+}
+
+.details div {
+  display: flex;
+  justify-content: space-between;
+}
+
+.card.pending {
+  border-left-color: #FFB800;
+}
+
+.card.accepted {
+  border-left-color: green;
+}
+
+.card.rejected {
+  border-left-color: red;
+}
 
 .rezervacije-container {
   display: flex;
@@ -39,21 +137,26 @@
   transition: 0.3s;
 }
 
-
 .aktivna-rezervacija {
   background-color: white;
 }
 
 .stara-rezervacija {
-  background-color: #AAAAAA;
-  color: white;
+  background-color: #f0f0f0;
+  color: #282828;
 }
 
-.stara-rezervacija small{
-  color: #E4E5EB;
-
+.stara-rezervacija small {
+  color: #282828;
 }
 
+.card .dugmad {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  display: flex;
+  gap: 5px;
+}
 
 .dugmad {
   margin-top: 10px;

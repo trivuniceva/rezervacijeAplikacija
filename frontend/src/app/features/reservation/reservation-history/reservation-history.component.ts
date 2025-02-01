@@ -36,6 +36,7 @@ export class ReservationHistoryComponent implements OnInit{
   fetchReservations() {
     this.reservationService.getReservationsForGuest(56).subscribe((data: Reservation[]) => {
       console.log(data);
+
       this.rezervacije = data.sort((a, b) => {
         const dateA = new Date(a.startDate).getTime();
         const dateB = new Date(b.startDate).getTime();
@@ -51,9 +52,9 @@ export class ReservationHistoryComponent implements OnInit{
       let match = true;
 
       // Pretraga po nazivu smeštaja
-      if (this.searchTerm && !rezervacija.accommodationName.toLowerCase().includes(this.searchTerm.toLowerCase())) {
-        match = false;
-      }
+      // if (this.searchTerm && !rezervacija.accommodationName.toLowerCase().includes(this.searchTerm.toLowerCase())) {
+      //   match = false;
+      // }
 
       // Pretraga po datumu
       if (this.searchDate && rezervacija.startDate !== this.searchDate) {

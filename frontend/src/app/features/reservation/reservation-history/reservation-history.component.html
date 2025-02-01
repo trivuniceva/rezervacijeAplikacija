@@ -4,45 +4,58 @@
   <input type="date" [(ngModel)]="searchDate" class="date-input">
 
   <select [(ngModel)]="filterStatus" class="filter-select">
-    <option value="">Svi statusi</option>
-    <option value="pending">Čekanje</option>
-    <option value="accepted">Prihvaćena</option>
-    <option value="rejected">Odbijena</option>
+    <option value="">Status</option>
+    <option value="pending">Pending</option>
+    <option value="accepted">Accepted</option>
+    <option value="rejected">Rejected</option>
   </select>
 </div>
 
-<div class="rezervacije-container">
-  <div
-    *ngFor="let rezervacija of filtriraneRezervacije()"
-    class="rezervacija-kartica"
-    [ngClass]="{
+<div class="card-container">
+  <div class="card" [ngClass]="{
+      'pending': rezervacija.status === 'PENDING',
+      'accepted': rezervacija.status === 'ACCEPTED',
+      'rejected': rezervacija.status === 'REJECTED',
       'stara-rezervacija': isPastReservation(rezervacija.startDate),
       'aktivna-rezervacija': !isPastReservation(rezervacija.startDate)
-    }">
+    }" *ngFor="let rezervacija of filtriraneRezervacije()">
+    <div class="card-content">
+      <div class="leftSide">
+        <p class="price">
+          {{ rezervacija.price | currency:'EUR':'symbol':'1.2-2' }}
+        </p>
+        <small class="status">{{rezervacija.status}}</small>
+      </div>
 
-    <h3>{{ rezervacija.accommodationName }}</h3>
-    <p> <small>Datum početka: </small> {{ rezervacija.startDate | date: 'dd.MM.yyyy' }} <br>
-      <small>Datum završetka: </small> {{ rezervacija.endDate | date: 'dd.MM.yyyy' }}</p>
-    <p><small>Status: </small>
-      <span *ngIf="rezervacija.status === 'PENDING'">Čekanje</span>
-      <span *ngIf="rezervacija.status === 'ACCEPTED'">Prihvaćena</span>
-      <span *ngIf="rezervacija.status === 'REJECTED'">Odbijena</span>
-    </p>
-    <p><small>Cena: </small>{{ rezervacija.price | currency:'USD':'symbol':'1.2-2' }}</p>
+      <div class="info">
+        <h3>{{rezervacija.accommodation.name}}</h3>
 
-    <div class="dugmad">
-      <button
-        *ngIf="rezervacija.status === 'ACCEPTED' && !isPastReservation(rezervacija.startDate)"
-        (click)="odbijRezervaciju(rezervacija)"
-        class="btn btn-odbij">
-        Odbij rezervaciju
-      </button>
+        <div class="route">
+          <span class="dot green"></span> {{rezervacija.startDate}}
+          <br>
+          <span class="dot green"></span> {{rezervacija.endDate}}
+          <br>
+          <p> Guests number: {{rezervacija.numberOfGuests}}</p>
 
-      <span *ngIf="rezervacija.status === 'REJECTED'" class="status-odbijena">Odbijena rezervacija</span>
+        </div>
+        <div class="details">
+          <p> {{rezervacija.accommodation.location}}</p>
+        </div>
+      </div>
+      <div class="dugmad">
+        <button
+          *ngIf="rezervacija.status === 'ACCEPTED' && !isPastReservation(rezervacija.startDate)"
+          (click)="odbijRezervaciju(rezervacija)"
+          class="btn btn-odbij">
+          Odbij rezervaciju
+        </button>
 
-      <button *ngIf="!(rezervacija.status === 'ACCEPTED' && !isPastReservation(rezervacija.startDate))"
-              (click)="obrisiRezervaciju(rezervacija)"
-              class="btn btn-obrisi">Obriši</button>
+        <span *ngIf="rezervacija.status === 'REJECTED'" class="status-odbijena">Odbijena rezervacija</span>
+
+        <button *ngIf="!(rezervacija.status === 'ACCEPTED' && !isPastReservation(rezervacija.startDate))"
+                (click)="obrisiRezervaciju(rezervacija)"
+                class="btn btn-obrisi">Obriši</button>
+      </div>
     </div>
   </div>
 </div>

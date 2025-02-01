@@ -3,11 +3,16 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 
 export interface Reservation {
-  accommodationName: string;
+  accommodation: {
+    name: string;
+    location: string;
+  };
   startDate: string;
   endDate: string;
   status: string;
   price: number;
+  numberOfGuests: number;
+
 }
 
 
