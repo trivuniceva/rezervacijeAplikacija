@@ -1,6 +1,7 @@
 package backend.service;
 
 import backend.model.PricingMethod;
+import backend.model.Reservation;
 import backend.model.SpecialPriceAndAvailability;
 import backend.model.ReservationStatus;
 import backend.repository.ReservationRepository;
@@ -14,6 +15,8 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import java.sql.Date;
 
 @Service
 public class SpecialPriceAndAvailabilityService {
@@ -63,7 +66,7 @@ public class SpecialPriceAndAvailabilityService {
     }
 
 
-    public List<LocalDate[]> getReservedDates(Long apartmentId) {
+    public List<LocalDate[]> getReservedDatesByApartmentId(Long apartmentId) {
         // Dohvatanje rezervacija koje su prihvaćene iz ReservationRequest
         List<LocalDate[]> reservedRequestDates = reservationRequestRepository.findAll().stream()
                 .filter(reservation -> apartmentId.equals(reservation.getAccommodation().getId()) &&
@@ -73,6 +76,8 @@ public class SpecialPriceAndAvailabilityService {
 
         return reservedRequestDates;
     }
+
+
 
     public void updateAvailability(Long apartmentId, List<String> dates) {
         System.out.println("Ažuriranje dostupnosti za apartman " + apartmentId + " sa datumima: " + dates);
@@ -142,5 +147,10 @@ public class SpecialPriceAndAvailabilityService {
         }
         return lst;
     }
+
+    public List<Reservation> getReservationsByGuestId(Long guestId) {
+        return null;
+    }
+
 
 }

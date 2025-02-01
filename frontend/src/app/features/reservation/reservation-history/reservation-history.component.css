@@ -1,0 +1,84 @@
+.filter-container {
+  display: flex;
+  gap: 10px;
+  width: 80%;
+  margin: 40px auto 15px;
+}
+
+.search-input, .filter-select, .date-input {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  margin: 0 auto;
+}
+
+.date-input, .filter-select {
+  width: 15%;
+}
+
+.search-input{
+  width: 70%;
+}
+
+
+.rezervacije-container {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  gap: 15px;
+  padding: 20px;
+  margin: 25px auto 0;
+}
+
+.rezervacija-kartica {
+  background-color: white;
+  border-radius: 12px;
+  padding: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: 0.3s;
+}
+
+
+.aktivna-rezervacija {
+  background-color: white;
+}
+
+.stara-rezervacija {
+  background-color: #AAAAAA;
+  color: white;
+}
+
+.stara-rezervacija small{
+  color: #E4E5EB;
+
+}
+
+
+.dugmad {
+  margin-top: 10px;
+  display: flex;
+  gap: 10px;
+}
+
+.btn {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.btn-odbij {
+  background-color: darkred;
+  color: white;
+}
+
+.btn-obrisi {
+  background-color: #555;
+  color: white;
+}
+
+.status-odbijena {
+  color: darkred;
+  font-weight: bold;
+}

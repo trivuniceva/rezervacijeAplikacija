@@ -1,0 +1,44 @@
+<div class="filter-container">
+  <input type="text" [(ngModel)]="searchTerm" placeholder="Pretraži po nazivu smeštaja..." class="search-input" >
+
+  <input type="date" [(ngModel)]="searchDate" class="date-input">
+
+  <select [(ngModel)]="filterStatus" class="filter-select">
+    <option value="">Svi statusi</option>
+    <option value="pending">Čekanje</option>
+    <option value="accepted">Prihvaćena</option>
+    <option value="rejected">Odbijena</option>
+  </select>
+</div>
+
+<div class="rezervacije-container">
+  <div
+    *ngFor="let rezervacija of filtriraneRezervacije()"
+    class="rezervacija-kartica"
+    [ngClass]="{
+      'stara-rezervacija': isPastReservation(rezervacija.datum),
+      'aktivna-rezervacija': !isPastReservation(rezervacija.datum)
+    }">
+
+    <h3>{{ rezervacija.nazivSmestaja }}</h3>
+    <p> <small>Datum: </small> {{ rezervacija.datum | date: 'dd.MM.yyyy' }}</p>
+    <p><small>Status: </small>
+      <span *ngIf="rezervacija.status === 'pending'">Čekanje</span>
+      <span *ngIf="rezervacija.status === 'accepted'">Prihvaćena</span>
+      <span *ngIf="rezervacija.status === 'rejected'">Odbijena</span>
+    </p>
+
+    <div class="dugmad">
+      <button
+        *ngIf="rezervacija.status === 'accepted' && !isPastReservation(rezervacija.datum)"
+        (click)="odbijRezervaciju(rezervacija)"
+        class="btn btn-odbij">
+        Odbij rezervaciju
+      </button>
+
+      <span *ngIf="rezervacija.status === 'rejected'" class="status-odbijena">Odbijena rezervacija</span>
+
+      <button (click)="obrisiRezervaciju(rezervacija)" class="btn btn-obrisi">Obriši</button>
+    </div>
+  </div>
+</div>

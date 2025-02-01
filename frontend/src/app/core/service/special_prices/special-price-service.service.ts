@@ -23,8 +23,8 @@ export class SpecialPriceServiceService {
     return this.http.get<SpecialPrice[]>(`${this.apiUrl}/pricesSSS?apartmentId=${apartmentId}`);
   }
 
-  getReservedDates(apartmentId: number): Observable<Date[][]> {
-    return this.http.get<Date[][]>(`${this.apiUrl}/reservedDates?apartmentId=${apartmentId}`);
+  getReservedDatesByApartmentId(apartmentId: number): Observable<Date[][]> {
+    return this.http.get<Date[][]>(`${this.apiUrl}/reservedDatesApartment?apartmentId=${apartmentId}`);
   }
 
   getUnavailableDates(apartmentId: number): Observable<Date[][]> {
@@ -44,7 +44,6 @@ export class SpecialPriceServiceService {
   getSpecialPricesByAccommodationId(accommodationId: number): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/prices/${accommodationId}`);
   }
-
 
 
 }

@@ -70,7 +70,7 @@ export class CalendarComponent implements OnInit {
   }
 
   getReservedDates(apartmentId: number): void {
-    this.specialPriceService.getReservedDates(apartmentId)
+    this.specialPriceService.getReservedDatesByApartmentId(apartmentId)
       .subscribe(data => {
         this.reservedDates = data.flatMap(dateRange =>
           this.generateDateRange(new Date(dateRange[0]), new Date(dateRange[1]))
