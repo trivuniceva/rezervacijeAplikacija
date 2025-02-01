@@ -13,6 +13,7 @@ import {
 import {EditApartmentViewComponent} from './features/apartment/edit-apartment-view/edit-apartment-view.component';
 import {DetailedViewBaseComponent} from './features/apartment/apartment-view-guest/detailed-view-base/detailed-view-base.component';
 import {NotificationsComponent} from './shared/notifications/notifications.component';
+import {ReservationHistoryComponent} from './features/reservation/reservation-history/reservation-history.component';
 
 export const routes: Routes = [
   {path: '', component: HomepageComponent},
@@ -28,6 +29,7 @@ export const routes: Routes = [
   {path: 'guest-reservation', component: SearchAccommodationsComponent},
   {path: 'detailed-view', component: DetailedViewBaseComponent},
   {path: 'notifications', component: NotificationsComponent},
+  {path: 'history', component: ReservationHistoryComponent},
 
 
 ];

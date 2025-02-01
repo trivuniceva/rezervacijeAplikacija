@@ -2,6 +2,7 @@ package backend.controller;
 
 import backend.dto.AvailabilityRequest;
 import backend.dto.SpecialPricingDto;
+import backend.model.Reservation;
 import backend.model.SpecialPriceAndAvailability;
 import backend.service.SpecialPriceAndAvailabilityService;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +12,7 @@ import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/special-prices")
@@ -26,10 +28,16 @@ public class SpecialPriceController {
         return service.getSpecialPrice(apartmentId);
     }
 
-    @GetMapping("/reservedDates")
-    public List<LocalDate[]> getReservedDates(@RequestParam Long apartmentId) {
-        return service.getReservedDates(apartmentId);
+    @GetMapping("/reservedDatesApartment")
+    public List<LocalDate[]> getReservedDatesByApartmentId(@RequestParam Long apartmentId) {
+        return service.getReservedDatesByApartmentId(apartmentId);
     }
+
+    @GetMapping("/reservedDatesGuest")
+    public List<Reservation> getReservationsByGuest(@PathVariable Long guestId) {
+        return service.getReservationsByGuestId(guestId);
+    }
+
 
     @GetMapping("/unavailableDates")
     public List<LocalDate[]> getUnavailableDates(@RequestParam Long apartmentId) {
