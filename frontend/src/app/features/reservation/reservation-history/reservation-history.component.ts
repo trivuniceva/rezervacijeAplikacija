@@ -34,10 +34,15 @@ export class ReservationHistoryComponent implements OnInit{
 
   // Dohvatanje svih rezervacija sa backend-a
   fetchReservations() {
-    this.reservationService.getReservationsForGuest(56).subscribe((data: any[]) => {
-      this.rezervacije = data;
+    this.reservationService.getReservationsForGuest(56).subscribe((data: Reservation[]) => {
+      this.rezervacije = data.sort((a, b) => {
+        const dateA = new Date(a.startDate).getTime();
+        const dateB = new Date(b.startDate).getTime();
+        return dateB - dateA;
+      });
     });
   }
+
 
   // Metoda za filtriranje rezervacija
   filtriraneRezervacije() {
