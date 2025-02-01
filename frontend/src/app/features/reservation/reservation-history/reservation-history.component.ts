@@ -35,6 +35,7 @@ export class ReservationHistoryComponent implements OnInit{
   // Dohvatanje svih rezervacija sa backend-a
   fetchReservations() {
     this.reservationService.getReservationsForGuest(56).subscribe((data: Reservation[]) => {
+      console.log(data);
       this.rezervacije = data.sort((a, b) => {
         const dateA = new Date(a.startDate).getTime();
         const dateB = new Date(b.startDate).getTime();
