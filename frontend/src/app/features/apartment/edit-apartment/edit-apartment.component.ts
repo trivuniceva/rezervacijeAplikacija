@@ -4,7 +4,10 @@ import {FormsModule} from '@angular/forms';
 import {SearchAccommodationsComponent} from "../../../shared/search-accommodations/search-accommodations.component";
 import {SpecialPricing} from '../SpecialPricing/SpecialPricing';
 import {CalendarComponent} from '../calendar/calendar.component';
-import {PriceReviewComponent} from '../price-review/price-review.component';
+import {Reservation, ReservationService} from '../../../core/service/reservation/reservation.service';
+import {
+  ReservationReviewComponentComponent
+} from '../../reservation/reservation-review-component/reservation-review-component.component';
 
 @Component({
   selector: 'app-edit-apartment',
@@ -15,7 +18,7 @@ import {PriceReviewComponent} from '../price-review/price-review.component';
     SearchAccommodationsComponent,
     SpecialPricing,
     CalendarComponent,
-    PriceReviewComponent,
+    ReservationReviewComponentComponent,
   ],
   templateUrl: './edit-apartment.component.html',
   styleUrl: './edit-apartment.component.css'
@@ -24,12 +27,17 @@ export class EditApartmentComponent implements OnInit{
   apartment: any;
   selectedSection: string = 'basic';
 
+  rezervacije: Reservation[] = [];
+
   constructor(private location: Location) {}
 
   ngOnInit(): void {
     console.log("caoosssss <33")
     this.apartment = history.state.apartment;
     console.log(this.apartment)
+
+    console.log("Reservation type: ", this.apartment.reservationType);
+
   }
 
 

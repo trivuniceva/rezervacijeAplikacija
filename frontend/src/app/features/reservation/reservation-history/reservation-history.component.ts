@@ -4,6 +4,7 @@ import {FormsModule} from '@angular/forms';
 import {SpecialPriceServiceService} from '../../../core/service/special_prices/special-price-service.service';
 import {Observable} from 'rxjs';
 import {Reservation, ReservationService} from '../../../core/service/reservation/reservation.service';
+import {AuthService} from '../../../core/service/auth/auth.service';
 
 @Component({
   selector: 'app-reservation-history',
@@ -21,20 +22,22 @@ import {Reservation, ReservationService} from '../../../core/service/reservation
 })
 export class ReservationHistoryComponent implements OnInit{
   rezervacije: Reservation[] = [];
+  user: any;
 
   searchTerm: string = ''; // Pretraga po nazivu smeštaja
   searchDate: string = ''; // Pretraga po datumu
   filterStatus: string = ''; // Filtriranje po statusu
 
-  constructor(private reservationService: ReservationService) { }
+  constructor(private reservationService: ReservationService, private authService: AuthService,) { }
 
   ngOnInit() {
+    this.user = this.authService.getLoggedUser()
     this.fetchReservations();
   }
 
   // Dohvatanje svih rezervacija sa backend-a
   fetchReservations() {
-    this.reservationService.getReservationsForGuest(56).subscribe((data: Reservation[]) => {
+    this.reservationService.getReservationsForGuest(this.user.id).subscribe((data: Reservation[]) => {
       console.log(data);
 
       this.rezervacije = data.sort((a, b) => {

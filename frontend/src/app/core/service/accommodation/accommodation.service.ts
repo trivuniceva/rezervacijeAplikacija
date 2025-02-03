@@ -15,6 +15,9 @@ export interface Accommodation {
   photos: string;
   defaultPrice: number;
   pricingMethod: string;
+  reservationType: string;
+  deadline: number;
+
 }
 
 @Injectable({

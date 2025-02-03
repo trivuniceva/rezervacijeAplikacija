@@ -18,7 +18,6 @@ public class ReservationController {
     @Autowired
     private ReservationService service;
 
-
     @PostMapping("/reserve")
     public ResponseEntity<?> confirmReservation(@RequestBody ReservationDTO reservationData) {
         try {
@@ -35,13 +34,30 @@ public class ReservationController {
 
     @GetMapping("/reservations/guest/{guestId}")
     public List<Reservation> getReservationsForGuest(@PathVariable Long guestId) {
-        System.out.println("usoooo");
-
-
-        // Pretpostavljamo da je User servis na backendu koji prepoznaje korisnika
-        User guest = new User(); // Logika za pretragu korisnika sa guestId
+        User guest = new User();
         guest.setId(guestId);
         return service.getReservationsForGuest(guest);
+    }
+
+    @GetMapping("/reservations/host/{apartmentId}")
+    public List<Reservation> getReservationsForHost(@PathVariable Long apartmentId) {
+        return service.getReservationsForHost(apartmentId);
+    }
+
+    @PostMapping("/reservations/update-status/{reservationId}/{status}")
+    public ResponseEntity<?> updateReservationStatus(
+            @PathVariable Long reservationId,
+            @PathVariable String status) {
+        try {
+            boolean success = service.updateReservationStatus(reservationId, status);
+            if (success) {
+                return ResponseEntity.ok().body(new ResponseMessage("Rezervacija je uspešno ažurirana."));
+            } else {
+                return ResponseEntity.status(400).body(new ResponseMessage("Greška pri ažuriranju rezervacije."));
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(new ResponseMessage("Interna greška servera: " + e.getMessage()));
+        }
     }
 
 

@@ -5,7 +5,7 @@
     <button [class.active]="selectedSection === 'more'" (click)="selectedSection = 'more'">More Info</button>
     <button [class.active]="selectedSection === 'pricing'" (click)="selectedSection = 'pricing'">Pricing</button>
     <button [class.active]="selectedSection === 'availability'" (click)="selectedSection = 'availability'">Availability</button>
-    <button [class.active]="selectedSection === 'priceReview'" (click)="selectedSection = 'priceReview'">Price Review</button>
+    <button [class.active]="selectedSection === 'reservationReview'" (click)="selectedSection = 'reservationReview'">Reservation Review</button>
   </div>
 
   <!-- Desna strana -->
@@ -13,6 +13,7 @@
     <div class="details-container">
       <div *ngIf="selectedSection === 'basic'" class="info-container">
         <h2>Edit Basic Info</h2>
+
         <label for="name">Name:</label>
         <input id="name" [(ngModel)]="apartment.name" type="text">
 
@@ -20,14 +21,15 @@
         <input id="location" [(ngModel)]="apartment.location" type="text">
 
         <label for="price">Price:</label>
-        <input id="price" [(ngModel)]="apartment.price" type="number">
+        <input id="price" [(ngModel)]="apartment.defaultPrice" type="number">
 
         <label for="apartmentType">Apartment Type:</label>
-        <select id="apartmentType" [(ngModel)]="apartment.apartmentType" name="apartmentType">
-          <option value="studio">Studio</option>
-          <option value="room">Room</option>
-          <option value="apartment">Apartment</option>
+        <select id="apartmentType" [(ngModel)]="apartment.type" name="apartmentType">
+          <option value="STUDIO" [selected]="apartment.type === 'STUDIO'">Studio</option>
+          <option value="ROOM" [selected]="apartment.type === 'ROOM'">Room</option>
+          <option value="APARTMENT" [selected]="apartment.type === 'APARTMENT'">Apartment</option>
         </select>
+
 
         <div class="guest-inputs">
           <div>
@@ -60,6 +62,31 @@
           <input type="file" id="photos" #fileInput (change)="onFileSelected($event)" multiple style="display: none;" />
         </div>
 
+        <!-- Reservation Type Selection -->
+        <div *ngIf="apartment.reservationType">
+          <label for="reservationType">Reservation Type:</label>
+          <select id="reservationType" [(ngModel)]="apartment.reservationType" name="reservationType">
+            <option value="AUTOMATIC">Automatic</option>
+            <option value="MANUAL">Manual</option>
+          </select>
+        </div>
+
+
+        <!-- Deadline Field (only visible for manual reservations) -->
+        <div *ngIf="apartment.reservationType === 'MANUAL'">
+        <label for="deadline">Deadline (days):</label>
+          <input id="deadline" [(ngModel)]="apartment.deadline" type="number" min="1" />
+
+          <small class="info-text">
+            For **manual** reservations, the **deadline** represents the number of days before the reservation date when cancellation is allowed.
+            For example, if a reservation is made for January 16th and the deadline is set to 3 days, the reservation can be canceled until January 13th.
+          </small>
+        </div>
+
+        <small class="info-text">
+          **Automatic** reservations do not require a deadline. Cancellations are not allowed once the reservation is confirmed.
+        </small>
+
         <div class="button-container">
           <button style="background-color: green; color: white" (click)="saveApartment()">Save</button>
           <button style="background-color: #B80C09; color: white" (click)="cancelEdit()">Cancel</button>
@@ -76,11 +103,9 @@
         <app-calendar [apartment]="apartment" [isEditAvailability]="true"></app-calendar>
       </div>
 
-      <div *ngIf="selectedSection === 'priceReview'">
-        <h2>Price Review</h2>
-        <app-price-review [apartment]="apartment"></app-price-review>
-
-
+      <div *ngIf="selectedSection === 'reservationReview'">
+        <h2> Reservation requests </h2>
+        <app-reservation-review-component [apartment]="apartment"></app-reservation-review-component>
       </div>
     </div>
   </div>

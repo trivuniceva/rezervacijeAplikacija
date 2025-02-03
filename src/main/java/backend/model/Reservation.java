@@ -99,4 +99,18 @@ public class Reservation {
     public void setPrice(BigDecimal price) {
         this.price = price;
     }
+
+    @Override
+    public String toString() {
+        return "Reservation{" +
+                "id=" + id +
+                ", guest=" + guest +
+                ", accommodation=" + accommodation +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                ", numberOfGuests=" + numberOfGuests +
+                ", status=" + status +
+                ", price=" + price +
+                '}';
+    }
 }

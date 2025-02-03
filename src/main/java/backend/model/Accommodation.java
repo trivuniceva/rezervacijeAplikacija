@@ -6,6 +6,7 @@ import menadzerisanjeuser.menadzerisanjeuser.model.User;
 import org.springframework.data.annotation.Id;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -52,6 +53,9 @@ public class Accommodation {
     @Enumerated(EnumType.STRING)
     @Column(name = "reservation_type")
     private ReservationType reservationType;
+
+    @Column(name = "deadline")
+    private int deadline;
 
     public Long getId() {
         return id;
@@ -165,6 +169,14 @@ public class Accommodation {
         this.reservationType = reservationType;
     }
 
+    public int getDeadline() {
+        return deadline;
+    }
+
+    public void setDeadline(int deadline) {
+        this.deadline = deadline;
+    }
+
     @Override
     public String toString() {
         return "Accommodation{" +
@@ -180,6 +192,9 @@ public class Accommodation {
                 ", approved=" + approved +
                 ", owner=" + owner +
                 ", defaultPrice=" + defaultPrice +
+                ", pricingMethod=" + pricingMethod +
+                ", reservationType=" + reservationType +
+                ", deadline=" + deadline +
                 '}';
     }
 }

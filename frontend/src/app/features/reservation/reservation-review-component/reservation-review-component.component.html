@@ -1,0 +1,19 @@
+<div class="reservation-container">
+  <div *ngIf="rezervacije.length === 0">
+    <p>No reservations required.</p>
+  </div>
+
+  <div *ngFor="let rezervacija of rezervacije" class="reservation-card">
+    <p><strong>Gost:</strong> {{ rezervacija.guest.firstname }} {{ rezervacija.guest.lastname }}</p>
+    <p><strong>Email gosta:</strong> {{ rezervacija.guest.email }}</p>
+    <p><strong>Broj gostiju:</strong> {{ rezervacija.numberOfGuests }}</p>
+    <p><strong>Datum:</strong> {{ rezervacija.startDate }} - {{ rezervacija.endDate }}</p>
+    <p><strong>Cena:</strong> {{ rezervacija.price }} €</p>
+    <p><strong>Status:</strong> <span class="status">{{ rezervacija.status }}</span></p>
+
+    <div class="action-buttons" *ngIf="rezervacija.status === 'PENDING'">
+      <button class="approve-btn" (click)="updateReservation(rezervacija.id, 'approve')">Odobri</button>
+      <button class="reject-btn" (click)="updateReservation(rezervacija.id, 'reject')">Odbij</button>
+    </div>
+  </div>
+</div>
