@@ -38,4 +38,10 @@ export class ReservationService {
   getReservationsForHost(apartmentId: number): Observable<any> {
     return this.http.get(`${this.apiUrl}/host/${apartmentId}`);
   }
+
+  updateReservationStatus(reservationId: number, status: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/update-status/${reservationId}/${status}`, {});
+  }
+
+
 }

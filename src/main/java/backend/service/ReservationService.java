@@ -183,4 +183,21 @@ public class ReservationService {
         return reservationRepository.findByAccommodationIdAndStatus(apartmentId, ReservationStatus.PENDING);
     }
 
+    public boolean updateReservationStatus(Long reservationId, String status) {
+        Optional<Reservation> reservation = reservationRepository.findById(reservationId);
+
+
+        System.out.println(reservation.toString());
+        if (status.equals("APPROVED")) {
+            reservation.get().setStatus(ReservationStatus.ACCEPTED);
+            reservationRepository.save(reservation.get());
+            return true;
+        } else if (status.equals("REJECTED")) {
+            reservation.get().setStatus(ReservationStatus.REJECTED);
+            reservationRepository.save(reservation.get());
+            return true;
+        }
+
+        return false;
+    }
 }

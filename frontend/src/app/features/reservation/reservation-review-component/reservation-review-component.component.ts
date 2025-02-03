@@ -36,14 +36,16 @@ export class ReservationReviewComponentComponent implements OnInit{
     });
   }
 
-  approveReservation(rezervacija: Reservation) {
-    console.log(`Odobrena rezervacija ID: ${rezervacija.id}`);
-    rezervacija.status = 'APPROVED';
-  }
+  updateReservation(reservationId: number, action: string): void {
+    const status = action === 'approve' ? 'APPROVED' : 'REJECTED';
 
-  rejectReservation(rezervacija: Reservation) {
-    console.log(`Odbijena rezervacija ID: ${rezervacija.id}`);
-    rezervacija.status = 'REJECTED';
+    this.reservationService.updateReservationStatus(reservationId, status).subscribe(response => {
+      console.log(`Rezervacija ${status === 'APPROVED' ? 'odobrena' : 'odbijena'}`, response);
+
+      this.rezervacije = this.rezervacije.filter(reservation => reservation.id !== reservationId);
+    }, error => {
+      console.error('Greška pri ažuriranju', error);
+    });
   }
 
 
