@@ -5,7 +5,7 @@
     <button [class.active]="selectedSection === 'more'" (click)="selectedSection = 'more'">More Info</button>
     <button [class.active]="selectedSection === 'pricing'" (click)="selectedSection = 'pricing'">Pricing</button>
     <button [class.active]="selectedSection === 'availability'" (click)="selectedSection = 'availability'">Availability</button>
-    <button [class.active]="selectedSection === 'priceReview'" (click)="selectedSection = 'priceReview'">Price Review</button>
+    <button [class.active]="selectedSection === 'reservationReview'" (click)="selectedSection = 'reservationReview'">Reservation Review</button>
   </div>
 
   <!-- Desna strana -->
@@ -76,10 +76,9 @@
         <app-calendar [apartment]="apartment" [isEditAvailability]="true"></app-calendar>
       </div>
 
-      <div *ngIf="selectedSection === 'priceReview'">
-        <h2>Price Review</h2>
-        <app-price-review [apartment]="apartment"></app-price-review>
-
+      <div *ngIf="selectedSection === 'reservationReview'">
+        <h2> Reservation requests </h2>
+        <app-reservation-review-component [apartment]="apartment"></app-reservation-review-component>
 
       </div>
     </div>

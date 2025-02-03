@@ -44,5 +44,12 @@ public class ReservationController {
         return service.getReservationsForGuest(guest);
     }
 
+    @GetMapping("/reservations/host/{apartmentId}")
+    public List<Reservation> getReservationsForHost(@PathVariable Long apartmentId) {
+        System.out.println("usoooo");
+
+        return service.getReservationsForHost(apartmentId);
+    }
+
 
 }

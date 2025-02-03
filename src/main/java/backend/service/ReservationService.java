@@ -176,4 +176,11 @@ public class ReservationService {
         return reservationRepository.findByGuest(guest);
     }
 
+    public List<Reservation> getReservationsForHost(Long apartmentId) {
+        System.out.println("ajm o lutkoooo");
+        System.out.println(reservationRepository.findByAccommodationIdAndStatus(apartmentId, ReservationStatus.PENDING));
+
+        return reservationRepository.findByAccommodationIdAndStatus(apartmentId, ReservationStatus.PENDING);
+    }
+
 }
