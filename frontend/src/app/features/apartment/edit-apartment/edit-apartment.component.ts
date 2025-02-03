@@ -35,6 +35,9 @@ export class EditApartmentComponent implements OnInit{
     console.log("caoosssss <33")
     this.apartment = history.state.apartment;
     console.log(this.apartment)
+
+    console.log("Reservation type: ", this.apartment.reservationType);
+
   }
 
 
