@@ -82,19 +82,26 @@ export class ReservationHistoryComponent implements OnInit{
 
   // Metoda za odbijanje rezervacije
   odbijRezervaciju(rezervacija: any) {
-    // Logika za odbijanje rezervacije
-    alert(`Rezervacija za smeštaj ${rezervacija.accommodationName} je odbijena.`);
-    // Možeš pozvati API da ažurira status rezervacije na 'rejected'
-  }
+    this.reservationService.updateReservationStatus(rezervacija.id, "DECLINED").subscribe(
+      response => {
+        console.log("Rezervacija odbijena", response);
+
+        this.rezervacije = this.rezervacije.filter(r => r.id !== rezervacija.id);
+
+        alert("Rezervacija za smeštaj ${rezervacija.accommodationName} je odbijena.");
+      },
+      error => {
+        console.error('Greška pri ažuriranju', error);
+      }
+    );  }
 
   // Metoda za brisanje rezervacije
   obrisiRezervaciju(rezervacija: any) {
-    // Logika za brisanje rezervacije
+
     const index = this.rezervacije.indexOf(rezervacija);
     if (index !== -1) {
       this.rezervacije.splice(index, 1);
-      alert(`Rezervacija za smeštaj ${rezervacija.accommodationName} je obrisana.`);
-      // Možeš pozvati API da ukloni rezervaciju sa backend-a
+      alert("Rezervacija za smeštaj ${rezervacija.accommodationName} je obrisana.");
     }
   }
 
