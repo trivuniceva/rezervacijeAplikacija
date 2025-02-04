@@ -38,15 +38,15 @@ export class ReservationHistoryComponent implements OnInit{
   // Dohvatanje svih rezervacija sa backend-a
   fetchReservations() {
     this.reservationService.getReservationsForGuest(this.user.id).subscribe((data: Reservation[]) => {
-      console.log(data);
-
-      this.rezervacije = data.sort((a, b) => {
+      // Filter only non-deleted reservations
+      this.rezervacije = data.filter(reservation => !reservation.deleted).sort((a, b) => {
         const dateA = new Date(a.startDate).getTime();
         const dateB = new Date(b.startDate).getTime();
         return dateB - dateA;
       });
     });
   }
+
 
 
   // Metoda za filtriranje rezervacija
@@ -66,6 +66,10 @@ export class ReservationHistoryComponent implements OnInit{
 
       // Filtriranje po statusu
       if (this.filterStatus && rezervacija.status !== this.filterStatus.toUpperCase()) {
+        match = false;
+      }
+
+      if (rezervacija.deleted === true) {
         match = false;
       }
 
@@ -93,16 +97,30 @@ export class ReservationHistoryComponent implements OnInit{
       error => {
         console.error('Greška pri ažuriranju', error);
       }
-    );  }
+    );
+  }
 
   // Metoda za brisanje rezervacije
   obrisiRezervaciju(rezervacija: any) {
 
-    const index = this.rezervacije.indexOf(rezervacija);
-    if (index !== -1) {
-      this.rezervacije.splice(index, 1);
-      alert("Rezervacija za smeštaj ${rezervacija.accommodationName} je obrisana.");
-    }
+    // const index = this.rezervacije.indexOf(rezervacija);
+    // if (index !== -1) {
+    //   this.rezervacije.splice(index, 1);
+    //   // alert("Rezervacija za smeštaj ${rezervacija.accommodationName} je obrisana.");
+    // }
+
+    this.reservationService.deleteCard(rezervacija.id).subscribe(
+      response => {
+        console.log("Rezervacija odbijena", response);
+
+        this.rezervacije = this.rezervacije.filter(r => r.id !== rezervacija.id);
+
+        // alert("Rezervacija za smeštaj ${rezervacija.accommodationName} je odbijena.");
+      },
+      error => {
+        console.error('Greška pri ažuriranju', error);
+      }
+    );
   }
 
 

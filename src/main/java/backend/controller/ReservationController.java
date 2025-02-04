@@ -60,5 +60,20 @@ public class ReservationController {
         }
     }
 
+    @PostMapping("/reservations/delete-card/{reservationId}")
+    public ResponseEntity<?> updateReservationStatus(
+            @PathVariable Long reservationId) {
+        try {
+            boolean success = service.deleteCard(reservationId);
+            if (success) {
+                return ResponseEntity.ok().body(new ResponseMessage("Rezervacija je uspešno ažurirana."));
+            } else {
+                return ResponseEntity.status(400).body(new ResponseMessage("Greška pri ažuriranju rezervacije."));
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(new ResponseMessage("Interna greška servera: " + e.getMessage()));
+        }
+    }
+
 
 }

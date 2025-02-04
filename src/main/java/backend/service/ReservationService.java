@@ -207,4 +207,13 @@ public class ReservationService {
 
         return false;
     }
+
+    public boolean deleteCard(Long reservationId) {
+
+        Optional<Reservation> reservation = reservationRepository.findById(reservationId);
+        reservation.get().setDeleted(true);
+        reservationRepository.save(reservation.get());
+        System.out.println("ajmoooooooo");
+        return true;
+    }
 }

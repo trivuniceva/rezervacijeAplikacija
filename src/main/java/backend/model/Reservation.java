@@ -36,6 +36,9 @@ public class Reservation {
     @Column(name = "price")
     private BigDecimal price;
 
+    @Column(name = "deleted")
+    private boolean deleted;
+
     public Long getId() {
         return id;
     }
@@ -98,6 +101,14 @@ public class Reservation {
 
     public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
     }
 
     @Override

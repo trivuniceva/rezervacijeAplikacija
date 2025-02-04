@@ -18,7 +18,7 @@ export interface Reservation {
   status: string;
   price: number;
   numberOfGuests: number;
-
+  deleted: boolean;
 }
 
 
@@ -41,6 +41,10 @@ export class ReservationService {
 
   updateReservationStatus(reservationId: number, status: string): Observable<any> {
     return this.http.post(`${this.apiUrl}/update-status/${reservationId}/${status}`, {});
+  }
+
+  deleteCard(reservationId: number): Observable<any> {
+    return this.http.post(`${this.apiUrl}/delete-card/${reservationId}`, {});
   }
 
 
