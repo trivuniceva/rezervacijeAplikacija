@@ -172,7 +172,7 @@ public class ReservationService {
     }
 
     public List<Reservation> getReservationsForGuest(User guest) {
-        System.out.println("ajm o lutkoooo");
+        System.out.println("ajm o lutkoooo guesttttt");
         return reservationRepository.findByGuest(guest);
     }
 
@@ -186,8 +186,10 @@ public class ReservationService {
     public boolean updateReservationStatus(Long reservationId, String status) {
         Optional<Reservation> reservation = reservationRepository.findById(reservationId);
 
-
         System.out.println(reservation.toString());
+        System.out.println(status);
+        System.out.println(reservation.get().getStatus());
+        System.out.println("u dobrom sam ");
         if (status.equals("APPROVED")) {
             reservation.get().setStatus(ReservationStatus.ACCEPTED);
             reservationRepository.save(reservation.get());
@@ -196,8 +198,34 @@ public class ReservationService {
             reservation.get().setStatus(ReservationStatus.REJECTED);
             reservationRepository.save(reservation.get());
             return true;
+        } else if (status.equals("DECLINED")) {
+            System.out.println("macko setuj ga");
+            reservation.get().setStatus(ReservationStatus.DECLINED);
+            reservationRepository.save(reservation.get());
+            return true;
         }
 
         return false;
+    }
+
+    public boolean deleteCard(Long reservationId) {
+
+        Optional<Reservation> reservation = reservationRepository.findById(reservationId);
+        reservation.get().setDeleted(true);
+        reservationRepository.save(reservation.get());
+        System.out.println("ajmoooooooo");
+        return true;
+    }
+
+
+    public long countByGuestIdAndStatus(Long guestId) {
+        return reservationRepository.countByGuestIdAndStatus(guestId, ReservationStatus.DECLINED);
+    }
+
+    public long fetchGuestDeclinedCount(Long guestId) {
+        System.out.println("vozi");
+        System.out.println(reservationRepository.countByGuestIdAndStatus(guestId, ReservationStatus.DECLINED));
+
+        return reservationRepository.countByGuestIdAndStatus(guestId, ReservationStatus.DECLINED);
     }
 }

@@ -185,3 +185,8 @@
   color: darkred;
   font-weight: bold;
 }
+
+.status-otkazana {
+  color: #555;
+  font-weight: bold;
+}

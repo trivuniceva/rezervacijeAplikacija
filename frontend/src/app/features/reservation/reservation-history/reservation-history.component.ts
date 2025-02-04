@@ -38,15 +38,15 @@ export class ReservationHistoryComponent implements OnInit{
   // Dohvatanje svih rezervacija sa backend-a
   fetchReservations() {
     this.reservationService.getReservationsForGuest(this.user.id).subscribe((data: Reservation[]) => {
-      console.log(data);
-
-      this.rezervacije = data.sort((a, b) => {
+      // Filter only non-deleted reservations
+      this.rezervacije = data.filter(reservation => !reservation.deleted).sort((a, b) => {
         const dateA = new Date(a.startDate).getTime();
         const dateB = new Date(b.startDate).getTime();
         return dateB - dateA;
       });
     });
   }
+
 
 
   // Metoda za filtriranje rezervacija
@@ -69,6 +69,10 @@ export class ReservationHistoryComponent implements OnInit{
         match = false;
       }
 
+      if (rezervacija.deleted === true) {
+        match = false;
+      }
+
       return match;
     });
   }
@@ -82,20 +86,41 @@ export class ReservationHistoryComponent implements OnInit{
 
   // Metoda za odbijanje rezervacije
   odbijRezervaciju(rezervacija: any) {
-    // Logika za odbijanje rezervacije
-    alert(`Rezervacija za smeštaj ${rezervacija.accommodationName} je odbijena.`);
-    // Možeš pozvati API da ažurira status rezervacije na 'rejected'
+    this.reservationService.updateReservationStatus(rezervacija.id, "DECLINED").subscribe(
+      response => {
+        console.log("Rezervacija odbijena", response);
+
+        this.rezervacije = this.rezervacije.filter(r => r.id !== rezervacija.id);
+
+        alert("Rezervacija za smeštaj ${rezervacija.accommodationName} je odbijena.");
+      },
+      error => {
+        console.error('Greška pri ažuriranju', error);
+      }
+    );
   }
 
   // Metoda za brisanje rezervacije
   obrisiRezervaciju(rezervacija: any) {
-    // Logika za brisanje rezervacije
-    const index = this.rezervacije.indexOf(rezervacija);
-    if (index !== -1) {
-      this.rezervacije.splice(index, 1);
-      alert(`Rezervacija za smeštaj ${rezervacija.accommodationName} je obrisana.`);
-      // Možeš pozvati API da ukloni rezervaciju sa backend-a
-    }
+
+    // const index = this.rezervacije.indexOf(rezervacija);
+    // if (index !== -1) {
+    //   this.rezervacije.splice(index, 1);
+    //   // alert("Rezervacija za smeštaj ${rezervacija.accommodationName} je obrisana.");
+    // }
+
+    this.reservationService.deleteCard(rezervacija.id).subscribe(
+      response => {
+        console.log("Rezervacija odbijena", response);
+
+        this.rezervacije = this.rezervacije.filter(r => r.id !== rezervacija.id);
+
+        // alert("Rezervacija za smeštaj ${rezervacija.accommodationName} je odbijena.");
+      },
+      error => {
+        console.error('Greška pri ažuriranju', error);
+      }
+    );
   }
 
 

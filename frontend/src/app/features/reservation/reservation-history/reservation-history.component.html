@@ -16,9 +16,11 @@
       'pending': rezervacija.status === 'PENDING',
       'accepted': rezervacija.status === 'ACCEPTED',
       'rejected': rezervacija.status === 'REJECTED',
+      'declinded': rezervacija.status === 'DECLINED',
       'stara-rezervacija': isPastReservation(rezervacija.startDate),
       'aktivna-rezervacija': !isPastReservation(rezervacija.startDate)
     }" *ngFor="let rezervacija of filtriraneRezervacije()">
+
     <div class="card-content">
       <div class="leftSide">
         <p class="price">
@@ -36,15 +38,16 @@
           <span class="dot green"></span> {{rezervacija.endDate}}
           <br>
           <p> Guests number: {{rezervacija.numberOfGuests}}</p>
-
         </div>
+
         <div class="details">
           <p> {{rezervacija.accommodation.location}}</p>
         </div>
       </div>
+
       <div class="dugmad">
         <button
-          *ngIf="rezervacija.status === 'ACCEPTED' && !isPastReservation(rezervacija.startDate)"
+          *ngIf="rezervacija.status === 'PENDING' && !isPastReservation(rezervacija.startDate)"
           (click)="odbijRezervaciju(rezervacija)"
           class="btn btn-odbij">
           Odbij rezervaciju
@@ -52,10 +55,15 @@
 
         <span *ngIf="rezervacija.status === 'REJECTED'" class="status-odbijena">Odbijena rezervacija</span>
 
+        <span *ngIf="rezervacija.status === 'DECLINED'" class="status-otkazana">Otkazana rezervacija</span>
+
         <button *ngIf="!(rezervacija.status === 'ACCEPTED' && !isPastReservation(rezervacija.startDate))"
                 (click)="obrisiRezervaciju(rezervacija)"
                 class="btn btn-obrisi">Obriši</button>
       </div>
     </div>
+
   </div>
 </div>
+
+
