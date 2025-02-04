@@ -12,6 +12,8 @@ export interface Reservation {
     firstname: string;
     lastname: string;
     email: string;
+    profilePic: string;
+
   }
   startDate: string;
   endDate: string;
