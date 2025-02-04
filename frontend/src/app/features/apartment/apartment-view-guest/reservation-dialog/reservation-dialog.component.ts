@@ -83,10 +83,13 @@ export class ReservationDialogComponent implements OnInit{
 
     this.accommodationService.reserveAccommodation(reservationData).subscribe({
       next: (response) => {
-        console.log('Rezervacija uspešno potvrđena:', response.message);  // Pristup poruci
+        console.log('Rezervacija uspešno potvrđena:', response.message);
+        alert('Rezervacija uspešno potvrđena!');
+        this.closeDialog();
       },
       error: (error) => {
         console.error('Došlo je do greške:', error);
+        alert('Došlo je do greške pri rezervaciji. Pokušajte ponovo.');
       }
     });
 
