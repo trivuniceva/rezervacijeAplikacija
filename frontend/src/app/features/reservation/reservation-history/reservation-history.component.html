@@ -46,6 +46,7 @@
       </div>
 
       <div class="dugmad">
+        <!-- Dugme za odbijanje ako je status PENDING -->
         <button
           *ngIf="rezervacija.status === 'PENDING' && !isPastReservation(rezervacija.startDate)"
           (click)="odbijRezervaciju(rezervacija)"
@@ -53,14 +54,43 @@
           Odbij rezervaciju
         </button>
 
-        <span *ngIf="rezervacija.status === 'REJECTED'" class="status-odbijena">Odbijena rezervacija</span>
+        <!-- Tekst za odbijenu rezervaciju -->
+        <span *ngIf="rezervacija.status === 'REJECTED'" class="status-odbijena">
+    Odbijena rezervacija
+  </span>
 
-        <span *ngIf="rezervacija.status === 'DECLINED'" class="status-otkazana">Otkazana rezervacija</span>
+        <!-- Tekst za otkazanu rezervaciju -->
+        <span *ngIf="rezervacija.status === 'DECLINED'" class="status-otkazana">
+    Otkazana rezervacija
+  </span>
 
-        <button *ngIf="!(rezervacija.status === 'ACCEPTED' && !isPastReservation(rezervacija.startDate))"
-                (click)="obrisiRezervaciju(rezervacija)"
-                class="btn btn-obrisi">Obriši</button>
+        <!-- Dugme za brisanje u slučaju REJECTED, DECLINED i ACCEPTED ako je prošla -->
+        <button
+          *ngIf="(rezervacija.status === 'DECLINED' || rezervacija.status === 'ACCEPTED') && isPastReservation(rezervacija.startDate)"
+          (click)="obrisiRezervaciju(rezervacija)"
+          class="btn btn-obrisi">
+          Obriši
+        </button>
+
+        <button
+          *ngIf="(rezervacija.status === 'REJECTED')"
+          (click)="obrisiRezervaciju(rezervacija)"
+          class="btn btn-obrisi">
+          Obriši
+        </button>
+
+        <!-- Dugme za odbijanje u slučaju ACCEPTED, ali ako nije prošla rezervacija -->
+        <button
+          *ngIf="rezervacija.status === 'ACCEPTED' && !isPastReservation(rezervacija.startDate)"
+          (click)="odbijRezervaciju(rezervacija)"
+          class="btn btn-odbij">
+          Odbij rezervaciju
+        </button>
       </div>
+
+
+
+
     </div>
 
   </div>
