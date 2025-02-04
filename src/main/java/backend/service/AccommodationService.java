@@ -1,9 +1,12 @@
 package backend.service;
 
+import backend.controller.AccommodationController;
 import backend.dto.ApartmentDTO;
 import backend.dto.NotificationRequest;
 import backend.model.Accommodation;
 import backend.model.Notification;
+import backend.model.PricingMethod;
+import backend.model.ReservationType;
 import backend.repository.AccommodationRepository;
 import menadzerisanjeuser.menadzerisanjeuser.model.User;
 import menadzerisanjeuser.menadzerisanjeuser.model.UserRole;
@@ -39,7 +42,10 @@ public class AccommodationService {
     }
 
     public Accommodation createAccommodation(Accommodation accommodation) {
+        System.out.println(accommodation.toString());
         accommodation.setApproved(false);
+        accommodation.setPricingMethod(PricingMethod.PER_GUEST);
+        accommodation.setReservationType(ReservationType.MANUAL);
         Accommodation savedAccommodation = accommodationRepository.save(accommodation);
 
         List<User> admins = userRepository.findByUserRole(UserRole.ADMINISTRATOR);
@@ -52,6 +58,7 @@ public class AccommodationService {
             handleNotification(admins.get(0), String.valueOf(accommodation.getId()));
         }
         return savedAccommodation;
+
     }
 
     private void handleNotification(User user, String info){

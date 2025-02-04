@@ -33,7 +33,7 @@ export class AddApartmentComponent implements OnInit {
       minGuests: [1, [Validators.required, Validators.min(1)]],
       maxGuests: [1, [Validators.required, Validators.min(1)]],
       apartmentType: ['', [Validators.required]],
-      price: [null, [Validators.required, Validators.min(0)]],
+      defaultPrice: [null, [Validators.required, Validators.min(0)]],
       availability: ['', [Validators.required]],
       photos: [''],
       owner: this.user
