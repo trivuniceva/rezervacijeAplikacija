@@ -21,6 +21,7 @@ export class ReservationReviewComponentComponent implements OnInit{
 
   ngOnInit() {
     this.fetchReservations();
+
   }
 
   fetchReservations() {
@@ -33,8 +34,22 @@ export class ReservationReviewComponentComponent implements OnInit{
         const dateB = new Date(b.startDate).getTime();
         return dateB - dateA;
       });
+
+      this.rezervacije.forEach(reservation => {
+        console.log("Rezervacija id: " + reservation.guest.id);
+        this.reservationService.fetchGuestDeclinedCount(reservation.guest.id).subscribe(
+          (declinedCount: number) => {
+            console.log('Broj odbijenih rezervacija: ' + declinedCount);
+            reservation.declinedCount = declinedCount;
+          },
+          error => console.error('Greška pri slanju zahteva', error)
+        );
+      });
     });
   }
+
+
+
 
   updateReservation(reservationId: number, action: string): void {
     const status = action === 'approve' ? 'APPROVED' : 'REJECTED';

@@ -216,4 +216,16 @@ public class ReservationService {
         System.out.println("ajmoooooooo");
         return true;
     }
+
+
+    public long countByGuestIdAndStatus(Long guestId) {
+        return reservationRepository.countByGuestIdAndStatus(guestId, ReservationStatus.DECLINED);
+    }
+
+    public long fetchGuestDeclinedCount(Long guestId) {
+        System.out.println("vozi");
+        System.out.println(reservationRepository.countByGuestIdAndStatus(guestId, ReservationStatus.DECLINED));
+
+        return reservationRepository.countByGuestIdAndStatus(guestId, ReservationStatus.DECLINED);
+    }
 }

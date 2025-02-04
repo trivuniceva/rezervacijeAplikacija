@@ -15,6 +15,8 @@
         <img [src]="rezervacija.guest.profilePic" alt="User Profile Picture" class="profile-picture">
         <p><strong>Gost:</strong> {{ rezervacija.guest.firstname }} {{ rezervacija.guest.lastname }}</p>
         <p><strong>Email gosta:</strong> {{ rezervacija.guest.email }}</p>
+        <p><strong>Otkazano rezervacija:</strong> {{ rezervacija.declinedCount }} </p> <!-- Prikazivanje broja otkazanih rezervacija -->
+
       </div>
     </div>
 

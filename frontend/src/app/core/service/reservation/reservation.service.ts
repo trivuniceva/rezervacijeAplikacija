@@ -9,11 +9,11 @@ export interface Reservation {
     location: string;
   };
   guest:{
+    id: number;
     firstname: string;
     lastname: string;
     email: string;
     profilePic: string;
-
   }
   startDate: string;
   endDate: string;
@@ -21,6 +21,7 @@ export interface Reservation {
   price: number;
   numberOfGuests: number;
   deleted: boolean;
+  declinedCount?: number;
 }
 
 
@@ -48,6 +49,13 @@ export class ReservationService {
   deleteCard(reservationId: number): Observable<any> {
     return this.http.post(`${this.apiUrl}/delete-card/${reservationId}`, {});
   }
+
+
+  fetchGuestDeclinedCount(guestId: number): Observable<any> {
+    return this.http.post(`${this.apiUrl}/guest-declined/${guestId}`, {});
+  }
+
+
 
 
 }
