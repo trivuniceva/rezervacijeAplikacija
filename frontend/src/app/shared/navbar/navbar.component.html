@@ -4,55 +4,58 @@
   <a routerLink="/login">Login</a>
 </div>
 
-
 <div *ngIf="userRole === 'GUEST'" class="sidenav">
-  <a (click)="toggleProfileMenu()"> Profile </a>
 
-  <div *ngIf="isProfileMenuOpen" class="dropdown-menu">
-    <div class="hover">
-      <a routerLink="/profile" (click)="closeMenu()">Edit Profile</a>
+  <div class="dropdown-wrapper">
+    <a (click)="toggleProfileMenu()"> Profile </a>
+    <div *ngIf="isProfileMenuOpen" class="dropdown-menu">
+      <div class="hover">
+        <a routerLink="/profile" (click)="closeMenus()">Edit Profile</a>
+      </div>
+      <a routerLink="/change-password" (click)="closeMenus()">Change Password</a>
     </div>
-    <a routerLink="/change-password" (click)="closeMenu()">Change Password</a>
   </div>
 
-<!--  <a routerLink="/guest-reservation" (click)="closeMenu()">Reservation</a>-->
-
-  <a (click)="toggleProfileMenu()"> Reservation </a>
-
-  <div *ngIf="isProfileMenuOpen" class="dropdown-menu">
-    <div class="hover">
-      <a routerLink="/guest-reservation" (click)="closeMenu()">Make Reservation</a>
+  <div class="dropdown-wrapper">
+    <a (click)="toggleReservationMenu()"> Reservation </a>
+    <div *ngIf="isReservationMenuOpen" class="dropdown-menu">
+      <div class="hover">
+        <a routerLink="/guest-reservation" (click)="closeMenus()">Make Reservation</a>
+      </div>
+      <a routerLink="/history" (click)="closeMenus()">History</a>
     </div>
-    <a routerLink="/history" (click)="closeMenu()">History</a>
   </div>
 
   <a routerLink="/notifications">Notifications</a>
+
   <a href="#" (click)="logout()">Logout</a>
 </div>
 
 <div *ngIf="userRole === 'HOST'" class="sidenav">
-  <a (click)="toggleProfileMenu()"> Profile </a>
 
-  <div *ngIf="isProfileMenuOpen" class="dropdown-menu">
-    <div class="hover">
-      <a routerLink="/profile" (click)="closeMenu()">Edit Profile</a>
+  <div class="dropdown-wrapper">
+    <a (click)="toggleProfileMenu()"> Profile </a>
+    <div *ngIf="isProfileMenuOpen" class="dropdown-menu">
+      <div class="hover">
+        <a routerLink="/profile" (click)="closeMenus()">Edit Profile</a>
+      </div>
+      <a routerLink="/change-password" (click)="closeMenus()">Change Password</a>
     </div>
-    <a routerLink="/change-password" (click)="closeMenu()">Change Password</a>
   </div>
 
-  <a (click)="toggleProfileMenu()"> Apartments </a>
-
-  <div *ngIf="isProfileMenuOpen" class="dropdown-menu">
-    <div class="hover">
-      <a routerLink="/add-apartment" (click)="closeMenu()">Add Apartment</a>
+  <div class="dropdown-wrapper">
+    <a (click)="toggleApartmentMenu()"> Apartments </a>
+    <div *ngIf="isApartmentMenuOpen" class="dropdown-menu">
+      <div class="hover">
+        <a routerLink="/add-apartment" (click)="closeMenus()">Add Apartment</a>
+      </div>
+      <a routerLink="/edit-apartment-view" (click)="closeMenus()">Edit Apartment</a>
     </div>
-    <a routerLink="/edit-apartment-view" (click)="closeMenu()">Edit Apartment</a>
   </div>
 
   <a routerLink="/notifications">Notifications</a>
   <a href="#" (click)="logout()">Logout</a>
 </div>
-
 
 <div *ngIf="userRole === 'ADMINISTRATOR'" class="sidenav">
   <a routerLink="/notifications">Notifications</a>
