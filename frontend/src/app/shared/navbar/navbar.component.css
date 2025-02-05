@@ -1,26 +1,17 @@
-body {
-  margin: 0;
-  padding: 0;
-  background-color: #f0f0f0;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: start;
-  position: relative;
-}
-
 .sidenav {
   position: relative;
   display: flex;
   justify-content: center;
   width: 95%;
-  /*background-color: rgba(30, 30, 30, 0.1);*/
-  background-color: rgba(1, 94, 97, 0.5);
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(15px);
   padding: 20px 0;
   margin: 0 auto;
   border-radius: 10px;
   z-index: 1;
+}
+
+.sidenav-green{
+  background-color: rgba(1, 94, 97, 0.7);
 }
 
 .sidenav a {
@@ -28,6 +19,7 @@ body {
   text-decoration: none;
   font-size: 18px;
   margin: 0 15px;
+  position: relative; /* Važno: omogućava pravilno pozicioniranje dropdowna */
 }
 
 .sidenav a:hover {
@@ -35,39 +27,36 @@ body {
   color: #015E61;
 }
 
+/* Omotac za dropdown kako bi bio pravilno pozicioniran */
+.dropdown-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+/* Popravljen dropdown meni */
 .dropdown-menu {
   display: flex;
   flex-direction: column;
   position: absolute;
   background-color: #333;
   border-radius: 5px;
-  z-index: 2;
-
-  padding: 15px;
-  margin-top: 30px;
-  margin-right: 350px;
-
-  width: auto;
-
+  z-index: 10; /* Postavljamo veći z-index da ne bude ispod drugih elemenata */
+  padding: 10px;
+  width: 180px; /* Fiksna širina menija */
+  top: 100%; /* Pozicioniranje ispod dugmeta */
+  left: 0; /* Obezbeđuje da dropdown ostane ispod dugmeta */
 }
 
 .dropdown-menu a {
   color: white;
-  padding: 10px 30px;
+  padding: 10px 15px;
   text-decoration: none;
-
   display: block;
-  width: auto;
   transition: background-color 0.3s ease;
-
   border-radius: 5px;
-  margin-left: -5%;
-  margin-right: -5%;
-
 }
 
 .dropdown-menu a:hover {
   background-color: #015E61;
   color: white;
 }
-
