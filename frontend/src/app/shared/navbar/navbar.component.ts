@@ -1,12 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { NgIf } from '@angular/common';
+import {NgClass, NgIf} from '@angular/common';
 import { AuthService } from '../../core/service/auth/auth.service';
 import {RouterModule} from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [NgIf, RouterModule],
+  imports: [
+    NgIf,
+    RouterModule,
+    NgClass
+  ],
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css'],
 })
@@ -16,6 +20,7 @@ export class NavbarComponent implements OnInit {
   isProfileMenuOpen: boolean = false;
   isReservationMenuOpen: boolean = false;
   isApartmentMenuOpen: boolean = false;
+  isSearchActive: boolean = false;
 
   constructor(private authService: AuthService) {}
 
@@ -54,6 +59,9 @@ export class NavbarComponent implements OnInit {
     this.closeMenus();
   }
 
+  setActivePage(page: string) {
+    this.isSearchActive = page === '/search-apartment';
+  }
 }
 
 

@@ -1,10 +1,11 @@
-<div *ngIf="!userRole || userRole === ''" class="sidenav">
-  <a routerLink="">Home</a>
-  <a routerLink="/search-apartment">Search</a>
-  <a routerLink="/login">Login</a>
+<div *ngIf="!userRole || userRole === ''" [ngClass]="{'sidenav': true, 'sidenav-green': isSearchActive}">
+<a routerLink="" (click)="setActivePage('')">Home</a>
+  <a routerLink="/search-apartment" (click)="setActivePage('/search-apartment')">Search</a>
+  <a routerLink="/login" (click)="setActivePage('/login')">Login</a>
 </div>
 
-<div *ngIf="userRole === 'GUEST'" class="sidenav">
+
+<div *ngIf="userRole === 'GUEST'" [ngClass]="['sidenav', 'sidenav-green']">
 
   <div class="dropdown-wrapper">
     <a (click)="toggleProfileMenu()"> Profile </a>
