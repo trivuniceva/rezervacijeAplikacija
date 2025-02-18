@@ -48,20 +48,34 @@ export class ReservationReviewComponentComponent implements OnInit{
     });
   }
 
-
-
-
   updateReservation(reservationId: number, action: string): void {
     const status = action === 'approve' ? 'APPROVED' : 'REJECTED';
 
     this.reservationService.updateReservationStatus(reservationId, status).subscribe(response => {
       console.log(`Rezervacija ${status === 'APPROVED' ? 'odobrena' : 'odbijena'}`, response);
 
-      this.rezervacije = this.rezervacije.filter(reservation => reservation.id !== reservationId);
+      const updatedReservation = this.rezervacije.find(reservation => reservation.id === reservationId);
+      if (updatedReservation) {
+        updatedReservation.status = status === 'APPROVED' ? 'ACCEPTED' : 'REJECTED';
+
+        this.rezervacije = this.rezervacije.filter(reservation => {
+          const startDate = new Date(updatedReservation.startDate);
+          const endDate = new Date(updatedReservation.endDate);
+
+          const isOverlapping = new Date(reservation.startDate) <= endDate && new Date(reservation.endDate) >= startDate;
+
+          return !(isOverlapping && reservation.id !== updatedReservation.id);
+        });
+
+        if (updatedReservation.status === 'ACCEPTED') {
+          setTimeout(() => {
+            this.rezervacije = this.rezervacije.filter(reservation => reservation.id !== updatedReservation.id);
+          }, 1000);
+        }
+      }
     }, error => {
       console.error('Greška pri ažuriranju', error);
     });
   }
-
 
 }

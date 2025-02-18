@@ -189,10 +189,11 @@ public class ReservationService {
         System.out.println(reservation.toString());
         System.out.println(status);
         System.out.println(reservation.get().getStatus());
-        System.out.println("u dobrom sam ");
+        System.out.println("u dobrom sam \n");
         if (status.equals("APPROVED")) {
             reservation.get().setStatus(ReservationStatus.ACCEPTED);
             reservationRepository.save(reservation.get());
+            rejectOverlappingRequests(reservation.get());
             return true;
         } else if (status.equals("REJECTED")) {
             reservation.get().setStatus(ReservationStatus.REJECTED);
@@ -207,6 +208,26 @@ public class ReservationService {
 
         return false;
     }
+
+    private void rejectOverlappingRequests(Reservation acceptedReservation) {
+        System.out.println("Usao je u odbijanje");
+
+        List<Reservation> overlappingReservations = getPendingReservations(acceptedReservation.getAccommodation().getId(),ReservationStatus.PENDING,acceptedReservation.getStartDate(),acceptedReservation.getEndDate(),acceptedReservation.getId());
+
+        for (Reservation res : overlappingReservations) {
+            System.out.println("Pokupljena: " + res);
+            if (!res.getId().equals(acceptedReservation.getId())) {
+                res.setStatus(ReservationStatus.REJECTED);
+                reservationRepository.save(res);
+                System.out.println("Ovu je odbio: " + res);
+            }
+        }
+    }
+
+    private List<Reservation> getPendingReservations(Long id, ReservationStatus pending, LocalDate startDate, LocalDate endDate, Long id1) {
+        return reservationRepository.findPendingReservationsByAccommodationAndDateRange(id,ReservationStatus.PENDING,startDate,endDate,id1);
+    }
+
 
     public boolean deleteCard(Long reservationId) {
 

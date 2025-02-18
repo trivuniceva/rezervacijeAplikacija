@@ -21,8 +21,8 @@
     </div>
 
     <div class="action-buttons" *ngIf="rezervacija.status === 'PENDING'">
-      <button class="approve-btn" (click)="updateReservation(rezervacija.id, 'approve')">Odobri</button>
-      <button class="reject-btn" (click)="updateReservation(rezervacija.id, 'reject')">Odbij</button>
+      <button class="approve-btn" (click)="updateReservation(rezervacija.id, 'approve')">Accept</button>
+      <button class="reject-btn" (click)="updateReservation(rezervacija.id, 'reject')">Reject</button>
     </div>
   </div>
 </div>

@@ -32,7 +32,7 @@
   <a href="#" (click)="logout()">Logout</a>
 </div>
 
-<div *ngIf="userRole === 'HOST'" class="sidenav">
+<div *ngIf="userRole === 'HOST'" [ngClass]="['sidenav', 'sidenav-green']">
 
   <div class="dropdown-wrapper">
     <a (click)="toggleProfileMenu()"> Profile </a>
@@ -58,7 +58,7 @@
   <a href="#" (click)="logout()">Logout</a>
 </div>
 
-<div *ngIf="userRole === 'ADMINISTRATOR'" class="sidenav">
+<div *ngIf="userRole === 'ADMINISTRATOR'" [ngClass]="['sidenav', 'sidenav-green']">
   <a routerLink="/notifications">Notifications</a>
   <a href="#" (click)="logout()">Logout</a>
 </div>
