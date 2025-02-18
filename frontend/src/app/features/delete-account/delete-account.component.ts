@@ -45,23 +45,6 @@ export class DeleteAccountComponent {
   onDeleteAccount() {
     let email = this.authService.getLoggedUser().email;
 
-    this.userService.deleteAccount(email).subscribe({
-      next: (response) => {
-        if (response.success) {
-          alert('Vaš nalog je uspešno obrisan.');
-          localStorage.clear();
-          setTimeout(() => {
-            this.router.navigate(['']);
-          }, 3000);
-        } else {
-          alert('Ne možete obrisati nalog dok imate aktivne rezervacije.');
-        }
-      },
-      error: () => {
-        alert('Greška prilikom brisanja naloga. Pokušajte ponovo.');
-      }
-    });
-
   }
 
   onCancel() {
