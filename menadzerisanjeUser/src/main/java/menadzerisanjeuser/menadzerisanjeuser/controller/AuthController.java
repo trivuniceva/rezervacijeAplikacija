@@ -37,9 +37,11 @@ public class AuthController {
         System.out.println(" - - - - - - - ");
         System.out.println(registerRequest.toString());
 
-        authService.signup(registerRequest);
+//        authService.signup(registerRequest);
 
-        return ResponseEntity.ok(new SuccessResponse("Registration successful!"));
+//        return ResponseEntity.ok(new SuccessResponse("Registration successful!"));
+        return authService.signup(registerRequest);
+
     }
 
 }

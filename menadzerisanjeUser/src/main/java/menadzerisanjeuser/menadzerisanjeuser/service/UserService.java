@@ -59,8 +59,4 @@ public class UserService {
         userRepository.save(user);
         return true;
     }
-
-    public String generateActivationToken() {
-        return UUID.randomUUID().toString();
-    }
 }

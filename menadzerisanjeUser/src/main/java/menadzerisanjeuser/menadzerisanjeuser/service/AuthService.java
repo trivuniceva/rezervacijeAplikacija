@@ -1,8 +1,12 @@
 package menadzerisanjeuser.menadzerisanjeuser.service;
 
+import menadzerisanjeuser.menadzerisanjeuser.model.ErrorResponse;
 import menadzerisanjeuser.menadzerisanjeuser.model.RegisterRequest;
+import menadzerisanjeuser.menadzerisanjeuser.model.SuccessResponse;
 import menadzerisanjeuser.menadzerisanjeuser.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -10,6 +14,9 @@ public class AuthService {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private TokenService tokenService;
 
     @Autowired
     private EmailService emailService;
@@ -28,7 +35,7 @@ public class AuthService {
         return null;
     }
 
-    public void signup(RegisterRequest registerRequest) {
+    public ResponseEntity<?> signup(RegisterRequest registerRequest) {
         System.out.println(registerRequest.getRole());
         if(!this.userService.userExist(registerRequest.getEmail())){
             User newUser = new User();
@@ -40,17 +47,27 @@ public class AuthService {
             newUser.setAddress(registerRequest.getAddress());
             newUser.setPhone(registerRequest.getPhone());
             newUser.setUserRole(registerRequest.getRole());
-            newUser.setResetToken(this.userService.generateActivationToken());
 
+            try{
+                System.out.println("krece mejl: " + newUser.getEmail());
+                System.out.println("tokeN: " + newUser.getResetToken());
 
+                String token = tokenService.generateToken();
+                newUser.setResetToken(token);
 
-            System.out.println("krece mejl: " + newUser.getEmail());
-            System.out.println("tokeN: " + newUser.getResetToken());
-//            emailService.sendActivationEmail(newUser.getEmail(), newUser.getResetToken());
+                System.out.println("save....");
+                userService.saveUser(newUser);
+                System.out.println("snimio korisnika");
 
-            System.out.println("save....");
-            userService.saveUser(newUser);
-            System.out.println("snimio korisnika");
+                emailService.sendActivationEmail(newUser.getEmail(), newUser.getResetToken());
+
+                return ResponseEntity.ok(new SuccessResponse("Registration successful! Please check your email to activate your account."));
+
+            } catch (Exception e) {
+                System.err.println("Error saving user: " + e.getMessage());
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ErrorResponse("Failed to save user."));
+            }
         }
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ErrorResponse("Email exist!."));
     }
 }
