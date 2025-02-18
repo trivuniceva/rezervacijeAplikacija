@@ -2,13 +2,11 @@ package backend.controller;
 
 import backend.dto.ReservationDTO;
 import backend.model.Reservation;
-import backend.model.ReservationStatus;
 import backend.model.ResponseMessage;
 import backend.service.ReservationService;
 import menadzerisanjeuser.menadzerisanjeuser.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -38,7 +36,7 @@ public class ReservationController {
     public List<Reservation> getReservationsForGuest(@PathVariable Long guestId) {
         User guest = new User();
         guest.setId(guestId);
-        return service.getReservationsForGuest(guest);
+        return service.getReservationsByGuest(guest);
     }
 
     @GetMapping("/reservations/host/{apartmentId}")

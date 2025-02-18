@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import {Router} from '@angular/router';
 import {NgForOf} from '@angular/common';
+import {UserService} from '../../core/service/user/user.service';
+import {AuthService} from '../../core/service/auth/auth.service';
 
 @Component({
   selector: 'app-delete-account',
@@ -26,7 +28,7 @@ export class DeleteAccountComponent {
 
   selectedReason: string | null = null;
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private userService: UserService, private authService: AuthService) {
   }
 
   toggleRadio(reason: string) {
@@ -41,7 +43,24 @@ export class DeleteAccountComponent {
   }
 
   onDeleteAccount() {
-    // this.userService.deleteAccount();
+    let email = this.authService.getLoggedUser().email;
+
+    this.userService.deleteAccount(email).subscribe({
+      next: (response) => {
+        if (response.success) {
+          alert('Vaš nalog je uspešno obrisan.');
+          localStorage.clear();
+          setTimeout(() => {
+            this.router.navigate(['']);
+          }, 3000);
+        } else {
+          alert('Ne možete obrisati nalog dok imate aktivne rezervacije.');
+        }
+      },
+      error: () => {
+        alert('Greška prilikom brisanja naloga. Pokušajte ponovo.');
+      }
+    });
 
   }
 
