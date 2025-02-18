@@ -6,10 +6,10 @@ import backend.repository.AccommodationRepository;
 import backend.repository.ReservationRepository;
 import backend.repository.SpecialPriceAndAvailabilityRepository;
 import menadzerisanjeuser.menadzerisanjeuser.model.User;
+import menadzerisanjeuser.menadzerisanjeuser.model.UserRole;
 import menadzerisanjeuser.menadzerisanjeuser.repository.UserRepository;
 import menadzerisanjeuser.menadzerisanjeuser.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -58,8 +58,8 @@ public class ReservationService {
 
         BigDecimal fullPrice = calculateTotalPrice(reservationData.getAccommodationId(), reservationData.getSelectedDates(), reservationData.getNumberOfGuests());
 
-        if(!areDatesReserved(reservationData.getAccommodationId(), reservationData.getSelectedDates())){
-            if (!areDatesNotAvailable(reservationData.getAccommodationId(), reservationData.getSelectedDates())){
+        if (!areDatesReserved(reservationData.getAccommodationId(), reservationData.getSelectedDates())) {
+            if (!areDatesNotAvailable(reservationData.getAccommodationId(), reservationData.getSelectedDates())) {
                 Long accommodationId = reservationData.getAccommodationId();
                 Accommodation accommodation = accommodationRepository.findById(accommodationId).get();
 
@@ -76,7 +76,7 @@ public class ReservationService {
                 reservation.setPrice(fullPrice);
 
 
-                if(isManualReservation(accommodation.getReservationType())) {
+                if (isManualReservation(accommodation.getReservationType())) {
                     reservation.setStatus(ReservationStatus.PENDING);
                 } else {
                     reservation.setStatus(ReservationStatus.ACCEPTED);
@@ -89,7 +89,7 @@ public class ReservationService {
     }
 
     private boolean isManualReservation(ReservationType reservationType) {
-        if(reservationType.equals(ReservationType.MANUAL)){
+        if (reservationType.equals(ReservationType.MANUAL)) {
             return true;
         }
         return false;
@@ -221,7 +221,7 @@ public class ReservationService {
     private void rejectOverlappingRequests(Reservation acceptedReservation) {
         System.out.println("Usao je u odbijanje");
 
-        List<Reservation> overlappingReservations = getPendingReservations(acceptedReservation.getAccommodation().getId(),ReservationStatus.PENDING,acceptedReservation.getStartDate(),acceptedReservation.getEndDate(),acceptedReservation.getId());
+        List<Reservation> overlappingReservations = getPendingReservations(acceptedReservation.getAccommodation().getId(), ReservationStatus.PENDING, acceptedReservation.getStartDate(), acceptedReservation.getEndDate(), acceptedReservation.getId());
 
         for (Reservation res : overlappingReservations) {
             System.out.println("Pokupljena: " + res);
@@ -234,7 +234,7 @@ public class ReservationService {
     }
 
     private List<Reservation> getPendingReservations(Long id, ReservationStatus pending, LocalDate startDate, LocalDate endDate, Long id1) {
-        return reservationRepository.findPendingReservationsByAccommodationAndDateRange(id,ReservationStatus.PENDING,startDate,endDate,id1);
+        return reservationRepository.findPendingReservationsByAccommodationAndDateRange(id, ReservationStatus.PENDING, startDate, endDate, id1);
     }
 
 
@@ -261,29 +261,40 @@ public class ReservationService {
 
 
     public Map<String, Object> deleteUser(String email) {
-        Map<String, Object> response = new HashMap<>();
 
         User user = userRepository.findByEmail(email);
-        if(user!=null){
-            if (getReservationsByGuest(user.getId()).isEmpty()){
-                userService.deleteUserByEmail(email);
+        System.out.println("1");
+        if (user != null) {
+            System.out.println("2");
+            System.out.println(user.getUserRole());
+            if (user.getUserRole().equals(UserRole.GUEST)) {
+                if (getReservationsByGuest(user.getId()).isEmpty()) {
+                    return successfulDeleteUser(email, "Nalog je uspešno obrisan.");
+                }
 
-                response.put("success", true);
-                response.put("message", "Nalog je uspešno obrisan.");
-                return response;
+            } else if (user.getUserRole().equals(UserRole.HOST)) {
+                System.out.println("3");
+                accommodationRepository.updateIsDeletedByOwnerId(user.getId());
+                return successfulDeleteUser(email, "Nalog je uspešno obrisan.");
             }
-
-            response.put("success", false);
-            response.put("message", "Ne možete obrisati nalog dok imate aktivne rezervacije.");
-            return response;
-
         }
 
+        Map<String, Object> response = new HashMap<>();
         response.put("success", false);
-        response.put("message", "Fejk mejl");
+        response.put("message", "Ne možete obrisati nalog dok imate aktivne rezervacije.");
         return response;
-
-
-
     }
+
+
+    private Map<String, Object> successfulDeleteUser(String email, String message) {
+        Map<String, Object> response = new HashMap<>();
+
+        userService.deleteUserByEmail(email);
+
+        response.put("success", true);
+        response.put("message", message);
+        return response;
+    }
+
+
 }

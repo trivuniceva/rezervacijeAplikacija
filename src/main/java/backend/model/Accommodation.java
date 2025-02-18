@@ -57,6 +57,9 @@ public class Accommodation {
     @Column(name = "deadline")
     private int deadline;
 
+    @Column(name = "is_deleted")
+    private boolean isDeleted = false;
+
     public Long getId() {
         return id;
     }
@@ -175,6 +178,14 @@ public class Accommodation {
 
     public void setDeadline(int deadline) {
         this.deadline = deadline;
+    }
+
+    public boolean isDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        isDeleted = deleted;
     }
 
     @Override
