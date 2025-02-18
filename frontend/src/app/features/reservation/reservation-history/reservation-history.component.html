@@ -1,5 +1,5 @@
 <div class="filter-container">
-  <input type="text" [(ngModel)]="searchTerm" placeholder="Pretraži po nazivu smeštaja..." class="search-input">
+  <input type="text" [(ngModel)]="searchTerm" placeholder="Search by accommodation name..." class="search-input">
 
   <input type="date" [(ngModel)]="searchDate" class="date-input">
 
@@ -81,11 +81,13 @@
 
         <!-- Dugme za odbijanje u slučaju ACCEPTED, ali ako nije prošla rezervacija -->
         <button
-          *ngIf="rezervacija.status === 'ACCEPTED' && !isPastReservation(rezervacija.startDate)"
+          *ngIf="rezervacija.status === 'ACCEPTED' && !isPastReservation(rezervacija.startDate) && canCancelReservation(rezervacija)"
           (click)="odbijRezervaciju(rezervacija)"
           class="btn btn-odbij">
           Odbij rezervaciju
         </button>
+
+
       </div>
 
 

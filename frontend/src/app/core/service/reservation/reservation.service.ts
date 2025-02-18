@@ -7,6 +7,7 @@ export interface Reservation {
   accommodation: {
     name: string;
     location: string;
+    deadline: number;
   };
   guest:{
     id: number;
