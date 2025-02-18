@@ -102,13 +102,6 @@ export class ReservationHistoryComponent implements OnInit{
 
   // Metoda za brisanje rezervacije
   obrisiRezervaciju(rezervacija: any) {
-
-    // const index = this.rezervacije.indexOf(rezervacija);
-    // if (index !== -1) {
-    //   this.rezervacije.splice(index, 1);
-    //   // alert("Rezervacija za smeštaj ${rezervacija.accommodationName} je obrisana.");
-    // }
-
     this.reservationService.deleteCard(rezervacija.id).subscribe(
       response => {
         console.log("Rezervacija odbijena", response);
@@ -121,6 +114,22 @@ export class ReservationHistoryComponent implements OnInit{
         console.error('Greška pri ažuriranju', error);
       }
     );
+  }
+
+  canCancelReservation(rezervacija: Reservation): boolean {
+    console.log("eloooo")
+    const today = new Date();
+    const startDate = new Date(rezervacija.startDate);
+    const cancellationDeadline = new Date(startDate);
+
+
+    // Oduzimamo broj dana za deadline
+    cancellationDeadline.setDate(startDate.getDate() - rezervacija.accommodation.deadline);
+
+    console.log("cancellationDeadline:" + cancellationDeadline)
+
+    // Gost može otkazati samo ako je današnji datum pre roka za otkazivanje
+    return today < cancellationDeadline;
   }
 
 
