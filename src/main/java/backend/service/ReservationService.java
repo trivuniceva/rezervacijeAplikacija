@@ -7,12 +7,16 @@ import backend.repository.ReservationRepository;
 import backend.repository.SpecialPriceAndAvailabilityRepository;
 import menadzerisanjeuser.menadzerisanjeuser.model.User;
 import menadzerisanjeuser.menadzerisanjeuser.repository.UserRepository;
+import menadzerisanjeuser.menadzerisanjeuser.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -29,6 +33,9 @@ public class ReservationService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private UserService userService;
 
 
     public Reservation createReservationRequest(Reservation reservation) {
@@ -171,8 +178,10 @@ public class ReservationService {
         return false;
     }
 
-    public List<Reservation> getReservationsByGuest(User guest) {
+    public List<Reservation> getReservationsByGuest(Long guestId) {
         System.out.println("ajm o lutkoooo guesttttt");
+        User guest = new User();
+        guest.setId(guestId);
         return reservationRepository.findByGuest(guest);
     }
 
@@ -248,5 +257,33 @@ public class ReservationService {
         System.out.println(reservationRepository.countByGuestIdAndStatus(guestId, ReservationStatus.DECLINED));
 
         return reservationRepository.countByGuestIdAndStatus(guestId, ReservationStatus.DECLINED);
+    }
+
+
+    public Map<String, Object> deleteUser(String email) {
+        Map<String, Object> response = new HashMap<>();
+
+        User user = userRepository.findByEmail(email);
+        if(user!=null){
+            if (getReservationsByGuest(user.getId()).isEmpty()){
+                userService.deleteUserByEmail(email);
+
+                response.put("success", true);
+                response.put("message", "Nalog je uspešno obrisan.");
+                return response;
+            }
+
+            response.put("success", false);
+            response.put("message", "Ne možete obrisati nalog dok imate aktivne rezervacije.");
+            return response;
+
+        }
+
+        response.put("success", false);
+        response.put("message", "Fejk mejl");
+        return response;
+
+
+
     }
 }

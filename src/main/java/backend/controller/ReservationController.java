@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
@@ -34,9 +36,7 @@ public class ReservationController {
 
     @GetMapping("/reservations/guest/{guestId}")
     public List<Reservation> getReservationsForGuest(@PathVariable Long guestId) {
-        User guest = new User();
-        guest.setId(guestId);
-        return service.getReservationsByGuest(guest);
+        return service.getReservationsByGuest(guestId);
     }
 
     @GetMapping("/reservations/host/{apartmentId}")
@@ -88,6 +88,15 @@ public class ReservationController {
         } catch (Exception e) {
             return ResponseEntity.status(500).body(new ResponseMessage("Interna greška servera: " + e.getMessage()));
         }
+    }
+
+    @DeleteMapping("reservations/delete-account/{email}")
+    public ResponseEntity<Map<String, Object>> deleteAccount(@PathVariable String email) {
+        Map<String, Object> response = new HashMap<>();
+
+        response = service.deleteUser(email);
+
+        return ResponseEntity.ok(response);
     }
 
 
