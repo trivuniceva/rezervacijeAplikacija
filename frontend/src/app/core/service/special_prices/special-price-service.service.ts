@@ -19,10 +19,6 @@ export class SpecialPriceServiceService {
 
   constructor(private http: HttpClient) { }
 
-  getAvailableSpecialPrices(apartmentId: number): Observable<SpecialPrice[]> {
-    return this.http.get<SpecialPrice[]>(`${this.apiUrl}/pricesSSS?apartmentId=${apartmentId}`);
-  }
-
   getReservedDatesByApartmentId(apartmentId: number): Observable<Date[][]> {
     return this.http.get<Date[][]>(`${this.apiUrl}/reservedDatesApartment?apartmentId=${apartmentId}`);
   }
