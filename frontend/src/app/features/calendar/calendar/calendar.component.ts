@@ -3,6 +3,7 @@ import {CurrencyPipe, DatePipe, NgForOf, NgIf} from '@angular/common';
 import {SpecialPriceServiceService} from '../../../core/service/special_prices/special-price-service.service';
 import {AuthService} from '../../../core/service/auth/auth.service';
 import {PricingMethodFormatPipe} from '../../../pipes/pricing-method-format.pipe';
+import {CalendarService} from '../../../core/service/calendar/calendar.service';
 
 @Component({
   selector: 'app-calendar',
@@ -16,7 +17,8 @@ import {PricingMethodFormatPipe} from '../../../pipes/pricing-method-format.pipe
     PricingMethodFormatPipe,
 
   ],
-  styleUrls: ['./calendar.component.css']
+  styleUrls: ['./calendar.component.css'],
+  providers: [CalendarService]
 })
 
 export class CalendarComponent implements OnInit {
@@ -46,7 +48,9 @@ export class CalendarComponent implements OnInit {
 
   user: any;
 
-  constructor(private specialPriceService: SpecialPriceServiceService, private authService: AuthService) {}
+  constructor(private specialPriceService: SpecialPriceServiceService,
+              private authService: AuthService,
+              private calendarService: CalendarService) {}
 
   ngOnInit(): void {
     this.user = this.authService.getLoggedUser()
@@ -79,7 +83,7 @@ export class CalendarComponent implements OnInit {
     this.specialPriceService.getReservedDatesByApartmentId(apartmentId)
       .subscribe(data => {
         this.reservedDates = data.flatMap(dateRange =>
-          this.generateDateRange(new Date(dateRange[0]), new Date(dateRange[1]))
+          this.calendarService.generateDateRange(new Date(dateRange[0]), new Date(dateRange[1]))
         );
         console.log('Reserved Dates:', this.reservedDates);
       }, error => {
@@ -91,7 +95,7 @@ export class CalendarComponent implements OnInit {
     this.specialPriceService.getUnavailableDates(apartmentId)
       .subscribe(data => {
         this.unavailabledDates = data.flatMap(dateRange =>
-          this.generateDateRange(new Date(dateRange[0]), new Date(dateRange[1]))
+          this.calendarService.generateDateRange(new Date(dateRange[0]), new Date(dateRange[1]))
         );
         console.log('Unavailable Dates:', this.reservedDates);
       }, error => {
@@ -121,18 +125,28 @@ export class CalendarComponent implements OnInit {
     });
   }
 
-
-  private generateDateRange(startDate: Date, endDate: Date): Date[] {
-    const dates: Date[] = [];
-    let currentDate = new Date(startDate);
-
-    while (currentDate <= endDate) {
-      dates.push(new Date(currentDate));
-      currentDate.setDate(currentDate.getDate() + 1);
-    }
-
-    return dates;
+  private formatDate(date: Date): string {
+    return this.calendarService.formatDate(date);
   }
+
+  private countPrice(date: Date) {
+    const priceToAdd = this.calendarService.countPrice(date, this.apartment, this.specialPrices);
+    this.fullPrice += priceToAdd;
+  }
+
+  private checkIfSpecialPrice(dateString: string): boolean {
+    return this.calendarService.checkIfSpecialPrice(dateString, this.specialPrices);
+  }
+
+
+  private isSameDay(d1: Date, d2: Date): boolean {
+    return this.calendarService.isSameDay(d1, d2);
+  }
+
+  getFormattedDate(date: Date): string {
+    return this.calendarService.getFormattedDate(date);
+  }
+
 
   prevMonth() {
     this.currentMonth = new Date(
@@ -232,35 +246,6 @@ export class CalendarComponent implements OnInit {
   }
 
 
-  private formatDate(date: Date): string {
-    const day = String(date.getDate());
-    const month = String(date.getMonth() + 1);
-    const year = date.getFullYear();
-    return `${day}/${month}/${year}`;  // Ovaj format: D/M/YYYY
-  }
-
-  private countPrice(date: Date) {
-    const dateString = this.formatDate(date);
-    if(this.checkIfSpecialPrice(dateString)){
-      this.fullPrice += this.specialPrices[dateString];
-    } else{
-      this.fullPrice += this.apartment.defaultPrice;
-    }
-  }
-
-  private checkIfSpecialPrice(dateString: string): boolean{
-    const specialPriceKeys = Object.keys(this.specialPrices);
-
-    if (specialPriceKeys.includes(dateString)) {
-      console.log("---------------------")
-      console.log("Special price found for " + dateString);
-      console.log(this.specialPrices[dateString]);
-      return true;
-    } else {
-      console.log("Date not found in special prices");
-      return false;
-    }
-  }
 
 
   sendSelectedDatesToBackend() {
@@ -289,15 +274,7 @@ export class CalendarComponent implements OnInit {
     }
   }
 
-  private isSameDay(d1: Date, d2: Date): boolean {
-    return d1.getDate() === d2.getDate() &&
-      d1.getMonth() === d2.getMonth() &&
-      d1.getFullYear() === d2.getFullYear();
-  }
 
-  getFormattedDate(date: Date): string {
-    return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
-  }
 
   isReserved(date: Date): boolean {
     return this.reservedDates.some(d => this.isSameDay(d, date));
