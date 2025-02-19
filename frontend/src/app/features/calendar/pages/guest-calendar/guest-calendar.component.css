@@ -1,0 +1,123 @@
+.calendar-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: Arial, sans-serif;
+}
+
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 10px;
+  align-items: center;
+}
+
+.calendar-header button {
+  background-color: #707070;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.calendar-header button:hover {
+  background-color: #333;
+}
+
+.calendar-header span {
+  font-size: 18px;
+  font-weight: bold;
+  color: #707070;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(100px, 1fr));
+  width: 100%;
+
+}
+
+.calendar-day {
+  padding: 15px 0;
+  text-align: center;
+  border-top: 1px solid #ddd;
+  border-right: 1px solid #ddd;
+  font-size: 14px;
+  color: #333;
+  min-height: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.calendar-day:nth-child(7n) {
+  border-right: none;
+}
+
+.calendar-day.selected {
+  font-weight: bold;
+  background-color: hotpink;
+  color: white;
+}
+
+.calendar-day.selected .date,
+.calendar-day.selected .price {
+  color: white;
+}
+
+.calendar-day.selected p .price,
+.calendar-day.srecni p .price {
+  color: white;
+}
+
+
+.calendar-day.reserved {
+  font-weight: bold;
+  color: white;
+  background-color: #B80C09;
+  opacity: 0.6;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.calendar-day.reserved:hover {
+  background-color: #B80C09;
+}
+
+.calendar-day.selected:hover {
+  background-color: darkgray;
+}
+
+.date {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.price {
+  font-size: 12px;
+  color: #888;
+  margin-top: 5px;
+}
+
+.selected-dates {
+  margin-top: 20px;
+  font-size: 14px;
+}
+
+.selected-dates ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.smaller-text {
+  font-size: 0.7em;
+  display: block;
+  color: inherit;
+}
+
+
