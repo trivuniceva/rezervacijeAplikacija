@@ -1,10 +1,10 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {SpecialPriceServiceService} from '../../../../core/service/special_prices/special-price-service.service';
-import {AuthService} from '../../../../core/service/auth/auth.service';
-import {CalendarService} from '../../../../core/service/calendar/calendar.service';
-import {CalendarComponent} from '../../calendar/calendar.component';
-import {CurrencyPipe, DatePipe, NgForOf, NgIf} from '@angular/common';
-import {PricingMethodFormatPipe} from '../../../../pipes/pricing-method-format.pipe';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { SpecialPriceServiceService } from '../../../../core/service/special_prices/special-price-service.service';
+import { AuthService } from '../../../../core/service/auth/auth.service';
+import { CalendarService } from '../../../../core/service/calendar/calendar.service';
+import { CalendarComponent } from '../../calendar/calendar.component';
+import { CurrencyPipe, DatePipe, NgForOf, NgIf } from '@angular/common';
+import { PricingMethodFormatPipe } from '../../../../pipes/pricing-method-format.pipe';
 
 @Component({
   selector: 'app-guest-calendar',
@@ -19,7 +19,7 @@ import {PricingMethodFormatPipe} from '../../../../pipes/pricing-method-format.p
   templateUrl: './guest-calendar.component.html',
   styleUrl: './guest-calendar.component.css'
 })
-export class GuestCalendarComponent extends CalendarComponent implements OnInit{
+export class GuestCalendarComponent extends CalendarComponent implements OnInit {
   @Input() apartment: any;
   @Output() reservedDaysLstChange = new EventEmitter<Date[]>();
   @Output() fullPriceNum = new EventEmitter<number>();
@@ -34,12 +34,12 @@ export class GuestCalendarComponent extends CalendarComponent implements OnInit{
   constructor(
     private specialPriceService: SpecialPriceServiceService,
     private authService: AuthService,
-    protected override calendarService: CalendarService // Add override
+    protected override calendarService: CalendarService
   ) {
     super(calendarService);
   }
 
-  override ngOnInit(): void { // Add override
+  override ngOnInit(): void {
     this.user = this.authService.getLoggedUser();
     super.ngOnInit();
 
@@ -78,7 +78,6 @@ export class GuestCalendarComponent extends CalendarComponent implements OnInit{
         console.error('Error fetching unavailable dates:', error);
       });
   }
-
 
   toggleDateSelection(date: Date) {
     if (!this.apartment || this.isReserved(date) || this.isUnavailableDate(date)) {
@@ -123,15 +122,15 @@ export class GuestCalendarComponent extends CalendarComponent implements OnInit{
   }
 
   isReserved(date: Date): boolean {
-    return false; // Gosti ne vide rezervirane datume
+    return this.reservedDates.some(d => this.calendarService.isSameDay(d, date));
   }
 
   isUnavailableDate(date: Date): boolean {
-    return false; // Gosti ne vide nedostupne datume
+    return this.unavailabledDates.some(d => this.calendarService.isSameDay(d, date));
   }
 
   isSrecni(date: Date): boolean {
-    return this.srecniVikend.some(d => this.isSameDay(d, date));
+    return this.srecniVikend.some(d => this.calendarService.isSameDay(d, date));
   }
 
   protected override isSameDay(d1: Date, d2: Date): boolean {
@@ -141,7 +140,4 @@ export class GuestCalendarComponent extends CalendarComponent implements OnInit{
   protected override getFormattedDate(date: Date): string {
     return this.calendarService.getFormattedDate(date);
   }
-
-
-
 }
