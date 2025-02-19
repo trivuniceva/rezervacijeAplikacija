@@ -43,24 +43,18 @@ export class GuestCalendarComponent extends CalendarComponent implements OnInit{
 
     if (this.apartment && this.apartment.id) {
       this.loadSpecialPrices(this.apartment.id);
+      // this.getReservedDates(this.apartment.id);
+      // this.getUnavailableDates(this.apartment.id);
     }
   }
 
   loadSpecialPrices(accommodationId: number): void {
-    this.specialPriceService.getSpecialPricesByAccommodationId(accommodationId).subscribe((data) => {
-      data.forEach((item: any) => {
-        const startDate = new Date(item.startDate);
-        const endDate = new Date(item.endDate);
-        const price = item.price;
-        let currentDate = new Date(startDate);
-        while (currentDate <= endDate) {
-          const formattedDate = this.getFormattedDate(currentDate);
-          this.specialPrices[formattedDate] = price;
-          currentDate.setDate(currentDate.getDate() + 1);
-        }
-      });
+    this.calendarService.loadSpecialPrices(accommodationId).subscribe((specialPrices) => {
+      this.specialPrices = specialPrices;
+      console.log("Special prices in component:", this.specialPrices);
     });
   }
+
 
   toggleDateSelection(date: Date) {
     if (!this.apartment || this.isReserved(date) || this.isUnavailableDate(date)) {

@@ -1,11 +1,14 @@
 import { Injectable } from '@angular/core';
+import {Observable} from 'rxjs';
+import {SpecialPriceServiceService} from '../special_prices/special-price-service.service';
+import {map} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CalendarService {
 
-  constructor() { }
+  constructor(private specialPriceService: SpecialPriceServiceService) { }
 
   generateDateRange(startDate: Date, endDate: Date): Date[] {
     const dates: Date[] = [];
@@ -59,6 +62,25 @@ export class CalendarService {
     }
   }
 
+  loadSpecialPrices(accommodationId: number): Observable<{ [key: string]: number }> {
+    return this.specialPriceService.getSpecialPricesByAccommodationId(accommodationId).pipe(
+      map((data: any[]) => { // Type the data correctly if possible
+        const specialPrices: { [key: string]: number } = {};
+        data.forEach((item: any) => {
+          const startDate = new Date(item.startDate);
+          const endDate = new Date(item.endDate);
+          const price = item.price;
+          let currentDate = new Date(startDate);
+          while (currentDate <= endDate) {
+            const formattedDate = this.getFormattedDate(currentDate);
+            specialPrices[formattedDate] = price;
+            currentDate.setDate(currentDate.getDate() + 1);
+          }
+        });
+        return specialPrices;
+      })
+    );
+  }
 
 
 }

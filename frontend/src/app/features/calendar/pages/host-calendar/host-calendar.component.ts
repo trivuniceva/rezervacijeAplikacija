@@ -69,7 +69,6 @@ export class HostCalendarComponent extends CalendarComponent implements OnInit{
       });
   }
 
-
   loadSpecialPrices(accommodationId: number): void {
     this.specialPriceService.getSpecialPricesByAccommodationId(accommodationId).subscribe((data) => {
       data.forEach((item: any) => {
