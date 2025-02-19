@@ -16,7 +16,8 @@
 .container {
   display: flex;
   height: 100%;
-  max-height: 600px;
+  max-height: 450px;
+  border: solid;
 }
 
 .left-side {
