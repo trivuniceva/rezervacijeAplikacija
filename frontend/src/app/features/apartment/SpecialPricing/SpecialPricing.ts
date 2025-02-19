@@ -1,8 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
 import { NgIf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import {CalendarComponent} from '../calendar/calendar.component';
 import {SpecialPriceServiceService} from '../../../core/service/special_prices/special-price-service.service';
+import {CalendarComponent} from '../../calendar/calendar/calendar.component';
 
 @Component({
   selector: 'app-pricing-and-availability',

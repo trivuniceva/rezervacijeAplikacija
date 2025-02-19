@@ -2,10 +2,10 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {FormsModule} from '@angular/forms';
 import {AuthService} from '../../../../core/service/auth/auth.service';
-import {CalendarComponent} from '../../calendar/calendar.component';
 import {AccommodationService} from '../../../../core/service/accommodation/accommodation.service';
 import {NgIf} from '@angular/common';
 import {PricingMethodFormatPipe} from '../../../../pipes/pricing-method-format.pipe';
+import {CalendarComponent} from '../../../calendar/calendar/calendar.component';
 
 @Component({
   selector: 'app-reservation-dialog',
