@@ -3,23 +3,25 @@ import {Location, NgIf} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 import {SearchAccommodationsComponent} from "../../../shared/search-accommodations/search-accommodations.component";
 import {SpecialPricing} from '../SpecialPricing/SpecialPricing';
-import {CalendarComponent} from '../calendar/calendar.component';
 import {Reservation, ReservationService} from '../../../core/service/reservation/reservation.service';
 import {
   ReservationReviewComponentComponent
 } from '../../reservation/reservation-review-component/reservation-review-component.component';
+import {CalendarComponent} from '../../calendar/calendar/calendar.component';
+import {HostCalendarComponent} from "../../calendar/pages/host-calendar/host-calendar.component";
 
 @Component({
   selector: 'app-edit-apartment',
   standalone: true,
-  imports: [
-    NgIf,
-    FormsModule,
-    SearchAccommodationsComponent,
-    SpecialPricing,
-    CalendarComponent,
-    ReservationReviewComponentComponent,
-  ],
+    imports: [
+        NgIf,
+        FormsModule,
+        SearchAccommodationsComponent,
+        SpecialPricing,
+        CalendarComponent,
+        ReservationReviewComponentComponent,
+        HostCalendarComponent,
+    ],
   templateUrl: './edit-apartment.component.html',
   styleUrl: './edit-apartment.component.css'
 })
