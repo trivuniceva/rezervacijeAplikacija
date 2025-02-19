@@ -25,7 +25,7 @@ public class User {
     @Column(name = "user_role")
     private UserRole userRole;
 
-    @Column(name = "profile_pic")
+    @Column(name = "profile_pic", columnDefinition = "LONGTEXT")
     private String profilePic;
 
     @Column(name = "deleted_acc")

@@ -22,8 +22,6 @@ public class UserController {
 
     @PostMapping("/update-user")
     public ResponseEntity<String> updateUser(@RequestBody UserDto userDto) {
-        System.out.println(userDto.getEmail());
-        System.out.println(userDto.getFirstname());
         try {
             userService.updateUser(userDto);
             return ResponseEntity.ok("User updated successfully");

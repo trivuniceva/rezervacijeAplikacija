@@ -47,9 +47,18 @@ export class UserProfileComponent implements OnInit{
     this.isEditing = false;
   }
 
-  onFileSelected($event: Event) {
+  onFileSelected(event: Event) {
+    const file = (event.target as HTMLInputElement).files?.[0];
 
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.user.profilePic = reader.result as string; // Base64 string
+      };
+      reader.readAsDataURL(file);
+    }
   }
+
 
   deleteAcc() {
     this.router.navigate(["/delete-account"])
