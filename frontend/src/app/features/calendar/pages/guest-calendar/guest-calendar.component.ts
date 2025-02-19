@@ -4,9 +4,9 @@ import { Component } from '@angular/core';
   selector: 'app-huest-calendar',
   standalone: true,
   imports: [],
-  templateUrl: './huest-calendar.component.html',
+  templateUrl: './guest-calendar.component.html',
   styleUrl: './huest-calendar.component.css'
 })
-export class HuestCalendarComponent {
+export class GuestCalendarComponent {
 
 }
