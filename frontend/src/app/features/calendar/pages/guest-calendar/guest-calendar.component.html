@@ -17,7 +17,7 @@
       </p>
 
       <p *ngIf="!specialPrices[getFormattedDate(date)]">
-        <small class="price">Price: €{{apartment.defaultPrice}}</small>
+        <small class="price">€{{apartment.defaultPrice}}</small>
         <small class="smaller-text">  {{apartment.pricingMethod | pricingMethodFormat}}</small>
       </p>
 
