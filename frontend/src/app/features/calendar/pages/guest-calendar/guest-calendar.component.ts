@@ -28,6 +28,8 @@ export class GuestCalendarComponent extends CalendarComponent implements OnInit{
   specialPrices: { [key: string]: number } = {};
   fullPrice: number = 0;
   user: any;
+  reservedDates: Date[] = [];
+  unavailabledDates: Date[] = [];
 
   constructor(
     private specialPriceService: SpecialPriceServiceService,
@@ -43,8 +45,8 @@ export class GuestCalendarComponent extends CalendarComponent implements OnInit{
 
     if (this.apartment && this.apartment.id) {
       this.loadSpecialPrices(this.apartment.id);
-      // this.getReservedDates(this.apartment.id);
-      // this.getUnavailableDates(this.apartment.id);
+      this.getReservedDates(this.apartment.id);
+      this.getUnavailableDates(this.apartment.id);
     }
   }
 
@@ -53,6 +55,28 @@ export class GuestCalendarComponent extends CalendarComponent implements OnInit{
       this.specialPrices = specialPrices;
       console.log("Special prices in component:", this.specialPrices);
     });
+  }
+
+  getReservedDates(apartmentId: number): void {
+    this.specialPriceService.getReservedDatesByApartmentId(apartmentId)
+      .subscribe(data => {
+        this.reservedDates = data.flatMap(dateRange =>
+          this.calendarService.generateDateRange(new Date(dateRange[0]), new Date(dateRange[1]))
+        );
+      }, error => {
+        console.error('Error fetching reserved dates:', error);
+      });
+  }
+
+  getUnavailableDates(apartmentId: number): void {
+    this.specialPriceService.getUnavailableDates(apartmentId)
+      .subscribe(data => {
+        this.unavailabledDates = data.flatMap(dateRange =>
+          this.calendarService.generateDateRange(new Date(dateRange[0]), new Date(dateRange[1]))
+        );
+      }, error => {
+        console.error('Error fetching unavailable dates:', error);
+      });
   }
 
 
@@ -66,6 +90,7 @@ export class GuestCalendarComponent extends CalendarComponent implements OnInit{
     }
 
     const index = this.srecniVikend.findIndex(d => this.isSameDay(d, date));
+
     if (index === -1) {
       this.srecniVikend.push(date);
       this.apartment.availabilityList.push(date);
