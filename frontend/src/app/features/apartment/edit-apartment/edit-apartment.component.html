@@ -100,7 +100,10 @@
 
       <div *ngIf="selectedSection === 'availability'">
         <h2>Edit Availability</h2>
-<!--        <app-calendar [apartment]="apartment" [isEditAvailability]="true"></app-calendar>-->
+        <app-host-calendar
+          [apartment]="apartment"
+        ></app-host-calendar>
+
       </div>
 
       <div *ngIf="selectedSection === 'reservationReview'">

@@ -3,6 +3,7 @@ import { NgIf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {SpecialPriceServiceService} from '../../../core/service/special_prices/special-price-service.service';
 import {CalendarComponent} from '../../calendar/calendar/calendar.component';
+import {HostCalendarComponent} from '../../calendar/pages/host-calendar/host-calendar.component';
 
 @Component({
   selector: 'app-pricing-and-availability',
@@ -11,6 +12,7 @@ import {CalendarComponent} from '../../calendar/calendar/calendar.component';
     NgIf,
     FormsModule,
     CalendarComponent,
+    HostCalendarComponent,
   ],
   templateUrl: './SpecialPricing.html',
   styleUrls: ['./SpecialPricing.css']
