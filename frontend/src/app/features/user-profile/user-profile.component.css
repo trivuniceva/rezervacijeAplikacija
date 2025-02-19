@@ -37,7 +37,8 @@
 
 .profile-container img {
   max-width: 100%;
-  height: auto;
+  /*height: auto;*/
+  max-height: 100%;
   border-radius: 5px;
   margin-top: 10px;
   margin-bottom: 15px;
