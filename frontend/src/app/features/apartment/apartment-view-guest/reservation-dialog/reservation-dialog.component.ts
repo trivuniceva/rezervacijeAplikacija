@@ -6,6 +6,7 @@ import {AccommodationService} from '../../../../core/service/accommodation/accom
 import {NgIf} from '@angular/common';
 import {PricingMethodFormatPipe} from '../../../../pipes/pricing-method-format.pipe';
 import {CalendarComponent} from '../../../calendar/calendar/calendar.component';
+import {GuestCalendarComponent} from '../../../calendar/pages/guest-calendar/guest-calendar.component';
 
 @Component({
   selector: 'app-reservation-dialog',
@@ -15,6 +16,7 @@ import {CalendarComponent} from '../../../calendar/calendar/calendar.component';
     CalendarComponent,
     NgIf,
     PricingMethodFormatPipe,
+    GuestCalendarComponent,
   ],
   templateUrl: './reservation-dialog.component.html',
   styleUrl: './reservation-dialog.component.css'
