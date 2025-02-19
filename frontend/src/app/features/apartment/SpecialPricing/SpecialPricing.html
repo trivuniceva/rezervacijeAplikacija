@@ -1,5 +1,5 @@
 <div>
-  <div class="container" style="display: flex; height: 100vh;">
+  <div class="container">
     <!-- Leva strana - 1/4 širine -->
     <div class="left-side">
       <div class="form-group">
@@ -30,15 +30,16 @@
     </div>
 
   <!-- Desna strana - 3/4 širine -->
-  <div class="right-side" style="flex: 3; padding: 20px;">
+  <div class="right-side">
     <app-host-calendar
       [apartment]="apartment"
     ></app-host-calendar>
   </div>
 
+
+</div>
+
   <div class="button-container">
     <button (click)="sendToBackend()">Save</button>
   </div>
-
-</div>
 </div>

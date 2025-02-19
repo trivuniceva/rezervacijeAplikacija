@@ -68,10 +68,6 @@ export class EditApartmentComponent implements OnInit{
 
   }
 
-  cancelEdit() {
-    console.log('Edit cancelled');
-  }
-
   onFileSelected($event: Event) {
 
   }
