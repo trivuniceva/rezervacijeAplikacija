@@ -61,7 +61,7 @@
 
 .calendar-day.selected {
   font-weight: bold;
-  background-color: hotpink;
+  background-color: dimgray;
   color: white;
 }
 
