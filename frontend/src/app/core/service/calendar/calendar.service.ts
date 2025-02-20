@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {Observable} from 'rxjs';
+import {catchError, Observable, of} from 'rxjs';
 import {SpecialPriceServiceService} from '../special_prices/special-price-service.service';
 import {map} from 'rxjs/operators';
 
@@ -62,25 +62,35 @@ export class CalendarService {
     }
   }
 
-  loadSpecialPrices(accommodationId: number): Observable<{ [key: string]: number }> {
+  loadSpecialPrices(accommodationId: number): Observable<{ specialPrices: { [key: string]: number }; pricingMethods: { [key: string]: string } }> {
     return this.specialPriceService.getSpecialPricesByAccommodationId(accommodationId).pipe(
-      map((data: any[]) => { // Type the data correctly if possible
+      map((data: any[]) => {
         const specialPrices: { [key: string]: number } = {};
+        const pricingMethods: { [key: string]: string } = {};
         data.forEach((item: any) => {
           const startDate = new Date(item.startDate);
           const endDate = new Date(item.endDate);
           const price = item.price;
+          const pricingMethod = item.pricingMethod;
           let currentDate = new Date(startDate);
+
           while (currentDate <= endDate) {
             const formattedDate = this.getFormattedDate(currentDate);
             specialPrices[formattedDate] = price;
+            pricingMethods[formattedDate] = pricingMethod;
             currentDate.setDate(currentDate.getDate() + 1);
           }
         });
-        return specialPrices;
+        return { specialPrices, pricingMethods };
+      }),
+      catchError(error => { // Handle errors
+        console.error("Error loading special prices:", error);
+        return of({ specialPrices: {}, pricingMethods: {} }); // Return empty objects on error
       })
     );
   }
+
+
 
 
 }

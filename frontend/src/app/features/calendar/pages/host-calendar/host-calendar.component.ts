@@ -29,6 +29,7 @@ export class HostCalendarComponent extends CalendarComponent implements OnInit{
   unavailabledDates: Date[] = [];
   reservedDates: Date[] = [];
   specialPrices: { [key: string]: number } = {};
+  pricingMethods: { [key: string]: string } = {};
   user: any;
   selectedPricingDates: Date[] = [];
 
@@ -82,11 +83,14 @@ export class HostCalendarComponent extends CalendarComponent implements OnInit{
   }
 
   loadSpecialPrices(accommodationId: number): void {
-    this.calendarService.loadSpecialPrices(accommodationId).subscribe((specialPrices) => {
-      this.specialPrices = specialPrices;
+    this.calendarService.loadSpecialPrices(accommodationId).subscribe((data: { specialPrices: { [key: string]: number }; pricingMethods: { [key: string]: string } }) => {
+      this.specialPrices = data.specialPrices;
+      this.pricingMethods = data.pricingMethods;
       console.log("Special prices in component:", this.specialPrices);
+      console.log("Pricing methods in component:", this.pricingMethods);
     });
   }
+
 
   toggleDateSelection(date: Date) {
     if (!this.apartment || !this.user || this.isReserved(date)) {

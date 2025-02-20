@@ -31,6 +31,8 @@ export class GuestCalendarComponent extends CalendarComponent implements OnInit 
   reservedDates: Date[] = [];
   unavailabledDates: Date[] = [];
 
+  pricingMethods: { [key: string]: string } = {};
+
   constructor(
     private specialPriceService: SpecialPriceServiceService,
     private authService: AuthService,
@@ -51,9 +53,11 @@ export class GuestCalendarComponent extends CalendarComponent implements OnInit 
   }
 
   loadSpecialPrices(accommodationId: number): void {
-    this.calendarService.loadSpecialPrices(accommodationId).subscribe((specialPrices) => {
-      this.specialPrices = specialPrices;
+    this.calendarService.loadSpecialPrices(accommodationId).subscribe((data: { specialPrices: { [key: string]: number }; pricingMethods: { [key: string]: string } }) => {
+      this.specialPrices = data.specialPrices; // Assign to the new property
+      this.pricingMethods = data.pricingMethods; // Assign to the new property
       console.log("Special prices in component:", this.specialPrices);
+      console.log("Pricing methods in component:", this.pricingMethods);
     });
   }
 
