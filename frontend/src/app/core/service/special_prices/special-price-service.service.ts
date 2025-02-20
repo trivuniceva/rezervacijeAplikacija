@@ -33,6 +33,7 @@ export class SpecialPriceServiceService {
 
   updateAvailability(apartmentId: number, dates: Date[]): Observable<any> {
     // datumi u ISO stringove za slanje
+    console.log(dates)
     const formattedDates = dates.map(date => date.toISOString());
     return this.http.post(`${this.apiUrl}/update-availability`, { apartmentId, dates: formattedDates });
   }
