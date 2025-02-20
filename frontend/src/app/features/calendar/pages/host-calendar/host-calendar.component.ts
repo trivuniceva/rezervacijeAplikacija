@@ -21,11 +21,13 @@ import {PricingMethodFormatPipe} from '../../../../pipes/pricing-method-format.p
 })
 export class HostCalendarComponent extends CalendarComponent implements OnInit{
   @Input() apartment: any;
+  @Input() mode: 'pricing' | 'availability' = 'availability';
 
   unavailabledDates: Date[] = [];
   reservedDates: Date[] = [];
   specialPrices: { [key: string]: number } = {};
   user: any;
+  selectedPricingDates: Date[] = [];
 
 
   constructor(
@@ -85,7 +87,8 @@ export class HostCalendarComponent extends CalendarComponent implements OnInit{
       this.apartment.availabilityList = [];
     }
 
-    const index = this.unavailabledDates.findIndex(d => this.isSameDay(d, date));
+    if(this.mode === 'availability'){
+      const index = this.unavailabledDates.findIndex(d => this.isSameDay(d, date));
 
       if (index === -1) {
         this.unavailabledDates.push(date);
@@ -95,22 +98,41 @@ export class HostCalendarComponent extends CalendarComponent implements OnInit{
         this.apartment.availabilityList.splice(index, 1);
       }
       this.sendSelectedDatesToBackend();
+
+    } else if(this.mode === 'pricing'){
+      const index = this.selectedPricingDates.findIndex(d => this.isSameDay(d, date));
+
+      if (index === -1) {
+        this.selectedPricingDates.push(date);
+      } else {
+        this.selectedPricingDates.splice(index, 1);
+      }
+
+      console.log(this.selectedPricingDates)
+      console.log("this.selectedPricingDates")
+
+      this.sendPricingToBackend()
+
+    }
+
   }
 
 
   sendSelectedDatesToBackend() {
-    if (this.apartment && this.apartment.id) { // Check if apartment and ID exist
+    if (this.apartment && this.apartment.id) {
       this.specialPriceService.updateAvailability(this.apartment.id, this.unavailabledDates)
         .subscribe(response => {
           console.log('Dates updated successfully', response);
-          // Optionally, you might want to refresh the calendar or provide feedback to the user
         }, error => {
           console.error('Error updating dates', error);
-          // Handle the error, e.g., display an error message to the user
         });
     } else {
       console.error("Apartment or apartment ID is missing. Cannot update availability.");
     }
+  }
+
+  sendPricingToBackend() {
+
   }
 
   isReserved(date: Date): boolean {
@@ -119,6 +141,19 @@ export class HostCalendarComponent extends CalendarComponent implements OnInit{
 
   isUnavailableDate(date: Date): boolean {
     return this.unavailabledDates.some(d => this.isSameDay(d, date));
+  }
+
+  isPricingDateSelected(date: Date): boolean {
+    return this.selectedPricingDates.some(d => this.isSameDay(d, date));
+  }
+
+  isSelected(date: Date): boolean {
+    if (this.mode === 'availability') {
+      return this.isUnavailableDate(date);
+    } else if (this.mode === 'pricing') {
+      return this.isPricingDateSelected(date);
+    }
+    return false;
   }
 
 }

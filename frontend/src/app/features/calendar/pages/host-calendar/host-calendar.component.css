@@ -75,6 +75,23 @@
 }
 
 
+.calendar-day.selected.pricing-mode {
+  background-color: #015E61;
+  color: white;
+}
+
+.calendar-day.selected.pricing-mode:hover {
+  background-color: #013637;
+  color: white;
+}
+
+
+.calendar-day.selected.pricing-mode  p .price,
+.calendar-day.selected.pricing-mode  .date
+{
+  color: white;
+}
+
 .calendar-day.reserved {
   font-weight: bold;
   color: white;
