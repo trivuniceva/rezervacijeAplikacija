@@ -40,6 +40,7 @@ export class SpecialPricing implements OnInit {
     this.cancellationDeadline = this.apartment.deadline;
     this.initializePricingMethod();
     console.log('apartmaaaaaan:', this.apartment);
+    this.price = this.apartment.defaultPrice;
   }
 
   ngOnDestroy() {
@@ -96,7 +97,7 @@ export class SpecialPricing implements OnInit {
           this.hostCalendarComponent.getReservedDates(this.apartment.id); // Reload reserved dates if needed
           this.hostCalendarComponent.getUnavailableDates(this.apartment.id);
 
-          this.selectedPricingDates = [];  
+          this.selectedPricingDates = [];
           this.hostCalendarComponent.selectedPricingDates = [];
         } else {
           alert('Unexpected response from server.');
