@@ -5,6 +5,7 @@ import {SpecialPriceServiceService} from '../../../core/service/special_prices/s
 import {CalendarComponent} from '../../calendar/calendar/calendar.component';
 import {HostCalendarComponent} from '../../calendar/pages/host-calendar/host-calendar.component';
 import {PricingMethodFormatPipe} from '../../../pipes/pricing-method-format.pipe';
+import {Subject} from 'rxjs';
 
 @Component({
   selector: 'app-pricing-and-availability',
@@ -31,12 +32,19 @@ export class SpecialPricing implements OnInit {
   @ViewChild(HostCalendarComponent) hostCalendarComponent!: HostCalendarComponent;
   @ViewChild('pricingForm') pricingForm!: NgForm;
 
+  private destroy$ = new Subject<void>();
+
   constructor(private specialPriceService: SpecialPriceServiceService, private datePipe: DatePipe) {}
 
   ngOnInit(): void {
     this.cancellationDeadline = this.apartment.deadline;
     this.initializePricingMethod();
     console.log('apartmaaaaaan:', this.apartment);
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   initializePricingMethod() {
@@ -84,6 +92,9 @@ export class SpecialPricing implements OnInit {
       response => {
         if (typeof response === 'string' || (response && response.message)) {
           alert('Data has been sent successfully!');
+          this.hostCalendarComponent.loadSpecialPrices(this.apartment.id); // Reload special prices
+          this.hostCalendarComponent.getReservedDates(this.apartment.id); // Reload reserved dates if needed
+          this.hostCalendarComponent.getUnavailableDates(this.apartment.id);
         } else {
           alert('Unexpected response from server.');
         }

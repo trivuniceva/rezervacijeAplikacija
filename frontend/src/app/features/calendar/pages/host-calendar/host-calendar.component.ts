@@ -5,6 +5,7 @@ import {AuthService} from '../../../../core/service/auth/auth.service';
 import {CalendarService} from '../../../../core/service/calendar/calendar.service';
 import {CurrencyPipe, DatePipe, NgForOf, NgIf} from '@angular/common';
 import {PricingMethodFormatPipe} from '../../../../pipes/pricing-method-format.pipe';
+import {Subject} from 'rxjs';
 
 @Component({
   selector: 'app-host-calendar',
@@ -31,6 +32,8 @@ export class HostCalendarComponent extends CalendarComponent implements OnInit{
   user: any;
   selectedPricingDates: Date[] = [];
 
+  private destroy$ = new Subject<void>();
+
   constructor(
     private specialPriceService: SpecialPriceServiceService,
     private authService: AuthService,
@@ -48,6 +51,12 @@ export class HostCalendarComponent extends CalendarComponent implements OnInit{
       this.loadSpecialPrices(this.apartment.id);
       this.getUnavailableDates(this.apartment.id);
     }
+  }
+
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   getReservedDates(apartmentId: number): void {
