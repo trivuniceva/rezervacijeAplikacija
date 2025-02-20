@@ -95,6 +95,9 @@ export class SpecialPricing implements OnInit {
           this.hostCalendarComponent.loadSpecialPrices(this.apartment.id); // Reload special prices
           this.hostCalendarComponent.getReservedDates(this.apartment.id); // Reload reserved dates if needed
           this.hostCalendarComponent.getUnavailableDates(this.apartment.id);
+
+          this.selectedPricingDates = [];  
+          this.hostCalendarComponent.selectedPricingDates = [];
         } else {
           alert('Unexpected response from server.');
         }

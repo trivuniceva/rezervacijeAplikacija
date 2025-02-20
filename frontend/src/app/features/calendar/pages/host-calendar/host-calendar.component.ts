@@ -149,6 +149,7 @@ export class HostCalendarComponent extends CalendarComponent implements OnInit{
   sendPricingToBackend() {
     if (this.apartment && this.apartment.id) {
       this.pricingDatesSelected.emit(this.selectedPricingDates);
+
     } else {
       console.error("Apartment or apartment ID is missing. Cannot update pricing.");
     }
