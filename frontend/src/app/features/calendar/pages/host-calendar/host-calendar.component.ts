@@ -114,6 +114,8 @@ export class HostCalendarComponent extends CalendarComponent implements OnInit{
   handleAvailability(date: Date){
     const index = this.unavailabledDates.findIndex(d => this.isSameDay(d, date));
 
+    console.log("date:::::" + date)
+
     if (index === -1) {
       this.unavailabledDates.push(date);
       this.apartment.availabilityList.push(date);
@@ -134,8 +136,13 @@ export class HostCalendarComponent extends CalendarComponent implements OnInit{
   }
 
   sendSelectedDatesToBackend() {
+
+    console.log(this.apartment.availabilityList)
+    // console.log(this.unavailabledDates)
+    console.log(" -------")
+
     if (this.apartment && this.apartment.id) {
-      this.specialPriceService.updateAvailability(this.apartment.id, this.unavailabledDates)
+      this.specialPriceService.updateAvailability(this.apartment.id, this.apartment.availabilityList)
         .subscribe(response => {
           console.log('Dates updated successfully', response);
         }, error => {
