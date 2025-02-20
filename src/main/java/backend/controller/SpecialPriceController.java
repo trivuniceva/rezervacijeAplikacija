@@ -48,6 +48,9 @@ public class SpecialPriceController {
     public ResponseEntity<Map<String, String>> saveSpecialPricing(@RequestBody SpecialPricingDto specialPricing) {
         System.out.println("Received special pricing data: " + specialPricing);
         Map<String, String> response = new HashMap<>();
+
+        service.updatePricing(specialPricing);
+
         response.put("message", "Special pricing data saved successfully");
         return ResponseEntity.ok(response);
     }

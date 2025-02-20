@@ -1,9 +1,10 @@
-import {Component, Input, OnInit} from '@angular/core';
-import { NgIf } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {DatePipe, NgIf} from '@angular/common';
+import {FormsModule, NgForm} from '@angular/forms';
 import {SpecialPriceServiceService} from '../../../core/service/special_prices/special-price-service.service';
 import {CalendarComponent} from '../../calendar/calendar/calendar.component';
 import {HostCalendarComponent} from '../../calendar/pages/host-calendar/host-calendar.component';
+import {PricingMethodFormatPipe} from '../../../pipes/pricing-method-format.pipe';
 
 @Component({
   selector: 'app-pricing-and-availability',
@@ -13,6 +14,9 @@ import {HostCalendarComponent} from '../../calendar/pages/host-calendar/host-cal
     FormsModule,
     CalendarComponent,
     HostCalendarComponent,
+    DatePipe,
+    PricingMethodFormatPipe
+
   ],
   templateUrl: './SpecialPricing.html',
   styleUrls: ['./SpecialPricing.css']
@@ -20,13 +24,34 @@ import {HostCalendarComponent} from '../../calendar/pages/host-calendar/host-cal
 export class SpecialPricing implements OnInit {
   @Input() apartment: any;
   price: number = 0;
-  pricingMethod: string = 'perGuest';
+  pricingMethod: string = '';
   cancellationDeadline: string = '';
+  selectedPricingDates: Date[] = [];
 
-  constructor(private specialPriceService: SpecialPriceServiceService) {}
+  @ViewChild(HostCalendarComponent) hostCalendarComponent!: HostCalendarComponent;
+  @ViewChild('pricingForm') pricingForm!: NgForm;
+
+  constructor(private specialPriceService: SpecialPriceServiceService, private datePipe: DatePipe) {}
 
   ngOnInit(): void {
+    this.cancellationDeadline = this.apartment.deadline;
+    this.initializePricingMethod();
     console.log('apartmaaaaaan:', this.apartment);
+  }
+
+  initializePricingMethod() {
+    if (this.apartment && this.apartment.pricingMethod) {
+      this.pricingMethod = new PricingMethodFormatPipe().transform(this.apartment.pricingMethod).toLowerCase().replace(/\s/g, ''); // Use pipe and format
+    }
+  }
+
+  onPricingDatesSelected(dates: Date[]) {
+    this.selectedPricingDates = dates;
+    console.log("Selected pricing dates in SpecialPricing:", this.selectedPricingDates);
+  }
+
+  formatDate(date: Date): string {
+    return this.datePipe.transform(date, 'yyyy-MM-dd') || '';
   }
 
   sendToBackend() {
@@ -35,13 +60,25 @@ export class SpecialPricing implements OnInit {
       return;
     }
 
+    if (!this.pricingForm.valid || this.selectedPricingDates.length === 0) {
+      alert('Please fill in the price, select a pricing method, and select at least one date.');
+      return;
+    }
+
+    const formattedDates = this.selectedPricingDates.map(date => this.formatDate(date)); // Format dates
+
     const payload = {
       apartmentId: this.apartment.id,
       price: this.price,
       pricingMethod: this.pricingMethod,
       cancellationDeadline: this.cancellationDeadline,
-      availabilityList: this.apartment.availabilityList || []
+      specialPriceDates: formattedDates
     };
+
+    console.log("payload:    " + payload.specialPriceDates);
+    console.log("payload:    " + payload.cancellationDeadline);
+    console.log("payload:    " + payload.pricingMethod);
+    console.log("payload:    " + payload.price);
 
     this.specialPriceService.createSpecialPrice(payload).subscribe(
       response => {

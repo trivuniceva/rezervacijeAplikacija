@@ -1,5 +1,6 @@
 package backend.service;
 
+import backend.dto.SpecialPricingDto;
 import backend.model.PricingMethod;
 import backend.model.Reservation;
 import backend.model.SpecialPriceAndAvailability;
@@ -153,4 +154,9 @@ public class SpecialPriceAndAvailabilityService {
     }
 
 
+    public void updatePricing(SpecialPricingDto specialPricing) {
+
+
+
+    }
 }

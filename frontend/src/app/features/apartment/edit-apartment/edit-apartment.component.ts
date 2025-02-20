@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Location, NgIf} from '@angular/common';
+import {DatePipe, Location, NgIf} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 import {SearchAccommodationsComponent} from "../../../shared/search-accommodations/search-accommodations.component";
 import {SpecialPricing} from '../SpecialPricing/SpecialPricing';
@@ -23,7 +23,8 @@ import {HostCalendarComponent} from "../../calendar/pages/host-calendar/host-cal
         HostCalendarComponent,
     ],
   templateUrl: './edit-apartment.component.html',
-  styleUrl: './edit-apartment.component.css'
+  styleUrl: './edit-apartment.component.css',
+  providers: [DatePipe]
 })
 export class EditApartmentComponent implements OnInit{
   apartment: any;

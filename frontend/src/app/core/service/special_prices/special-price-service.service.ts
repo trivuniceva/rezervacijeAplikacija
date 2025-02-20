@@ -41,11 +41,4 @@ export class SpecialPriceServiceService {
     return this.http.get<any>(`${this.apiUrl}/prices/${accommodationId}`);
   }
 
-
-  updatePricing(apartmentId: number, dates: Date[]): Observable<any> {
-    const formattedDates = dates.map(date => date.toISOString());
-    return this.http.post(`${this.apiUrl}/update-pricing`, { apartmentId, dates: formattedDates });
-  }
-
-
 }
