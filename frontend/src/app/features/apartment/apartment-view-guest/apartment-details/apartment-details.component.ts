@@ -14,16 +14,23 @@ import {PricingMethodFormatPipe} from "../../../../pipes/pricing-method-format.p
 })
 export class ApartmentDetailsComponent {
   accommodation: any;
+  displayDetails: boolean = false;
+  displayDescription: boolean = false;
 
   constructor(private location: Location) {}
 
   ngOnInit(): void {
-
     this.accommodation = history.state.accommodation;
   }
 
-  goBack() {
-    this.location.back();  // Vraća korisnika nazad na listu
+  showDetails() {
+    this.displayDetails = true;
+    this.displayDescription = false;
+  }
+
+  showDescription() {
+    this.displayDescription = true;
+    this.displayDetails = false;
   }
 
 }
