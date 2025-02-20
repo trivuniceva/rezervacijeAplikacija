@@ -86,6 +86,11 @@
   gap: 10px;
 }
 
+.button-container button{
+  background-color: green;
+  color: white;
+}
+
 button {
   display: block;
   width: 25%;

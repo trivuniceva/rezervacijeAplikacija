@@ -2,7 +2,6 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  font-family: Arial, sans-serif;
 }
 
 .calendar-header {
@@ -75,6 +74,23 @@
   color: white;
 }
 
+
+.calendar-day.selected.pricing-mode {
+  background-color: #015E61;
+  color: white;
+}
+
+.calendar-day.selected.pricing-mode:hover {
+  background-color: #013637;
+  color: white;
+}
+
+
+.calendar-day.selected.pricing-mode  p .price,
+.calendar-day.selected.pricing-mode  .date
+{
+  color: white;
+}
 
 .calendar-day.reserved {
   font-weight: bold;

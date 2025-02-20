@@ -43,8 +43,7 @@
         </div>
 
         <div class="button-container">
-          <button style="background-color: green; color: white" (click)="saveApartment()">Save</button>
-          <button style="background-color: #B80C09; color: white" (click)="cancelEdit()">Cancel</button>
+          <button (click)="saveApartment()">Save</button>
         </div>
       </div>
 
@@ -89,19 +88,20 @@
 
         <div class="button-container">
           <button style="background-color: green; color: white" (click)="saveApartment()">Save</button>
-          <button style="background-color: #B80C09; color: white" (click)="cancelEdit()">Cancel</button>
         </div>
       </div>
 
       <div *ngIf="selectedSection === 'pricing'">
         <h2>Edit Pricing</h2>
         <app-pricing-and-availability [apartment]="apartment"></app-pricing-and-availability>
+
       </div>
 
       <div *ngIf="selectedSection === 'availability'">
         <h2>Edit Availability</h2>
         <app-host-calendar
           [apartment]="apartment"
+          mode="availability"
         ></app-host-calendar>
 
       </div>

@@ -7,18 +7,20 @@
   <div class="calendar-grid">
     <div class="calendar-day" *ngFor="let date of datesInMonth"
          [class.selected]="isSrecni(date)"
+         [class.reserved]="isReserved(date)"
+         [class.unavailable]="isUnavailableDate(date)"
          (click)="toggleDateSelection(date)">
 
       <span class="date">{{ date.getDate() }}</span>
 
       <p *ngIf="specialPrices[getFormattedDate(date)]">
         <small class="price">Price: {{ specialPrices[getFormattedDate(date)] | currency:'EUR' }}</small>
-        <small class="smaller-text">  {{apartment.pricingMethod | pricingMethodFormat}}</small>
+        <small class="smaller-text"> {{ pricingMethods[getFormattedDate(date)] | pricingMethodFormat }}</small>
       </p>
 
       <p *ngIf="!specialPrices[getFormattedDate(date)]">
-        <small class="price">Price: €{{apartment.defaultPrice}}</small>
-        <small class="smaller-text">  {{apartment.pricingMethod | pricingMethodFormat}}</small>
+        <small class="price">€{{apartment.defaultPrice}}</small>
+        <small class="smaller-text"> {{apartment.pricingMethod | pricingMethodFormat}}</small>
       </p>
 
     </div>

@@ -1,10 +1,11 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {CalendarComponent} from '../../calendar/calendar.component';
 import {SpecialPriceServiceService} from '../../../../core/service/special_prices/special-price-service.service';
 import {AuthService} from '../../../../core/service/auth/auth.service';
 import {CalendarService} from '../../../../core/service/calendar/calendar.service';
 import {CurrencyPipe, DatePipe, NgForOf, NgIf} from '@angular/common';
 import {PricingMethodFormatPipe} from '../../../../pipes/pricing-method-format.pipe';
+import {Subject} from 'rxjs';
 
 @Component({
   selector: 'app-host-calendar',
@@ -21,12 +22,18 @@ import {PricingMethodFormatPipe} from '../../../../pipes/pricing-method-format.p
 })
 export class HostCalendarComponent extends CalendarComponent implements OnInit{
   @Input() apartment: any;
+  @Input() mode: 'pricing' | 'availability' = 'availability';
+
+  @Output() pricingDatesSelected = new EventEmitter<Date[]>();
 
   unavailabledDates: Date[] = [];
   reservedDates: Date[] = [];
   specialPrices: { [key: string]: number } = {};
+  pricingMethods: { [key: string]: string } = {};
   user: any;
+  selectedPricingDates: Date[] = [];
 
+  private destroy$ = new Subject<void>();
 
   constructor(
     private specialPriceService: SpecialPriceServiceService,
@@ -45,6 +52,12 @@ export class HostCalendarComponent extends CalendarComponent implements OnInit{
       this.loadSpecialPrices(this.apartment.id);
       this.getUnavailableDates(this.apartment.id);
     }
+  }
+
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   getReservedDates(apartmentId: number): void {
@@ -69,22 +82,15 @@ export class HostCalendarComponent extends CalendarComponent implements OnInit{
       });
   }
 
-
   loadSpecialPrices(accommodationId: number): void {
-    this.specialPriceService.getSpecialPricesByAccommodationId(accommodationId).subscribe((data) => {
-      data.forEach((item: any) => {
-        const startDate = new Date(item.startDate);
-        const endDate = new Date(item.endDate);
-        const price = item.price;
-        let currentDate = new Date(startDate);
-        while (currentDate <= endDate) {
-          const formattedDate = this.getFormattedDate(currentDate);
-          this.specialPrices[formattedDate] = price;
-          currentDate.setDate(currentDate.getDate() + 1);
-        }
-      });
+    this.calendarService.loadSpecialPrices(accommodationId).subscribe((data: { specialPrices: { [key: string]: number }; pricingMethods: { [key: string]: string } }) => {
+      this.specialPrices = data.specialPrices;
+      this.pricingMethods = data.pricingMethods;
+      console.log("Special prices in component:", this.specialPrices);
+      console.log("Pricing methods in component:", this.pricingMethods);
     });
   }
+
 
   toggleDateSelection(date: Date) {
     if (!this.apartment || !this.user || this.isReserved(date)) {
@@ -95,32 +101,59 @@ export class HostCalendarComponent extends CalendarComponent implements OnInit{
       this.apartment.availabilityList = [];
     }
 
-    const index = this.unavailabledDates.findIndex(d => this.isSameDay(d, date));
-
-      if (index === -1) {
-        this.unavailabledDates.push(date);
-        this.apartment.availabilityList.push(date);
-      } else {
-        this.unavailabledDates.splice(index, 1);
-        this.apartment.availabilityList.splice(index, 1);
-      }
+    if(this.mode === 'availability'){
+      this.handleAvailability(date);
       this.sendSelectedDatesToBackend();
+
+    } else if(this.mode === 'pricing'){
+      this.handlePricing(date);
+      this.sendPricingToBackend()
+    }
   }
 
+  handleAvailability(date: Date){
+    const index = this.unavailabledDates.findIndex(d => this.isSameDay(d, date));
+
+    if (index === -1) {
+      this.unavailabledDates.push(date);
+      this.apartment.availabilityList.push(date);
+    } else {
+      this.unavailabledDates.splice(index, 1);
+      this.apartment.availabilityList.splice(index, 1);
+    }
+  }
+
+  handlePricing(date: Date){
+    const index = this.selectedPricingDates.findIndex(d => this.isSameDay(d, date));
+
+    if (index === -1) {
+      this.selectedPricingDates.push(date);
+    } else {
+      this.selectedPricingDates.splice(index, 1);
+    }
+  }
 
   sendSelectedDatesToBackend() {
-    if (this.apartment && this.apartment.id) { // Check if apartment and ID exist
+    if (this.apartment && this.apartment.id) {
       this.specialPriceService.updateAvailability(this.apartment.id, this.unavailabledDates)
         .subscribe(response => {
           console.log('Dates updated successfully', response);
-          // Optionally, you might want to refresh the calendar or provide feedback to the user
         }, error => {
           console.error('Error updating dates', error);
-          // Handle the error, e.g., display an error message to the user
         });
     } else {
       console.error("Apartment or apartment ID is missing. Cannot update availability.");
     }
+  }
+
+  sendPricingToBackend() {
+    if (this.apartment && this.apartment.id) {
+      this.pricingDatesSelected.emit(this.selectedPricingDates);
+
+    } else {
+      console.error("Apartment or apartment ID is missing. Cannot update pricing.");
+    }
+
   }
 
   isReserved(date: Date): boolean {
@@ -130,5 +163,19 @@ export class HostCalendarComponent extends CalendarComponent implements OnInit{
   isUnavailableDate(date: Date): boolean {
     return this.unavailabledDates.some(d => this.isSameDay(d, date));
   }
+
+  isPricingDateSelected(date: Date): boolean {
+    return this.selectedPricingDates.some(d => this.isSameDay(d, date));
+  }
+
+  isSelected(date: Date): boolean {
+    if (this.mode === 'availability') {
+      return this.isUnavailableDate(date);
+    } else if (this.mode === 'pricing') {
+      return this.isPricingDateSelected(date);
+    }
+    return false;
+  }
+
 
 }

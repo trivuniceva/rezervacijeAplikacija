@@ -1,10 +1,10 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {SpecialPriceServiceService} from '../../../../core/service/special_prices/special-price-service.service';
-import {AuthService} from '../../../../core/service/auth/auth.service';
-import {CalendarService} from '../../../../core/service/calendar/calendar.service';
-import {CalendarComponent} from '../../calendar/calendar.component';
-import {CurrencyPipe, DatePipe, NgForOf, NgIf} from '@angular/common';
-import {PricingMethodFormatPipe} from '../../../../pipes/pricing-method-format.pipe';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { SpecialPriceServiceService } from '../../../../core/service/special_prices/special-price-service.service';
+import { AuthService } from '../../../../core/service/auth/auth.service';
+import { CalendarService } from '../../../../core/service/calendar/calendar.service';
+import { CalendarComponent } from '../../calendar/calendar.component';
+import { CurrencyPipe, DatePipe, NgForOf, NgIf } from '@angular/common';
+import { PricingMethodFormatPipe } from '../../../../pipes/pricing-method-format.pipe';
 
 @Component({
   selector: 'app-guest-calendar',
@@ -19,7 +19,7 @@ import {PricingMethodFormatPipe} from '../../../../pipes/pricing-method-format.p
   templateUrl: './guest-calendar.component.html',
   styleUrl: './guest-calendar.component.css'
 })
-export class GuestCalendarComponent extends CalendarComponent implements OnInit{
+export class GuestCalendarComponent extends CalendarComponent implements OnInit {
   @Input() apartment: any;
   @Output() reservedDaysLstChange = new EventEmitter<Date[]>();
   @Output() fullPriceNum = new EventEmitter<number>();
@@ -28,38 +28,59 @@ export class GuestCalendarComponent extends CalendarComponent implements OnInit{
   specialPrices: { [key: string]: number } = {};
   fullPrice: number = 0;
   user: any;
+  reservedDates: Date[] = [];
+  unavailabledDates: Date[] = [];
+
+  pricingMethods: { [key: string]: string } = {};
 
   constructor(
     private specialPriceService: SpecialPriceServiceService,
     private authService: AuthService,
-    protected override calendarService: CalendarService // Add override
+    protected override calendarService: CalendarService
   ) {
     super(calendarService);
   }
 
-  override ngOnInit(): void { // Add override
+  override ngOnInit(): void {
     this.user = this.authService.getLoggedUser();
     super.ngOnInit();
 
     if (this.apartment && this.apartment.id) {
       this.loadSpecialPrices(this.apartment.id);
+      this.getReservedDates(this.apartment.id);
+      this.getUnavailableDates(this.apartment.id);
     }
   }
 
   loadSpecialPrices(accommodationId: number): void {
-    this.specialPriceService.getSpecialPricesByAccommodationId(accommodationId).subscribe((data) => {
-      data.forEach((item: any) => {
-        const startDate = new Date(item.startDate);
-        const endDate = new Date(item.endDate);
-        const price = item.price;
-        let currentDate = new Date(startDate);
-        while (currentDate <= endDate) {
-          const formattedDate = this.getFormattedDate(currentDate);
-          this.specialPrices[formattedDate] = price;
-          currentDate.setDate(currentDate.getDate() + 1);
-        }
-      });
+    this.calendarService.loadSpecialPrices(accommodationId).subscribe((data: { specialPrices: { [key: string]: number }; pricingMethods: { [key: string]: string } }) => {
+      this.specialPrices = data.specialPrices; // Assign to the new property
+      this.pricingMethods = data.pricingMethods; // Assign to the new property
+      console.log("Special prices in component:", this.specialPrices);
+      console.log("Pricing methods in component:", this.pricingMethods);
     });
+  }
+
+  getReservedDates(apartmentId: number): void {
+    this.specialPriceService.getReservedDatesByApartmentId(apartmentId)
+      .subscribe(data => {
+        this.reservedDates = data.flatMap(dateRange =>
+          this.calendarService.generateDateRange(new Date(dateRange[0]), new Date(dateRange[1]))
+        );
+      }, error => {
+        console.error('Error fetching reserved dates:', error);
+      });
+  }
+
+  getUnavailableDates(apartmentId: number): void {
+    this.specialPriceService.getUnavailableDates(apartmentId)
+      .subscribe(data => {
+        this.unavailabledDates = data.flatMap(dateRange =>
+          this.calendarService.generateDateRange(new Date(dateRange[0]), new Date(dateRange[1]))
+        );
+      }, error => {
+        console.error('Error fetching unavailable dates:', error);
+      });
   }
 
   toggleDateSelection(date: Date) {
@@ -72,6 +93,7 @@ export class GuestCalendarComponent extends CalendarComponent implements OnInit{
     }
 
     const index = this.srecniVikend.findIndex(d => this.isSameDay(d, date));
+
     if (index === -1) {
       this.srecniVikend.push(date);
       this.apartment.availabilityList.push(date);
@@ -104,15 +126,15 @@ export class GuestCalendarComponent extends CalendarComponent implements OnInit{
   }
 
   isReserved(date: Date): boolean {
-    return false; // Gosti ne vide rezervirane datume
+    return this.reservedDates.some(d => this.calendarService.isSameDay(d, date));
   }
 
   isUnavailableDate(date: Date): boolean {
-    return false; // Gosti ne vide nedostupne datume
+    return this.unavailabledDates.some(d => this.calendarService.isSameDay(d, date));
   }
 
   isSrecni(date: Date): boolean {
-    return this.srecniVikend.some(d => this.isSameDay(d, date));
+    return this.srecniVikend.some(d => this.calendarService.isSameDay(d, date));
   }
 
   protected override isSameDay(d1: Date, d2: Date): boolean {
@@ -122,7 +144,4 @@ export class GuestCalendarComponent extends CalendarComponent implements OnInit{
   protected override getFormattedDate(date: Date): string {
     return this.calendarService.getFormattedDate(date);
   }
-
-
-
 }

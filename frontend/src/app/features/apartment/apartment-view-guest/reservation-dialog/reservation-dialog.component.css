@@ -76,7 +76,6 @@ mat-form-field {
 }
 
 .reserve-button[mat-raised-button] {
-  font-weight: bold;
   text-transform: uppercase;
   margin: 0 auto;
   padding: 12px 30px;
@@ -91,7 +90,7 @@ mat-form-field {
 }
 
 .reserve-button:hover{
-  background-color: #015E61;
+  background-color: #013637;
 }
 
 @keyframes fadeIn {
