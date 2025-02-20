@@ -72,10 +72,10 @@ export class SpecialPricing implements OnInit {
       price: this.price,
       pricingMethod: this.pricingMethod,
       cancellationDeadline: this.cancellationDeadline,
-      specialPriceDates: formattedDates
+      availabilityList: formattedDates
     };
 
-    console.log("payload:    " + payload.specialPriceDates);
+    console.log("payload:    " + payload.availabilityList);
     console.log("payload:    " + payload.cancellationDeadline);
     console.log("payload:    " + payload.pricingMethod);
     console.log("payload:    " + payload.price);

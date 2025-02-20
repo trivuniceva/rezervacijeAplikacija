@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {CalendarComponent} from '../../calendar/calendar.component';
 import {SpecialPriceServiceService} from '../../../../core/service/special_prices/special-price-service.service';
 import {AuthService} from '../../../../core/service/auth/auth.service';
@@ -30,7 +30,6 @@ export class HostCalendarComponent extends CalendarComponent implements OnInit{
   specialPrices: { [key: string]: number } = {};
   user: any;
   selectedPricingDates: Date[] = [];
-
 
   constructor(
     private specialPriceService: SpecialPriceServiceService,
@@ -163,5 +162,6 @@ export class HostCalendarComponent extends CalendarComponent implements OnInit{
     }
     return false;
   }
+
 
 }

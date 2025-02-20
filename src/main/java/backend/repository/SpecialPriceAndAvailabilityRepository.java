@@ -19,5 +19,7 @@ public interface SpecialPriceAndAvailabilityRepository extends JpaRepository<Spe
     List<SpecialPriceAndAvailability> findByAccommodationIdAndAvailability(Long accommodationId, SpecialPriceAndAvailability.Availability availability);
     List<SpecialPriceAndAvailability> findByAccommodationIdAndAvailability(Long accommodationId, String availability);
 
+    SpecialPriceAndAvailability findByAccommodation_IdAndStartDate(Long accommodationId, LocalDate startDate);
+
 }
 

@@ -1,29 +1,34 @@
 <div class="container">
   <div class="left-side">
-    <div class="form-group">
+    <form #pricingForm="ngForm">  <div class="form-group">
       <label for="price">Price</label>
       <input type="number" id="price" class="form-control" [(ngModel)]="price" name="price" required />
     </div>
 
-    <div class="form-group">
-      <label for="cancellationDeadline">Cancellation Deadline (days)</label>
-      <input type="number" id="cancellationDeadline" class="form-control" [(ngModel)]="cancellationDeadline" name="cancellationDeadline" [value]="apartment?.cancellationDeadline" />
-    </div>
-
-    <div class="form-group">
-      <label>Pricing Method</label>
-      <div class="pricing-method-options">
-        <label for="perGuest" class="custom-radio">
-          <input type="radio" id="perGuest" [(ngModel)]="pricingMethod" value="perguest" name="pricingMethod" required />
-          <span>Per Guest</span>
-        </label>
-        <label for="perUnit" class="custom-radio">
-          <input type="radio" id="perUnit" [(ngModel)]="pricingMethod" value="perunit" name="pricingMethod" />
-          <span>Per Unit</span>
-        </label>
+      <div class="form-group">
+        <label for="cancellationDeadline">Cancellation Deadline (days)</label>
+        <input type="number" id="cancellationDeadline" class="form-control" [(ngModel)]="cancellationDeadline" name="cancellationDeadline" [value]="apartment?.cancellationDeadline" />
       </div>
-    </div>
-  </div>  <div class="right-side">
-  <app-host-calendar [apartment]="apartment" mode="pricing" (pricingDatesSelected)="onPricingDatesSelected($event)" #hostCalendar></app-host-calendar>
+
+      <div class="form-group">
+        <label>Pricing Method</label>
+        <div class="pricing-method-options">
+          <label for="perGuest" class="custom-radio">
+            <input type="radio" id="perGuest" [(ngModel)]="pricingMethod" value="perguest" name="pricingMethod" required />
+            <span>Per Guest</span>
+          </label>
+          <label for="perUnit" class="custom-radio">
+            <input type="radio" id="perUnit" [(ngModel)]="pricingMethod" value="perunit" name="pricingMethod" />
+            <span>Per Unit</span>
+          </label>
+        </div>
+      </div>
+    </form> </div>
+  <div class="right-side">
+    <app-host-calendar [apartment]="apartment" mode="pricing" (pricingDatesSelected)="onPricingDatesSelected($event)" #hostCalendar></app-host-calendar>
+  </div>
 </div>
+
+<div class="button-container">
+  <button (click)="sendToBackend()">Save</button>
 </div>

@@ -1,14 +1,12 @@
 package backend.service;
 
 import backend.dto.SpecialPricingDto;
-import backend.model.PricingMethod;
-import backend.model.Reservation;
-import backend.model.SpecialPriceAndAvailability;
-import backend.model.ReservationStatus;
+import backend.model.*;
 import backend.repository.ReservationRepository;
 import backend.repository.SpecialPriceAndAvailabilityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -140,6 +138,8 @@ public class SpecialPriceAndAvailabilityService {
         }
     }
 
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
     public List<SpecialPriceAndAvailability> getSpecialPricesByAccommodationId(Long accommodationId) {
         List<SpecialPriceAndAvailability> lst = repository.findByAccommodationIdAndAvailability(accommodationId, SpecialPriceAndAvailability.Availability.AVAILABLE);
 
@@ -154,9 +154,63 @@ public class SpecialPriceAndAvailabilityService {
     }
 
 
-    public void updatePricing(SpecialPricingDto specialPricing) {
+    private PricingMethod convertPricingMethod(String pricingMethodStr) {
+        if (!StringUtils.hasText(pricingMethodStr)) {
+            throw new IllegalArgumentException("Pricing method cannot be empty");
+        }
 
+        try {
+            System.out.println(pricingMethodStr);
 
-
+            if(pricingMethodStr.toUpperCase().equals("PERUNIT")){
+                return PricingMethod.PER_UNIT;
+            } else if (pricingMethodStr.toUpperCase().equals("PERGUEST")) {
+                return PricingMethod.PER_GUEST;
+            } else {
+                return PricingMethod.NONE;
+            }
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("Invalid pricing method: " + pricingMethodStr); // More specific exception
+        }
     }
+
+    public void updatePricing(SpecialPricingDto specialPricing) {
+        Accommodation accommodation = accommodationService.getAccommodationById(specialPricing.getApartmentId());
+
+        System.out.println(specialPricing.getPricingMethod());
+
+        PricingMethod pricingMethod = convertPricingMethod(specialPricing.getPricingMethod()); // Use the conversion method
+
+        System.out.println(pricingMethod);
+
+
+        List<LocalDate> specialPriceDates = specialPricing.getAvailabilityList().stream()
+                .map(dateString -> LocalDate.parse(dateString, formatter))
+                .collect(Collectors.toList());
+
+        for (LocalDate date : specialPriceDates) {
+            SpecialPriceAndAvailability existingEntry = repository.findByAccommodation_IdAndStartDate(specialPricing.getApartmentId(), date);
+
+            if (existingEntry != null) {
+                existingEntry.setPrice(BigDecimal.valueOf(specialPricing.getPrice()));
+                existingEntry.setPricingMethod(pricingMethod);
+                existingEntry.setDeadline(Integer.parseInt(specialPricing.getCancellationDeadline()));
+                existingEntry.setAvailability(SpecialPriceAndAvailability.Availability.AVAILABLE);
+                repository.save(existingEntry);
+                System.out.println("snimljenoooooo <3333");
+            } else {
+                SpecialPriceAndAvailability newEntry = new SpecialPriceAndAvailability();
+                newEntry.setAccommodation(accommodation);
+                newEntry.setStartDate(date);
+                newEntry.setEndDate(date);
+                newEntry.setPrice(BigDecimal.valueOf(specialPricing.getPrice()));
+                newEntry.setPricingMethod(pricingMethod);
+                newEntry.setDeadline(Integer.parseInt(specialPricing.getCancellationDeadline()));
+                newEntry.setAvailability(SpecialPriceAndAvailability.Availability.AVAILABLE); // Or handle availability as needed
+                repository.save(newEntry);
+                System.out.println("snimljen");
+            }
+        }
+    }
+
 }
