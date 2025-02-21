@@ -23,7 +23,7 @@
         <p>Tip: {{ accommodation.type }}</p>
 
         <div *ngIf="!userRole || userRole === ''" class="sidenav">
-          <button class="view-details" (click)="signup()">View Details</button>
+          <button class="view-details" (click)="detailedViewApartment(accommodation)">View Details</button>
         </div>
 
         <div *ngIf="userRole === 'HOST'">

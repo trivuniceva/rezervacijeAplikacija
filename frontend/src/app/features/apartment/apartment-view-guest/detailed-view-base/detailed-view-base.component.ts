@@ -9,6 +9,7 @@ import {AmenitiesInfoComponent} from '../amenities-info/amenities-info.component
 import { Location } from '@angular/common';
 import {ReservationDialogComponent} from '../reservation-dialog/reservation-dialog.component';
 import {MatDialog} from '@angular/material/dialog';
+import {AuthService} from '../../../../core/service/auth/auth.service';
 
 @Component({
   selector: 'app-detailed-view',
@@ -27,11 +28,16 @@ import {MatDialog} from '@angular/material/dialog';
 export class DetailedViewBaseComponent implements OnInit {
   accommodation: any;
   user: any;
+  userRole: string = '';
 
-  constructor(private location: Location, public dialog: MatDialog) {}
+  constructor(private location: Location, public dialog: MatDialog, private authService: AuthService) {}
 
   ngOnInit(): void {
     this.accommodation = history.state.accommodation;
+
+    this.authService.userRole$.subscribe((role) => {
+      this.userRole = role;
+    });
   }
 
   goBack() {

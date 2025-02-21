@@ -16,5 +16,7 @@
   </div>
 </div>
 
-<button class="reserve-button" (click)="reserve()">Reserve</button>
+<div *ngIf="userRole === 'GUEST'" >
+  <button class="reserve-button" (click)="reserve()">Reserve</button>
+</div>
 

@@ -30,7 +30,7 @@ export class AppComponent implements OnInit{
 
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
-        this.isVideoVisible = event.url !== '/search-apartment';
+        this.isVideoVisible = event.url !== '/search-apartment' && event.url !== '/detailed-view';
       }
     });
   }
