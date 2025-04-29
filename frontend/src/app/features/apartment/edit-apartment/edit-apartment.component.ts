@@ -35,12 +35,8 @@ export class EditApartmentComponent implements OnInit{
   constructor(private location: Location) {}
 
   ngOnInit(): void {
-    console.log("caoosssss <33")
     this.apartment = history.state.apartment;
-    console.log(this.apartment)
-
     console.log("Reservation type: ", this.apartment.reservationType);
-
   }
 
 
