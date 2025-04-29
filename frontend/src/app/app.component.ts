@@ -17,7 +17,6 @@ import {AuthService} from './core/service/auth/auth.service';
   styleUrl: './app.component.css'
 })
 export class AppComponent implements OnInit{
-  title = 'frontend';
   userRole: string = '';
   isVideoVisible: boolean = true;
 

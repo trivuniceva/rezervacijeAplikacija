@@ -43,11 +43,8 @@ export class ReservationDialogComponent implements OnInit{
     this.accommodation = history.state.accommodation;
     this.numGuests = this.accommodation.minGuests;
 
-
     this.user = this.authService.getLoggedUser()
     console.log(this.user)
-    console.log("oko moje  <333333")
-
   }
 
   updateReservedDaysNum(selectedDates: Date[]) {

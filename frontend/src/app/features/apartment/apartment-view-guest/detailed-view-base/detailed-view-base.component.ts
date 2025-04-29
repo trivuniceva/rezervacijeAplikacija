@@ -35,6 +35,12 @@ export class DetailedViewBaseComponent implements OnInit {
   ngOnInit(): void {
     this.accommodation = history.state.accommodation;
 
+    if (!this.accommodation) {
+      console.error('Accommodation data is missing in history state!');
+    } else {
+      console.log('Accommodation data:', this.accommodation);
+    }
+
     this.authService.userRole$.subscribe((role) => {
       this.userRole = role;
     });

@@ -32,7 +32,11 @@ export class ReservationHistoryComponent implements OnInit{
 
   ngOnInit() {
     this.user = this.authService.getLoggedUser()
-    this.fetchReservations();
+    if (this.user) {
+      this.fetchReservations();
+    } else {
+      console.error("User is not logged in!");
+    }
   }
 
   // Dohvatanje svih rezervacija sa backend-a
