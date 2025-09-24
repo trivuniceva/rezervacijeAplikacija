@@ -1,6 +1,5 @@
 package backend.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import menadzerisanjeuser.menadzerisanjeuser.model.User;
 import org.springframework.data.annotation.Id;
