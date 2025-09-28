@@ -19,5 +19,5 @@ public class SpecialPriceAndAvailabilityRepositoryTest {
     @Autowired
     private SpecialPriceAndAvailabilityRepository repository;
 
-   
+
 }
