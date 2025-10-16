@@ -34,13 +34,25 @@ public class AuthService {
         System.out.println("password: " + password);
 
         User user = userService.getUserByEmail(email);
-        if (user != null && userService.validPassword(user, password)) {
-            if (!userService.isDeleted(user) && user.getActive()) {
-                System.out.println("dobar korisnik: " + user.getProfilePic());
-                return user;
-            }
+        if (user == null) {
+            throw new RuntimeException("User with this email does not exist");
         }
-        return null;
+
+        if (!userService.validPassword(user, password)) {
+            throw new RuntimeException("Invalid password");
+        }
+
+        if (userService.isDeleted(user) || !user.getActive()) {
+            throw new RuntimeException("User account is inactive");
+        }
+
+        if (!user.isVerified()) {
+            throw new RuntimeException("User is not verified. Please check your email.");
+        }
+
+        System.out.println("Login successful for user: " + user.getProfilePic());
+        return user;
+
     }
 
     public String signup(RegisterRequest registerRequest) {
