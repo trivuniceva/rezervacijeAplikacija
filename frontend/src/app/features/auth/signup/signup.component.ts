@@ -43,6 +43,7 @@ export class SignupComponent implements OnInit {
       const userData = {
         email: this.signupForm.value.email,
         password: this.signupForm.value.password,
+        confirmPassword: this.signupForm.value.confirmPassword,
         firstname: this.signupForm.value.firstname,
         lastname: this.signupForm.value.lastname,
         address: this.signupForm.value.address,

@@ -43,6 +43,9 @@ public class User {
     @Column(name = "reset_token")
     private String resetToken;
 
+    @Column(nullable = false)
+    private boolean verified = false;
+
     public Long getId() {
         return id;
     }
@@ -137,6 +140,14 @@ public class User {
 
     public void setResetToken(String resetToken) {
         this.resetToken = resetToken;
+    }
+
+    public boolean isVerified() {
+        return verified;
+    }
+
+    public void setVerified(boolean verified) {
+        this.verified = verified;
     }
 }
 

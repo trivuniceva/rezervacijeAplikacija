@@ -1,13 +1,15 @@
 package menadzerisanjeuser.menadzerisanjeuser.service;
 
-import menadzerisanjeuser.menadzerisanjeuser.model.ErrorResponse;
-import menadzerisanjeuser.menadzerisanjeuser.model.RegisterRequest;
-import menadzerisanjeuser.menadzerisanjeuser.model.SuccessResponse;
-import menadzerisanjeuser.menadzerisanjeuser.model.User;
+import menadzerisanjeuser.menadzerisanjeuser.model.*;
+import menadzerisanjeuser.menadzerisanjeuser.repository.UserRepository;
+import menadzerisanjeuser.menadzerisanjeuser.repository.VerificationTokenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Service
 public class AuthService {
@@ -16,7 +18,13 @@ public class AuthService {
     private UserService userService;
 
     @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
     private TokenService tokenService;
+
+    @Autowired
+    private VerificationTokenRepository tokenRepository;
 
     @Autowired
     private EmailService emailService;
@@ -26,48 +34,87 @@ public class AuthService {
         System.out.println("password: " + password);
 
         User user = userService.getUserByEmail(email);
-        if (user != null && userService.validPassword(user, password)) {
-            if (!userService.isDeleted(user) && user.getActive()) {
-                System.out.println("dobar korisnik: " + user.getProfilePic());
-                return user;
-            }
+        if (user == null) {
+            throw new RuntimeException("User with this email does not exist");
         }
-        return null;
+
+        if (!userService.validPassword(user, password)) {
+            throw new RuntimeException("Invalid password");
+        }
+
+        if (userService.isDeleted(user) || !user.getActive()) {
+            throw new RuntimeException("User account is inactive");
+        }
+
+        if (!user.isVerified()) {
+            throw new RuntimeException("User is not verified. Please check your email.");
+        }
+
+        System.out.println("Login successful for user: " + user.getProfilePic());
+        return user;
+
     }
 
-    public ResponseEntity<?> signup(RegisterRequest registerRequest) {
-        System.out.println(registerRequest.getRole());
-        if(!this.userService.userExist(registerRequest.getEmail())){
-            User newUser = new User();
-            newUser.setEmail(registerRequest.getEmail());
-            newUser.setPassword(registerRequest.getPassword());
-            newUser.setFirstname(registerRequest.getFirstname());
-            newUser.setLastname(registerRequest.getLastname());
-            newUser.setProfilePic("/pics/slika2.jpg");
-            newUser.setAddress(registerRequest.getAddress());
-            newUser.setPhone(registerRequest.getPhone());
-            newUser.setUserRole(registerRequest.getRole());
+    public String signup(RegisterRequest registerRequest) {
 
-            try{
-                System.out.println("krece mejl: " + newUser.getEmail());
-                System.out.println("tokeN: " + newUser.getResetToken());
-
-                String token = tokenService.generateToken();
-                newUser.setResetToken(token);
-
-                System.out.println("save....");
-                userService.saveUser(newUser);
-                System.out.println("snimio korisnika");
-
-                emailService.sendActivationEmail(newUser.getEmail(), newUser.getResetToken());
-
-                return ResponseEntity.ok(new SuccessResponse("Registration successful! Please check your email to activate your account."));
-
-            } catch (Exception e) {
-                System.err.println("Error saving user: " + e.getMessage());
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ErrorResponse("Failed to save user."));
-            }
+        if (!registerRequest.getPassword().equals(registerRequest.getConfirmPassword())) {
+            throw new RuntimeException("Passwords do not match");
         }
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ErrorResponse("Email exist!."));
+
+        if (userRepository.findByEmail(registerRequest.getEmail()) != null) {
+            throw new RuntimeException("Email already in use");
+        }
+
+        User newUser = new User();
+        newUser.setEmail(registerRequest.getEmail());
+        newUser.setPassword(registerRequest.getPassword());
+        newUser.setFirstname(registerRequest.getFirstname());
+        newUser.setLastname(registerRequest.getLastname());
+        newUser.setProfilePic("/pics/slika2.jpg");
+        newUser.setAddress(registerRequest.getAddress());
+        newUser.setPhone(registerRequest.getPhone());
+        newUser.setUserRole(registerRequest.getRole());
+
+        newUser.setVerified(false);
+
+        userRepository.save(newUser);
+
+        VerificationToken token = new VerificationToken();
+        token.setToken(UUID.randomUUID().toString());
+        token.setUser(newUser);
+        token.setExpiryDate(LocalDateTime.now().plusHours(24));
+        token.setUsed(false);
+
+        tokenRepository.save(token);
+
+        String verificationLink = "http://localhost:8080/api/auth/verify?token=" + token.getToken();
+
+        emailService.sendEmail(newUser.getEmail(), "Verify your account",
+                "Click the link to activate your account: " + verificationLink);
+
+
+        return "Registration successful, please check your email to verify your account.";
+    }
+
+    public String verifyToken(String tokenStr) {
+        VerificationToken token = tokenRepository.findByToken(tokenStr)
+                .orElseThrow(() -> new RuntimeException("Invalid token"));
+
+        if (token.isUsed()) {
+            throw new RuntimeException("Token already used");
+        }
+
+        if (token.getExpiryDate().isBefore(LocalDateTime.now())) {
+            throw new RuntimeException("Token expired");
+        }
+
+        token.setUsed(true);
+        tokenRepository.save(token);
+
+        User user = token.getUser();
+        user.setVerified(true);
+        userRepository.save(user);
+
+        return "Account successfully verified! You can now log in.";
     }
 }

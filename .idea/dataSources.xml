@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="rezervacije/Hibernate" uuid="b8129276-f3e3-463f-9359-91747bf5b33c">
+    <data-source source="LOCAL" name="rezervacije/Hibernate" uuid="af68b78a-f8a3-4d95-a99a-06fe40de7ccb">
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
       <imported>true</imported>
@@ -10,7 +10,7 @@
       <jdbc-url>jdbc:mysql://localhost:3306/bookingDB</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
-    <data-source source="LOCAL" name="menadzerisanjeUser/Hibernate" uuid="4d54347d-c49e-4c8b-86c1-78aa3aee8e1c">
+    <data-source source="LOCAL" name="menadzerisanjeUser/Hibernate" uuid="6cfbd35a-8b6b-49a6-b1c3-8bc2af14a4fa">
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
       <imported>true</imported>

@@ -51,9 +51,8 @@ public class SpecialPriceAndAvailabilityService {
     }
 
     public List<SpecialPriceAndAvailability> getSpecialPrice(Long apartmentId) {
-        System.out.println("ajdee");
-        System.out.println(repository.findByAccommodation_Id(apartmentId));
-        return repository.findByAccommodation_Id(apartmentId);
+        List<SpecialPriceAndAvailability> specialPrices = repository.findByAccommodation_Id(apartmentId);
+        return specialPrices;
     }
 
     public List<LocalDate[]> getUnavailableDates(Long apartmentId) {

@@ -8,23 +8,17 @@ import org.springframework.stereotype.Service;
 @Service
 public class EmailService {
 
-    @Autowired
-    private JavaMailSender mailSender;
+    private final JavaMailSender mailSender;
 
-    private void sendEmail(String to, String subject, String text) {
+    public EmailService(JavaMailSender mailSender) {
+        this.mailSender = mailSender;
+    }
+
+    public void sendEmail(String to, String subject, String body) {
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom("imenkoprezimic123@gmail.com");
         message.setTo(to);
         message.setSubject(subject);
-        message.setText(text);
+        message.setText(body);
         mailSender.send(message);
     }
-
-    public void sendActivationEmail(String email, String token) {
-        String text = "To activate your account, click the link below:\n\n" +
-                "http://localhost:4200/activate-account?token=" + token;
-        sendEmail(email, "Account Activation", text);
-    }
-
-
 }
