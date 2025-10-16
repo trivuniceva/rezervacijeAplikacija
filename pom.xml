@@ -19,7 +19,7 @@
 
     <dependencyManagement>
         <dependencies>
-            <!-- Upravljanje verzijama JUnit-a i drugih test biblioteka -->
+            <!-- Upravljanje verzijama JUnit-a i drugih test biblioteka - KORISTI 5.11.0 -->
             <dependency>
                 <groupId>org.junit</groupId>
                 <artifactId>junit-bom</artifactId>
@@ -59,7 +59,14 @@
             <artifactId>lombok</artifactId>
         </dependency>
 
-        <!-- Jedinstvene i ispravne JUnit i Mockito zavisnosti bez eksplicitnih verzija -->
+        <!-- Spring Boot Test (upravlja osnovnim test zavisnostima) -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- JUnit 5 zavisnosti - BEZ EKSPLICITNIH VERZIJA (koristi se verzija iz BOM-a: 5.11.0) -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
@@ -71,8 +78,24 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Selenium Zavisnosti - Korišćenje "test" scope -->
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <version>4.22.0</version>
+            <scope>test</scope> <!-- Dodat scope -->
+        </dependency>
+
+        <!-- WebDriverManager - Korišćenje "test" scope -->
+        <dependency>
+            <groupId>io.github.bonigarcia</groupId>
+            <artifactId>webdrivermanager</artifactId>
+            <version>5.8.0</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
