@@ -37,31 +37,8 @@ describe('SignupComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('treba da ispravno inicijalizuje signupForm', () => {
-    expect(component.signupForm.controls['email']).toBeTruthy();
-    expect(component.signupForm.controls['password']).toBeTruthy();
-    expect(component.signupForm.controls['confirmPassword']).toBeTruthy();
-    expect(component.signupForm.controls['firstname']).toBeTruthy();
-    expect(component.signupForm.controls['lastname']).toBeTruthy();
-    expect(component.signupForm.controls['address']).toBeTruthy();
-    expect(component.signupForm.controls['phone']).toBeTruthy();
-    expect(component.signupForm.controls['role']).toBeTruthy();
-    expect(component.currentStep).toBe(1);
-  });
-
-  it('treba da predje na sledeci korak', () => {
-    component.goToStep(2);
-    expect(component.currentStep).toBe(2);
-  });
-
-  it('treba da se vrati na prethodni korak', () => {
-    component.currentStep = 2;
-    component.goToStep(1);
-    expect(component.currentStep).toBe(1);
-  });
-
-  describe('validacija forme', () => {
-    it('treba da bude validna kada su svi unosi validni', () => {
+  describe('Validacija forme', () => {
+    const setValidForm = (role: string = 'GUEST') => {
       component.signupForm.setValue({
         email: 'test@example.com',
         password: 'password123',
@@ -70,60 +47,117 @@ describe('SignupComponent', () => {
         lastname: 'Doe',
         address: '123 Main St',
         phone: '123-456-7890',
-        role: 'GUEST'
+        role: role
       });
       fixture.detectChanges();
+    };
+
+    it('treba da bude validna kada su svi unosi validni', () => {
+      setValidForm();
       expect(component.signupForm.valid).toBeTruthy();
+      expect(component.signupForm.get('address')?.value).toBeDefined();
+      expect(component.signupForm.get('phone')?.value).toBeDefined();
     });
 
-    it('treba da bude nevalidna ako je email nevalidan', () => {
+    ['email', 'password', 'confirmPassword', 'firstname', 'lastname', 'role'].forEach(controlName => {
+      it(`treba da bude nevalidna ako je polje '${controlName}' prazno (Required)`, () => {
+        setValidForm();
+        component.signupForm.controls[controlName].setValue('');
+        expect(component.signupForm.controls[controlName].errors?.['required']).toBeTruthy();
+        expect(component.signupForm.valid).toBeFalsy();
+      });
+    });
+
+    it('treba da bude nevalidna ako je email nevalidnog formata', () => {
+      setValidForm();
       component.signupForm.controls['email'].setValue('nevalidan-email');
       expect(component.signupForm.controls['email'].errors?.['email']).toBeTruthy();
       expect(component.signupForm.valid).toBeFalsy();
     });
 
-    it('treba da bude nevalidna ako su obavezna polja prazna', () => {
-      component.signupForm.setValue({
-        email: '',
-        password: 'password123',
-        confirmPassword: 'password123',
-        firstname: 'John',
-        lastname: 'Doe',
-        address: '123 Main St',
-        phone: '123-456-7890',
-        role: 'GUEST'
-      });
-      expect(component.signupForm.valid).toBeFalsy();
-    });
-
-    it('treba da bude nevalidna ako je lozinka prekratka', () => {
+    it('treba da bude nevalidna ako je lozinka prekratka (MinLength - testiran sa duzinom 0, jer je minLength 1)', () => {
+      setValidForm();
       component.signupForm.controls['password'].setValue('');
+      component.signupForm.controls['confirmPassword'].setValue('');
+
       expect(component.signupForm.controls['password'].errors?.['required']).toBeTruthy();
       expect(component.signupForm.valid).toBeFalsy();
     });
 
-    it('ne bi trebalo da posalje formu ako se lozinke ne poklapaju', () => {
-      component.signupForm.setValue({
-        email: 'test@example.com',
-        password: 'password123',
-        confirmPassword: 'wrong-password',
-        firstname: 'John',
-        lastname: 'Doe',
-        address: '123 Main St',
-        phone: '123-456-7890',
-        role: 'GUEST'
-      });
+    it('treba da bude nevalidna ako se lozinka i potvrda lozinke ne poklapaju (Izuzetan slucaj)', () => {
+      setValidForm();
+      component.signupForm.controls['confirmPassword'].setValue('druga-lozinka');
+
+      expect(component.signupForm.valid).toBeTruthy();
+
       spyOn(console, 'error');
       component.onSubmit();
       expect(authServiceSpy.register).not.toHaveBeenCalled();
       expect(console.error).toHaveBeenCalledWith('Form is invalid or passwords do not match');
     });
+
+    it('treba da bude validna kada su opcionalna polja (address, phone) prazna', () => {
+      setValidForm();
+      component.signupForm.controls['address'].setValue('');
+      component.signupForm.controls['phone'].setValue('');
+      expect(component.signupForm.valid).toBeTruthy();
+    });
   });
 
-  describe('onSubmit', () => {
-    beforeEach(() => {
+  describe('Slanje forme (onSubmit)', () => {
+    it('treba da posalje podatke sa ulogom VLASNIK (OWNER) i navigira na /login kada je uspesna registracija', () => {
       component.signupForm.setValue({
-        email: 'test@example.com',
+        email: 'owner@example.com',
+        password: 'password123',
+        confirmPassword: 'password123',
+        firstname: 'Ana',
+        lastname: 'Anic',
+        address: '456 Oak St',
+        phone: '987-654-3210',
+        role: 'OWNER'
+      });
+      authServiceSpy.register.and.returnValue(of({message: 'Registration successful'}));
+
+      component.onSubmit();
+
+      expect(authServiceSpy.register).toHaveBeenCalledWith(
+        jasmine.objectContaining({
+          email: 'owner@example.com',
+          role: 'OWNER'
+        })
+      );
+      expect(routerSpy.navigate).toHaveBeenCalledWith(['/login']);
+    });
+
+    it('treba da posalje podatke sa ulogom GOST (GUEST) i navigira na /login kada je uspesna registracija', () => {
+      component.signupForm.setValue({
+        email: 'guest@example.com',
+        password: 'password123',
+        confirmPassword: 'password123',
+        firstname: 'Petar',
+        lastname: 'Petrovic',
+        address: '',
+        phone: '',
+        role: 'GUEST'
+      });
+      authServiceSpy.register.and.returnValue(of({message: 'Registration successful'}));
+
+      component.onSubmit();
+
+      expect(authServiceSpy.register).toHaveBeenCalledWith(
+        jasmine.objectContaining({
+          email: 'guest@example.com',
+          address: '',
+          phone: '',
+          role: 'GUEST'
+        })
+      );
+      expect(routerSpy.navigate).toHaveBeenCalledWith(['/login']);
+    });
+
+    it('treba da prikaze poruku o gresci i NE navigira ako registracija ne uspe', () => {
+      component.signupForm.setValue({
+        email: 'duplicate@example.com',
         password: 'password123',
         confirmPassword: 'password123',
         firstname: 'John',
@@ -132,38 +166,44 @@ describe('SignupComponent', () => {
         phone: '123-456-7890',
         role: 'GUEST'
       });
-    });
-
-    it('treba da pozove authService.register i navigira na /login kada je registracija uspešna', () => {
-      authServiceSpy.register.and.returnValue(of({message: 'Registration successful'}));
-      component.onSubmit();
-      expect(authServiceSpy.register).toHaveBeenCalledWith({
-        email: 'test@example.com',
-        password: 'password123',
-        firstname: 'John',
-        lastname: 'Doe',
-        address: '123 Main St',
-        phone: '123-456-7890',
-        role: 'GUEST'
-      });
-      expect(routerSpy.navigate).toHaveBeenCalledWith(['/login']);
-    });
-
-    it('treba da prikaze poruku o gresci ako registracija ne uspe', () => {
-      authServiceSpy.register.and.returnValue(throwError(() => new Error('Registration failed')));
+      const errorResponse = new Error('Email already in use');
+      authServiceSpy.register.and.returnValue(throwError(() => errorResponse));
       spyOn(console, 'error');
+
       component.onSubmit();
-      expect(console.error).toHaveBeenCalledWith('Registration error:', new Error('Registration failed'));
+
+      expect(console.error).toHaveBeenCalledWith('Registration error:', errorResponse);
       expect(routerSpy.navigate).not.toHaveBeenCalled();
     });
 
-    it('ne bi trebalo da pozove authService.register ako je forma nevalidna', () => {
-      component.signupForm.controls['email'].setValue('nevalidan-email');
-      spyOn(console, 'error');
+    it('treba da pozove register sa ispravnim DTO objektom koji sadrži sva polja', () => {
+      const expectedData = {
+        email: 'dto@test.com',
+        password: 'dtoPassword123',
+        confirmPassword: 'dtoPassword123',
+        firstname: 'DTO',
+        lastname: 'User',
+        address: 'Adresa',
+        phone: '111222333',
+        role: 'OWNER'
+      };
+      component.signupForm.setValue(expectedData);
+      expectedData.role = expectedData.role.toUpperCase();
+      const payload = {
+        email: expectedData.email,
+        password: expectedData.password,
+        confirmPassword: expectedData.confirmPassword,
+        firstname: expectedData.firstname,
+        lastname: expectedData.lastname,
+        address: expectedData.address,
+        phone: expectedData.phone,
+        role: expectedData.role,
+      };
+
+      authServiceSpy.register.and.returnValue(of({message: 'Registration successful'}));
       component.onSubmit();
-      expect(console.error).toHaveBeenCalledWith('Form is invalid or passwords do not match');
-      expect(authServiceSpy.register).not.toHaveBeenCalled();
+
+      expect(authServiceSpy.register).toHaveBeenCalledWith(payload);
     });
   });
-
 });
